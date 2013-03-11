@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+
+{% block body %}
+
+<div class="navbar navbar-inverse navbar-static-top">
+  <div class="navbar-inner ">
+    <a class="brand" href="#">BudgetTracker</a>
+    <ul class="nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
+      <li><a href="#">Login</a></li>
+    </ul>
+  </div>
+</div>
+        <div class="text-center">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'Hello, '|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'Logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'Login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+
+        {% for key, message in app.session.getFlashes() %}
+        <div class="{{ key }}">
+            {{ message|trans({}, 'FOSUserBundle') }}
+        </div>
+        {% endfor %}
+
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        </div>
+{% endblock %}
