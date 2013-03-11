@@ -6323,3 +6323,14 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+
+/*
+Not from the original file
+*/
+
+.spacer {
+    margin-top: 20px;
+}
+
+/*
+*/

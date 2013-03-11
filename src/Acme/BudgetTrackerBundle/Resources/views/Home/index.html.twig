@@ -1,10 +1,28 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<h1>Welcome to BudgetTracker!</h1>
 
-<p> You still don't have an account? <a href="#">Register</a> now! </p>
+<div class="navbar navbar-inverse navbar-static-top">
+  <div class="navbar-inner ">
+    <a class="brand" href="#">BudgetTracker</a>
+    <ul class="nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
+      <li><a href="#">Login</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="text-center">
+<h1 class="spacer">Welcome to BudgetTracker!</h1>
+
+<p class="lead spacer">Welcome to BudgetTracker - an application, which helps you to keep track of all your expenses!</p>
+<p class="lead">Create categories and and manage them, get full reports for everything spent!</p>
+
+
+<p class="spacer"> Still don't have an account? <a href="{{ path('fos_user_registration_register') }}">Register</a> now! </p>
 
 <p> You are already a member? <a href="#">Sign in</a>! </p>
+</div>
 {% endblock %}
 
