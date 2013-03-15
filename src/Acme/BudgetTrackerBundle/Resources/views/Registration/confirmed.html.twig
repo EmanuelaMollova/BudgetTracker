@@ -1,0 +1,39 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+
+
+{% block fos_user_content %}
+
+    {# Top menu #}
+    <div class="navbar navbar-inverse navbar-static-top"> 
+        <div class="navbar-inner">
+            <a class="brand" href="{{ path('home') }}">BudgetTracker</a>
+
+            <ul class="nav">
+                <li>
+                    <a href="{{ path('fos_user_security_login') }}">Login</a>
+                </li>
+
+                <li>
+                    <a href="{{ path('fos_user_registration_register') }}">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {# Main content #}
+    <div class="text-center">
+
+        <p class="big-spacer text-success lead">{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
+        {% if app.session is not empty %}
+            {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+            {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>{% endif %}
+        {% endif %}
+            
+            <p class="big-spacer lead">You can now <a href="{{ path('fos_user_security_login') }}">log in</a> with your username and password.</p>
+            
+            <p class="lead">Enjoy your stay in BudgetTracker! </p>
+            
+    </div>
+
+{% endblock fos_user_content %}

@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -57,8 +57,25 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    spool:     { type: memory }	
+    spool:     { type: memory }
+    
 fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Acme\BudgetTrackerBundle\Entity\User
+    service:
+        mailer: fos_user.mailer.twig_swift
+    resetting:
+        email:
+            template: AcmeDemoBundle:User:resetting.email.twig
+    registration:
+        confirmation:
+            from_email:
+                address:        emanuela.mollova@gmail.com  
+                sender_name:    BudgetTracker
+            enabled:    false
+            template:   FOSUserBundle:Registration:email.txt.twig
+        form:
+            type:               fos_user_registration
+            name:               fos_user_registration_form
+            validation_groups:  [Registration, Default]

@@ -6328,8 +6328,12 @@ a.badge:focus {
 Not from the original file
 */
 
-.spacer {
+.big-spacer {
     margin-top: 50px;
+}
+
+.little-spacer {
+    margin-top: 15px;
 }
 
 /*

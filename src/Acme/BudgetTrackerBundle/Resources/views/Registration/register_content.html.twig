@@ -1,0 +1,30 @@
+{# Top menu #}
+<div class="navbar navbar-inverse navbar-static-top"> 
+    <div class="navbar-inner">
+        <a class="brand" href="{{ path('home') }}">BudgetTracker</a>
+
+        <ul class="nav">
+            <li>
+                <a href="{{ path('fos_user_security_login') }}">Login</a>
+            </li>
+
+            <li class="active">
+                <a href="{{ path('fos_user_registration_register') }}">Register</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{# Main content #}
+<div class="text-center">
+
+    <h1 class="little-spacer">Register</h1>
+    
+    <form class="big-spacer" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+        {{ form_widget(form) }}
+        <div>
+            <input class="btn little-spacer" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+        </div>
+    </form>
+    
+</div>
