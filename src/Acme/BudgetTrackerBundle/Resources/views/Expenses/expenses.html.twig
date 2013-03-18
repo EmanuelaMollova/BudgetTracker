@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} Expenses {% endblock %}
+
+{% block body %}
+    
+    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Expenses'} %}
+
+    <div class="little-spacer text-center">
+        <h1>Expenses</h1>   
+    </div>
+
+{% endblock %}

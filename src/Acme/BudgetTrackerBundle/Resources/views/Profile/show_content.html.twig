@@ -1,0 +1,33 @@
+{% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Profile'} %}
+
+<div class="little-spacer text-center">
+
+    <h1>Your profile</h1>
+    
+    <div class="big-spacer fos_user_user_show">
+        <p class="lead">
+            <strong>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}:</strong> 
+            {{ user.username }}
+        </p>
+        
+        <p class="lead">
+            <strong>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}:</strong> 
+            {{ user.email }}
+        </p>
+    </div>
+
+    <div class="big-spacer">
+        
+        <p>
+            <i class="icon-user"></i> 
+            <a href="{{ path('fos_user_profile_edit') }}">Edit profile</a>
+        </p>
+        
+        <p>
+            <i class="icon-pencil"></i> 
+            <a href="{{ path('fos_user_change_password') }}">Change password</a>
+        </p>
+
+    </div>
+
+</div>

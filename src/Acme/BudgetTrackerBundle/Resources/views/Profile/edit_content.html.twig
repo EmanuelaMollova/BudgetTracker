@@ -1,0 +1,28 @@
+{% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Profile'} %}
+
+<div class="little-spacer text-center">
+
+    <h1>Edit your profile</h1>
+    
+    <form class="big-spacer" action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+        {{ form_widget(form) }}
+        <div>
+            <input class="btn little-spacer" type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+        </div>
+    </form>
+    
+    <div class="big-spacer">
+        
+        <p>
+            <i class="icon-user"></i> 
+            <a href="{{ path('fos_user_profile_show') }}">View profile</a>
+        </p>
+        
+        <p>
+            <i class="icon-pencil"></i> 
+            <a href="{{ path('fos_user_change_password') }}">Change password</a>
+        </p>
+
+    </div>
+    
+</div>

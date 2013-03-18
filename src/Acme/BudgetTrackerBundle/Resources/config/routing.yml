@@ -1,7 +1,4 @@
-home:
-    pattern:  /
-    defaults: { _controller: AcmeBudgetTrackerBundle:Home:index }
-
+#From FOSUserBundle
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -20,3 +17,24 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+    
+#BudgetTracker
+home:
+    pattern:  /
+    defaults: { _controller: AcmeBudgetTrackerBundle:Home:index }
+    
+expenses:
+    pattern: /expenses
+    defaults: { _controller: AcmeBudgetTrackerBundle:Expenses:expenses }
+    
+reports:
+    pattern: /reports
+    defaults: { _controller: AcmeBudgetTrackerBundle:Reports:reports }
+    
+categories:
+    pattern: /categories
+    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:categories }
+    
+months:
+    pattern: /months
+    defaults: { _controller: AcmeBudgetTrackerBundle:Months:months } 

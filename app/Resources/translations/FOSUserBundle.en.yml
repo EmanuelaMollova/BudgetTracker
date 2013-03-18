@@ -16,9 +16,9 @@ group:
 
 security:
     login:
-        username: "Username pleaseeee:"
+        username: "Username:"
         password: "Password:"
-        remember_me: Remember me!!! bla bla
+        remember_me: Remember me
         submit: Login
 
 # Profile
@@ -93,4 +93,4 @@ form:
     password: "Password:"
     password_confirmation: "Confirm your password:"
     new_password: "New password:"
-    new_password_confirmation: "Verification:"
+    new_password_confirmation: "Confirm your password:"

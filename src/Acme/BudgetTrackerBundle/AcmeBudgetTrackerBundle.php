@@ -11,3 +11,6 @@ class AcmeBudgetTrackerBundle extends Bundle
         return 'FOSUserBundle';
     }
 }
+
+//TODO email activation of accounts
+//TODO reset of passwords

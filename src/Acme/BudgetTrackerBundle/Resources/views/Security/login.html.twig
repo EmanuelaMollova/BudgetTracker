@@ -2,27 +2,12 @@
 
 {% block fos_user_content %}
     
-    {# Top menu #}
-    <div class="navbar navbar-inverse navbar-static-top"> 
-        <div class="navbar-inner">
-            <a class="brand" href="{{ path('home') }}">BudgetTracker</a>
-            
-            <ul class="nav">
-                <li class="active">
-                    <a href="{{ path('fos_user_security_login') }}">Login</a>
-                </li>
-
-                <li>
-                    <a href="{{ path('fos_user_registration_register') }}">Register</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    {% include 'AcmeBudgetTrackerBundle::unlogged_navbar.html.twig' with {'var':'Login'} %}
     
     {# Main content #}
-    <div class="text-center">
+    <div class="text-center little-spacer">
 
-        <h1 class="little-spacer">Welcome to BudgetTracker!</h1>
+        <h1>Welcome to BudgetTracker!</h1>
 
         <p class="lead big-spacer">
             Welcome to BudgetTracker - an application, which helps you to keep track of all your expenses!
@@ -43,18 +28,18 @@
         <form class="big-spacer" action="{{ path("fos_user_security_check") }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-            <label for="username">{{ 'Username'|trans({}, 'FOSUserBundle') }}</label>
+            <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
 
-            <label for="password">{{ 'Password'|trans({}, 'FOSUserBundle') }}</label>
+            <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
             <input type="password" id="password" name="_password" required="required" />
 
             <label class="little-spacer" for="remember_me">
                 <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                {{ 'Remember me'|trans({}, 'FOSUserBundle') }}
+                {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
             </label>
 
-            <input class="btn little-spacer" type="submit" id="_submit" name="_submit" value="{{ 'Submit'|trans({}, 'FOSUserBundle') }}" />
+            <input class="btn little-spacer" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
         </form>
 
         <p class="big-spacer">

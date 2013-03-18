@@ -10,28 +10,8 @@
     </head>
     <body>
         
-    {# <div class="navbar navbar-inverse navbar-static-top"> 
-        <div class="navbar-inner">
-            <a class="brand" href="{{ path('home') }}">BudgetTracker</a>
-            <ul class="nav">
-                
-                <li{% if var == "Login" %} class="active"{% endif %}>
-                    <a href="{{ path('login') }}">Login</a>
-                </li>
-                
-                <li{% if var == "Register" %} class="active"{% endif %}>
-                    <a href="{{ path('register') }}">Register</a>
-                </li>
-                
-                <li{% if var == "Expenses" %} class="active"{% endif %}>
-                    <a href="{{ path('expenses') }}">Bla bla</a>
-                </li>
-
-                </ul>
-        </div>
-    </div> #}
-        
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        
     </body>
 </html>

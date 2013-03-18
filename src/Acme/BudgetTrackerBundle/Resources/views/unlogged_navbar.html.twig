@@ -1,0 +1,21 @@
+<div class="navbar navbar-inverse navbar-static-top"> 
+    
+    <div class="navbar-inner">
+        
+        <a class="brand" href="{{ path('home') }}">BudgetTracker</a>
+
+        <ul class="nav">
+            
+            <li {% if var == "Login" %} class="active"{% endif %}>
+                <a href="{{ path('fos_user_security_login') }}">Login</a>
+            </li>
+
+            <li {% if var == "Register" %} class="active"{% endif %}>
+                <a href="{{ path('fos_user_registration_register') }}">Register</a>
+            </li>
+            
+        </ul>
+        
+    </div>
+    
+</div>

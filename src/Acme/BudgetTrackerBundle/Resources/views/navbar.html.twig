@@ -1,0 +1,40 @@
+<div class="navbar navbar-inverse navbar-static-top"> 
+    <div class="navbar-inner">
+        
+        <a class="brand" href="{{ path('home') }}">BudgetTracker</a>
+        
+        <ul class="nav">
+
+            <li{% if var == "Expenses" %} class="active"{% endif %}>
+                <a href="{{ path('expenses') }}">Expenses</a>
+            </li>
+
+            <li{% if var == "Reports" %} class="active"{% endif %}>
+                <a href="{{ path('reports') }}">Reports</a>
+            </li>
+
+            <li{% if var == "Categories" %} class="active"{% endif %}>
+                <a href="{{ path('categories') }}">Categories</a>
+            </li>
+            
+            <li{% if var == "Months" %} class="active"{% endif %}>
+                <a href="{{ path('months') }}">Months</a>
+            </li>
+
+        </ul>
+        
+        <ul class="nav pull-right">
+            
+            <li{% if var == "Profile" %} class="active"{% endif %}>
+                <a href={{ path('fos_user_profile_show') }}>
+                    <i class="icon-user icon-white"></i>
+                    {{app.user.username}}                   
+                </a>
+            </li>
+            
+            <li><a href={{ path('fos_user_security_logout') }}>Logout</a></li>
+            
+        </ul>
+        
+    </div>
+</div>

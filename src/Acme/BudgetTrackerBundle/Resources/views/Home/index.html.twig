@@ -2,20 +2,13 @@
 
 {% block body %}
 
-<div class="navbar navbar-inverse navbar-static-top">
-  <div class="navbar-inner ">
-    <a class="brand" href="#">BudgetTracker</a>
-    <ul class="nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
-      <li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
-    </ul>
-  </div>
-</div>
+    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Home'} %}
 
-<div class="text-center">
-    
-Home page for logged user!
-</div>
+    <div class="little-spacer text-center">
+
+        <h1>Hello, {{app.user.username}}!</h1>
+
+    </div>
+
 {% endblock %}
 

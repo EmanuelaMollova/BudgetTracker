@@ -1,19 +1,4 @@
-{# Top menu #}
-<div class="navbar navbar-inverse navbar-static-top"> 
-    <div class="navbar-inner">
-        <a class="brand" href="{{ path('home') }}">BudgetTracker</a>
-
-        <ul class="nav">
-            <li>
-                <a href="{{ path('fos_user_security_login') }}">Login</a>
-            </li>
-
-            <li class="active">
-                <a href="{{ path('fos_user_registration_register') }}">Register</a>
-            </li>
-        </ul>
-    </div>
-</div>
+{% include 'AcmeBudgetTrackerBundle::unlogged_navbar.html.twig' with {'var':'Register'} %}
 
 {# Main content #}
 <div class="text-center">
