@@ -3,7 +3,6 @@ BudgetTracker
 
 An application which helps you to track your expenses.
 
-<<<<<<< HEAD
 Symfony Standard Edition
 ========================
 
