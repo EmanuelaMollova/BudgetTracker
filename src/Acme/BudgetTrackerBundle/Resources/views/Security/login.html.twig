@@ -3,8 +3,7 @@
 {% block fos_user_content %}
     
     {% include 'AcmeBudgetTrackerBundle::unlogged_navbar.html.twig' with {'var':'Login'} %}
-    
-    {# Main content #}
+
     <div class="text-center little-spacer">
 
         <h1>Welcome to BudgetTracker!</h1>
@@ -28,10 +27,10 @@
         <form class="big-spacer" action="{{ path("fos_user_security_check") }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-            <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+            <label for="username"><strong>{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</strong></label>
             <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
 
-            <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+            <label for="password"><strong>{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</strong></label>
             <input type="password" id="password" name="_password" required="required" />
 
             <label class="little-spacer" for="remember_me">
@@ -43,6 +42,10 @@
         </form>
 
         <p class="big-spacer">
+            <a href="{{ path('fos_user_resetting_request') }}">Forgot your password?</a> 
+        </p>
+            
+        <p class="little-spacer">
             Still don't have an account? <a href="{{ path('fos_user_registration_register') }}">Register</a> now! 
         </p>
 

@@ -1,0 +1,22 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+
+    {% include 'AcmeBudgetTrackerBundle::unlogged_navbar.html.twig' with {'var':'Confirm'} %}
+    
+    <div class="little-spacer text-center">
+        <p class="lead text-success">Your registration was successful!</p>
+        
+        {#<p>{{ 'registration.check_email'|raw|trans({'%email%': user.email}, 'FOSUserBundle') }}</p>#}
+        
+        <p class="big-spacer lead">An email has been sent to <strong>{{user.email}}</strong>.</p>
+        
+        <p class="little-spacer lead">It contains an activation link you must click to activate your account.</p>
+        
+        <p class="little-spacer lead">
+            Then you can 
+            <a href="{{ path('fos_user_security_login') }}">log in</a> 
+            with your username and password and start enjoying BudgetTracker!</p>
+    </div>
+    
+{% endblock fos_user_content %}

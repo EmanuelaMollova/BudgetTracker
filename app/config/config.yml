@@ -51,13 +51,12 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
-# Swiftmailer Configuration
+# Swiftmailer Configuration    
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
+    transport: gmail
+    username:  ***
+    password:  ***
+    encryption: tls
     
 fos_user:
     db_driver: orm
@@ -67,13 +66,13 @@ fos_user:
         mailer: fos_user.mailer.twig_swift
     resetting:
         email:
-            template: AcmeDemoBundle:User:resetting.email.twig
+            template: AcmeBudgetTrackerBundle:User:resetting.email.twig
     registration:
         confirmation:
             from_email:
                 address:        emanuela.mollova@gmail.com  
                 sender_name:    BudgetTracker
-            enabled:    false
+            enabled:    true
             template:   FOSUserBundle:Registration:email.txt.twig
         form:
             type:               fos_user_registration

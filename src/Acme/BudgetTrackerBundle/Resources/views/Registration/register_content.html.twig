@@ -1,11 +1,12 @@
 {% include 'AcmeBudgetTrackerBundle::unlogged_navbar.html.twig' with {'var':'Register'} %}
 
-{# Main content #}
 <div class="text-center">
 
     <h1 class="little-spacer">Register</h1>
     
-    <form class="big-spacer" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}
+    
+   <form class="big-spacer" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
         {{ form_widget(form) }}
         <div>
             <input class="btn little-spacer" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />

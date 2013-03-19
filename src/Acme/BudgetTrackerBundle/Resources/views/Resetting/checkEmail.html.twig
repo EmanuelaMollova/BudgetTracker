@@ -1,0 +1,14 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+
+    {% include 'AcmeBudgetTrackerBundle::unlogged_navbar.html.twig' with {'var':'Check Email'} %}
+
+    <div class="big-spacer text-center">
+        
+    <p class="lead">
+        {{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}
+    </p>
+    
+    {{email}}
+{% endblock %}

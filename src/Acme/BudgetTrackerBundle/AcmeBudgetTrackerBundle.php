@@ -12,5 +12,6 @@ class AcmeBudgetTrackerBundle extends Bundle
     }
 }
 
-//TODO email activation of accounts
+//TODO titles
+//TODO h1 !
 //TODO reset of passwords

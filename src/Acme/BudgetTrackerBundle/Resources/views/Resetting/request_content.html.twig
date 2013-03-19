@@ -1,0 +1,20 @@
+{% include 'AcmeBudgetTrackerBundle::unlogged_navbar.html.twig' with {'var':'Request'} %}
+
+<div class="text-center">
+    
+    <h1 class="little-spacer">Request resetting</h1>
+    
+    <form class="big-spacer" action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+        <div>
+            {% if invalid_username is defined %}
+                <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+            {% endif %}
+                <label for="username"><strong>{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</strong></label>
+            <input type="text" id="username" name="username" required="required" />
+        </div>
+        <div>
+            <input class="btn little-spacer" type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
+        </div>
+    </form>
+    
+</div>

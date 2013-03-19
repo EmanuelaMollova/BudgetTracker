@@ -39,21 +39,21 @@ change_password:
 
 # Registration
 registration:
-    check_email: An email has been sent to %email%. It contains an activation link you must click to activate your account.
+    check_email: An email has been sent to %email%.It contains an activation link you must click to activate your account.
     confirmed: Congratulations, %username%! Your account is now activated.
     back: Back to the originating page.
     submit: Submit
     flash:
         user_created: The user has been created successfully
     email:
-        subject: Welcome %username%!
+        subject: Welcome to BudgetTracker, %username%!
         message: |
-            Hello %username%!
+            Hello, %username%!
 
-            To finish activating your account - please visit %confirmationUrl%
+            To finish activating your account - please visit the following URL: %confirmationUrl%
 
             Regards,
-            the Team.
+            BudgetTracker.
 
 # Password resetting
 resetting:

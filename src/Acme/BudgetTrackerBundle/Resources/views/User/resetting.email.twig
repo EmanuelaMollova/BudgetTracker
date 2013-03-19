@@ -12,10 +12,5 @@ the Acme team
 {% endblock %}
 
 {% block body_html %}
-{#
-    You can of course render the html directly here.
-    Including a template as done here allows keeping things DRY by using
-    the template inheritance in it
-#}
-{% include 'AcmeBudgetTrackerBundle:User:resetting_email.html.twig' %}
+    {% include 'AcmeBudgetTrackerBundle:User:resetting_email.html.twig' %}
 {% endblock %}
