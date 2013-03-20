@@ -1,6 +1,14 @@
-<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}" />
-    </div>
-</form>
+{% include 'AcmeBudgetTrackerBundle::unlogged_navbar.html.twig' with {'var':'Password Reset'} %}
+
+<div class="text-center">
+    
+    <h1 class="little-spacer">Choose a new password</h1> 
+
+    <form class="big-spacer" action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+        {{ form_widget(form) }}
+        <div>
+            <input class="little-spacer btn" type="submit" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}" />
+        </div>
+    </form>
+    
+</div>
