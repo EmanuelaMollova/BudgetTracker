@@ -18,6 +18,11 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
     
+AcmeBudgetTrackerBundle_category_:
+    resource: "@AcmeBudgetTrackerBundle/Resources/config/routing/category.yml"
+    prefix:   /category/	
+
+	
 #BudgetTracker
 home:
     pattern:  /
@@ -38,3 +43,15 @@ categories:
 months:
     pattern: /months
     defaults: { _controller: AcmeBudgetTrackerBundle:Months:months } 
+    
+create_category:
+    pattern: /create_category
+    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:createCategory }
+    
+edit_category:
+    pattern: /edit_category/{id}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:editCategory }
+    
+delete_category:
+    pattern: /delete_category/{id}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:deleteCategory }

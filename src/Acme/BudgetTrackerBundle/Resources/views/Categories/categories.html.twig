@@ -7,7 +7,32 @@
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Categories'} %}
 
     <div class="little-spacer text-center">
-        <h1>Categories</h1>   
+        <h1>Categories</h1> 
+        
+        <table class="big-spacer table table-striped">
+            {% for cat in categories %}
+
+                <tr>
+                    <td>
+                        <span class="right-spacer"><strong>{{ cat.name }}</strong></span> 
+                        <a href=""><i class="icon-pencil right-spacer"></i></a>
+                        <a href="{{ path('delete_category', { 'id': cat.id }) }}"><i class="icon-remove"></i></a>
+                        
+                    </td>
+                
+                </tr>
+
+            {% endfor %}
+        </table>
+        
+        {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}
+        
+        <form class="big-spacer" action="{{ path('create_category') }}" method="post" {{ form_enctype(form) }}>
+            {{ form_widget(form) }}
+
+            <input class="little-spacer btn" type="submit" value="Submit"/>
+        </form>
+        
     </div>
 
 {% endblock %}
