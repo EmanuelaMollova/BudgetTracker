@@ -15,7 +15,8 @@ class AcmeBudgetTrackerBundle extends Bundle
 //TODO titles
 //TODO h1 !
 
-//TODO registration validation
 //TODO not to be able to change username
+//Password validation
+//Unique names FOR USER!
 
 //TODO ??? add real name, photo... to users ???

@@ -1,0 +1,33 @@
+{% block field_widget %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    <input class="input-small" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock field_widget %}
+    
+{% block field_row %}
+{% spaceless %}
+    {{ form_label(form, label|default(null)) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+{% endspaceless %}
+{% endblock field_row %}
+    
+{% block form_widget %}
+{% spaceless %}
+    {{ block('field_rows') }}
+    {{ form_rest(form) }}
+{% endspaceless %}
+{% endblock form_widget %}
+    
+{% block field_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <ul class="nav text-error">
+                {% for error in errors %}
+                    <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock field_errors %}

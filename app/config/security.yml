@@ -23,7 +23,7 @@ security:
                 provider: fos_userbundle
             logout:
                 path:   /logout
-                target: /
+                target: /goodbye
             anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"

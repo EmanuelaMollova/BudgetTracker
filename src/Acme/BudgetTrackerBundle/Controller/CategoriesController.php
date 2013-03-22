@@ -12,6 +12,36 @@ class CategoriesController extends Controller
 {
     public function categoriesAction()
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        
+                $em = $this->getDoctrine()->getManager();
+    $product = $em->getRepository('AcmeBudgetTrackerBundle:Category')->countByName('Food', $user);
+    
+    var_dump($product);
+    die();
+    
+    
+        
+        $category = new Category();
+        $form = $this->createForm(new CategoryType(), $category);
+        
+
+        
+        $repository = $this->getDoctrine()
+            ->getRepository('AcmeBudgetTrackerBundle:Category');
+        
+        
+        
+        $categories = $repository->findByUser($user);
+        
+        $id = null;
+        
+        return $this->render('AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
+            'categories' => $categories, 'id' => $id, 'form' => $form->createView()));
+    }
+   
+    public function createCategoryAction(Request $request)
+    {
         $category = new Category();
         $form = $this->createForm(new CategoryType(), $category);
         
@@ -21,21 +51,9 @@ class CategoriesController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
         
         $categories = $repository->findByUser($user);
-        
-        return $this->render('AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
-            'categories' => $categories, 'form' => $form->createView()));
-    }
-   
-    public function createCategoryAction(Request $request)
-    {
-        $category = new Category();
-        $form = $this->createForm(new CategoryType(), $category);
-
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
-            
-         $user = $this->container->get('security.context')->getToken()->getUser();
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
@@ -45,29 +63,40 @@ class CategoriesController extends Controller
 
                 return $this->redirect($this->generateUrl('categories'));
             }
+            $id = null;
+        
+        return $this->render('AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
+            'categories' => $categories, 'id' => $id, 'form' => $form->createView()));
         }
     }
     
     public function editCategoryAction(Request $request, $id)
     {
-        $category = new Category();
+        $repository = $this->getDoctrine()
+            ->getRepository('AcmeBudgetTrackerBundle:Category');
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $categories = $repository->findByUser($user);
+        
+        $category = $repository->find($id);
+        
         $form = $this->createForm(new CategoryType(), $category);
-
-
+        
         if ($request->isMethod('POST')) {
             $form->bind($request);
-            
-         $user = $this->container->get('security.context')->getToken()->getUser();
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $category->setUser($user);
                 $em->persist($category);
                 $em->flush();
-
+                
                 return $this->redirect($this->generateUrl('categories'));
-            }
+            }   
+            return $this->render('AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
+        'categories' => $categories, 'id' => $id, 'form' => $form->createView()));
         }
+return $this->render('AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
+        'categories' => $categories, 'id' => $id, 'form' => $form->createView()));
+        
     }
     
     public function deleteCategoryAction($id)

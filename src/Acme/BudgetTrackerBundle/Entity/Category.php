@@ -2,10 +2,14 @@
 namespace Acme\BudgetTrackerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="category")
+ * @ORM\Entity(repositoryClass="Acme\BudgetTrackerBundle\Entity\CategoryRepository")
+ * @UniqueEntity(fields={"name"}, message="There already is such a category.")
  */
 class Category
 {
@@ -17,7 +21,12 @@ class Category
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\MinLength(
+     *     limit=3,
+     *     message="The name must have at least {{ limit }} characters."
+     * )
      */
     protected $name;
     
@@ -27,22 +36,11 @@ class Category
      */
     protected $user;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Category
-     */
     public function setName($name)
     {
         $this->name = $name;
@@ -50,22 +48,11 @@ class Category
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string 
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * Set user
-     *
-     * @param \Acme\BudgetTrackerBundle\Entity\User $user
-     * @return Category
-     */
     public function setUser(\Acme\BudgetTrackerBundle\Entity\User $user = null)
     {
         $this->user = $user;
@@ -73,11 +60,6 @@ class Category
         return $this;
     }
 
-    /**
-     * Get user
-     *
-     * @return \Acme\BudgetTrackerBundle\Entity\User 
-     */
     public function getUser()
     {
         return $this->user;

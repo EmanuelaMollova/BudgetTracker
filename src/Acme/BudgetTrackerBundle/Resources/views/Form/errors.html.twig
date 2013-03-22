@@ -1,14 +1,11 @@
 {% block field_errors %}
     {% spaceless %}
-        
         {% if errors|length > 0 %}
-
             <ul class="little-spacer nav text-error">
                 {% for error in errors %}
-                    <li>{{loop.index}}. {{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+                    <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
                 {% endfor %}
             </ul>
-
         {% endif %}
     {% endspaceless %}
 {% endblock field_errors %}

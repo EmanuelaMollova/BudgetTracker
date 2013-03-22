@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} Goodbye {% endblock %}
+
+{% block body %}
+
+    {% include 'AcmeBudgetTrackerBundle::unlogged_navbar.html.twig' with {'var':'Goodbye'} %}
+
+    <div class="text-center">
+        
+        <p class="lead little-spacer text-success">You logged out successfully!</p>
+        
+        <p class="lead">Hope you enjoyed your stay in BudgetTracker!</p>
+        
+        <p class="lead">Come back soon or <a href="{{ path('fos_user_security_login') }}">log in</a> just now!</p>
+        
+        <p class="lead">Have a wonderful day!</p>
+       
+    </div>
+    
+{% endblock %}
