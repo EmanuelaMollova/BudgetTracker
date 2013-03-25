@@ -4,6 +4,8 @@
 
     <h1>Edit your profile</h1>
     
+    {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}
+    
     <form class="big-spacer" action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
         {{ form_widget(form) }}
         <div>

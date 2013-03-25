@@ -14,23 +14,17 @@ class CategoriesController extends Controller
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
         
-                $em = $this->getDoctrine()->getManager();
-    $product = $em->getRepository('AcmeBudgetTrackerBundle:Category')->countByName('Food', $user);
-    
-    var_dump($product);
-    die();
-    
-    
-        
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository('AcmeBudgetTrackerBundle:Category')->countByName('Food', $user);
+
+        //var_dump($product);
+        //die();
+      
         $category = new Category();
         $form = $this->createForm(new CategoryType(), $category);
-        
 
-        
         $repository = $this->getDoctrine()
             ->getRepository('AcmeBudgetTrackerBundle:Category');
-        
-        
         
         $categories = $repository->findByUser($user);
         
@@ -94,9 +88,8 @@ class CategoriesController extends Controller
             return $this->render('AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
         'categories' => $categories, 'id' => $id, 'form' => $form->createView()));
         }
-return $this->render('AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
-        'categories' => $categories, 'id' => $id, 'form' => $form->createView()));
-        
+        return $this->render('AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
+        'categories' => $categories, 'id' => $id, 'form' => $form->createView()));      
     }
     
     public function deleteCategoryAction($id)

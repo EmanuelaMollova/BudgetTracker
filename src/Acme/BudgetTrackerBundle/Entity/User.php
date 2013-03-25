@@ -31,22 +31,11 @@ class User extends BaseUser
         $this->categories = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Add categories
-     *
-     * @param \Acme\BudgetTrackerBundle\Entity\Category $categories
-     * @return User
-     */
     public function addCategorie(\Acme\BudgetTrackerBundle\Entity\Category $categories)
     {
         $this->categories[] = $categories;
@@ -54,21 +43,11 @@ class User extends BaseUser
         return $this;
     }
 
-    /**
-     * Remove categories
-     *
-     * @param \Acme\BudgetTrackerBundle\Entity\Category $categories
-     */
     public function removeCategorie(\Acme\BudgetTrackerBundle\Entity\Category $categories)
     {
         $this->categories->removeElement($categories);
     }
 
-    /**
-     * Get categories
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
     public function getCategories()
     {
         return $this->categories;

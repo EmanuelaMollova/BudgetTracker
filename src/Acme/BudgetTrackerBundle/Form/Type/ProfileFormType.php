@@ -9,20 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace FOS\UserBundle\Form\Type;
+namespace Acme\BudgetTrackerBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+//use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Security\Core\Validator\Constraint\UserPassword;
+//use Symfony\Component\Security\Core\Validator\Constraint\UserPassword;
 
-class ProfileFormType extends AbstractType
+use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
+
+class ProfileFormType extends BaseType
 {
     private $class;
 
-    /**
-     * @param string $class The User class name
-     */
     public function __construct($class)
     {
         $this->class = $class;
@@ -31,13 +30,7 @@ class ProfileFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->buildUserForm($builder, $options);
-
-        $builder->add('current_password', 'password', array(
-            'label' => 'form.current_password',
-            'translation_domain' => 'FOSUserBundle',
-            'mapped' => false,
-            'constraints' => new UserPassword(),
-        ));
+        //parent::buildForm($builder, $options);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -50,15 +43,9 @@ class ProfileFormType extends AbstractType
 
     public function getName()
     {
-        return 'fos_user_profile';
+        return 'acme_user_profile';
     }
 
-    /**
-     * Builds the embedded form representing the user.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     protected function buildUserForm(FormBuilderInterface $builder, array $options)
     {
         $builder
