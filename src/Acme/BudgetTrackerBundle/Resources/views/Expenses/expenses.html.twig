@@ -1,5 +1,10 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block title %} Expenses {% endblock %}
 
 {% block body %}
@@ -7,7 +12,27 @@
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Expenses'} %}
 
     <div class="little-spacer text-center">
+        
         <h1>Expenses</h1>   
+   
+        {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %} 
+
+         <form class="form-inline" action="{{ path('expenses') }}" method="post" {{ form_enctype(form) }}>
+            
+            {{ form_widget(form) }}
+
+            <button type="submit" class="btn">
+                <i class="icon-ok"></i> 
+            </button>
+             
+        </form>
+        
     </div>
+
+    {%block javascript%}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/editable.js') }}"></script>
+    {%endblock%}
 
 {% endblock %}

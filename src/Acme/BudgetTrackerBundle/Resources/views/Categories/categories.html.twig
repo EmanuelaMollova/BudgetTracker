@@ -18,13 +18,13 @@
                         
                             {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %}
                    
-                                <form class="form-inline" action="{{ path('edit_category', { 'id': cat.id}) }}" method="post" {{ form_enctype(form) }}>
-                                    {{ form_widget(form) }}
+                            <form class="form-inline" action="{{ path('edit_category', { 'id': cat.id}) }}" method="post" {{ form_enctype(form) }}>
+                                {{ form_widget(form) }}
 
-                                    <button type="submit" class="btn">
-                                    <i class="icon-ok"></i> 
-                                    </button>
-                                </form>
+                                <button type="submit" class="btn">
+                                <i class="icon-ok"></i> 
+                                </button>
+                            </form>
                         
                         {% else %}
                         
@@ -41,7 +41,7 @@
         
         {% if id==null %}
         
-            <p class="big-spacer"><strong>Add a new category:<strong></p>
+            <p class="big-spacer"><strong>{{ 'add.new.category'|trans({}, 'messages')  }}<strong></p>
 
             {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}
                         
@@ -50,6 +50,7 @@
                     {{ form_widget(form) }}
                 <input class="little-spacer btn" type="submit" value="Submit"/>
             </form>
+                        
         {% else %}
 
              <a href="{{ path('categories') }}">Go Back</a>
@@ -57,5 +58,10 @@
         {% endif %}
         
     </div>
+
+    {%block javascript%}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/editable.js') }}"></script>
+    {%endblock%}
 
 {% endblock %}

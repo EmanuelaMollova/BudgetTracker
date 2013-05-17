@@ -2,9 +2,9 @@
 
 namespace Acme\BudgetTrackerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 
-class MonthsController extends Controller
+class MonthsController extends BaseController
 {
     public function monthsAction()
     {

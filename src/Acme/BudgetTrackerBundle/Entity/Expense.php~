@@ -1,0 +1,52 @@
+<?php
+namespace Acme\BudgetTrackerBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * 
+ * 
+ * @ORM\Table(name="expense")
+ * @ORM\Entity(repositoryClass="Acme\BudgetTrackerBundle\Entity\ExpenseRepository")
+ */
+class Expense
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category;
+    
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\MinLength(
+     *     limit=3,
+     *     message="The product must have at least {{ limit }} characters."
+     * )
+     */
+    protected $product;
+    
+    /**
+     * @ORM\Column(type="string", length=300)
+     */
+    protected $description;
+    
+    /**
+     * @ORM\Column(type="decimal")
+     */
+    protected $price;
+    
+    /**
+     * @ORM\Column(type="date")
+     */
+    protected $date;
+}

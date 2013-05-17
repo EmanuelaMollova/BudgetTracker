@@ -36,14 +36,14 @@ class User extends BaseUser
         return $this->id;
     }
 
-    public function addCategorie(\Acme\BudgetTrackerBundle\Entity\Category $categories)
+    public function addCategory(\Acme\BudgetTrackerBundle\Entity\Category $categories)
     {
         $this->categories[] = $categories;
     
         return $this;
     }
 
-    public function removeCategorie(\Acme\BudgetTrackerBundle\Entity\Category $categories)
+    public function removeCategory(\Acme\BudgetTrackerBundle\Entity\Category $categories)
     {
         $this->categories->removeElement($categories);
     }

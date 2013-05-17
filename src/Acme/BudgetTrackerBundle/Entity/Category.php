@@ -4,12 +4,14 @@ namespace Acme\BudgetTrackerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * 
+ * 
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="Acme\BudgetTrackerBundle\Entity\CategoryRepository")
- * @UniqueEntity(fields={"name"}, message="There already is such a category.")
+ * @UniqueEntity(fields={"name", "user"})
  */
 class Category
 {
@@ -19,9 +21,19 @@ class Category
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Expense", mappedBy="expense")
+     */
+    protected $expenses;
+
+    public function __construct()
+    {
+        $this->expenses = new ArrayCollection();
+    }
 
     /**
-     * @ORM\Column(type="string", length=100, unique=true)
+     * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\MinLength(
      *     limit=3,
@@ -63,5 +75,38 @@ class Category
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add expenses
+     *
+     * @param \Acme\BudgetTrackerBundle\Entity\Expense $expenses
+     * @return Category
+     */
+    public function addExpense(\Acme\BudgetTrackerBundle\Entity\Expense $expenses)
+    {
+        $this->expenses[] = $expenses;
+    
+        return $this;
+    }
+
+    /**
+     * Remove expenses
+     *
+     * @param \Acme\BudgetTrackerBundle\Entity\Expense $expenses
+     */
+    public function removeExpense(\Acme\BudgetTrackerBundle\Entity\Expense $expenses)
+    {
+        $this->expenses->removeElement($expenses);
+    }
+
+    /**
+     * Get expenses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getExpenses()
+    {
+        return $this->expenses;
     }
 }

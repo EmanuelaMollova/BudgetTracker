@@ -36,8 +36,16 @@ reports:
     defaults: { _controller: AcmeBudgetTrackerBundle:Reports:reports }
     
 categories:
-    pattern: /categories
-    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:categories }
+    pattern: /categories/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:categories, _locale: bg }
+    requirements:
+        _locale: en|bg
+        
+categories:
+    pattern: /categories/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:categories, _locale: en }
+    requirements:
+        _locale: en|bg
     
 months:
     pattern: /months
