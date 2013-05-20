@@ -7,15 +7,15 @@ An application which helps you to track your expenses.
 Register and create your own categories. Then start tracking how many you spend and for what.
 Take report about whatever you are interested in.
 
-Future ideas to implement:
+####Future ideas to implement:
 
 * Bills system
 * Debts and loans
 * Limits (month, day)
 * Bank interest
 
-Helpers
-========================
+###Helpers
+
 
 * [Symfony][1]
 * [Twig][2]
