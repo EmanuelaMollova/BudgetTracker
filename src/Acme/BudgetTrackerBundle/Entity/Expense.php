@@ -5,8 +5,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * 
- * 
  * @ORM\Table(name="expense")
  * @ORM\Entity(repositoryClass="Acme\BudgetTrackerBundle\Entity\ExpenseRepository")
  */
@@ -18,6 +16,12 @@ class Expense
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="fos_user")
+     * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
+     */
+    protected $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="category")
@@ -36,12 +40,12 @@ class Expense
     protected $product;
     
     /**
-     * @ORM\Column(type="string", length=300)
+     * @ORM\Column(type="string")
      */
     protected $description;
     
     /**
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      */
     protected $price;
     
@@ -50,22 +54,11 @@ class Expense
      */
     protected $date;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set product
-     *
-     * @param string $product
-     * @return Expense
-     */
     public function setProduct($product)
     {
         $this->product = $product;
@@ -73,45 +66,23 @@ class Expense
         return $this;
     }
 
-    /**
-     * Get product
-     *
-     * @return string 
-     */
     public function getProduct()
     {
         return $this->product;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Expense
-     */
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
     
         return $this;
     }
 
-    /**
-     * Get description
-     *
-     * @return string 
-     */
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * Set price
-     *
-     * @param float $price
-     * @return Expense
-     */
     public function setPrice($price)
     {
         $this->price = $price;
@@ -119,22 +90,11 @@ class Expense
         return $this;
     }
 
-    /**
-     * Get price
-     *
-     * @return float 
-     */
     public function getPrice()
     {
         return $this->price;
     }
 
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     * @return Expense
-     */
     public function setDate($date)
     {
         $this->date = $date;
@@ -142,22 +102,11 @@ class Expense
         return $this;
     }
 
-    /**
-     * Get date
-     *
-     * @return \DateTime 
-     */
     public function getDate()
     {
         return $this->date;
     }
 
-    /**
-     * Set category
-     *
-     * @param \Acme\BudgetTrackerBundle\Entity\Category $category
-     * @return Expense
-     */
     public function setCategory(\Acme\BudgetTrackerBundle\Entity\Category $category = null)
     {
         $this->category = $category;
@@ -165,13 +114,20 @@ class Expense
         return $this;
     }
 
-    /**
-     * Get category
-     *
-     * @return \Acme\BudgetTrackerBundle\Entity\Category 
-     */
     public function getCategory()
     {
         return $this->category;
+    }
+
+    public function setUser(\Acme\BudgetTrackerBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
     }
 }

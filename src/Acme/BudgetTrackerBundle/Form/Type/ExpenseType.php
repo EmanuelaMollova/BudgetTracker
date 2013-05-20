@@ -21,14 +21,15 @@ class ExpenseType extends AbstractType
         ));
         
         $builder->add('description', 'text', array(
-            'label' => 'Description'
+            'label' => 'Description',
+            'required' => false
         ));
         
         $builder->add('price', 'number', array(
             'label' => 'Price'
         ));
         
-        $builder->add('description', 'text', array(
+        $builder->add('date', 'text', array(
             'label' => 'Date'
         ));
         

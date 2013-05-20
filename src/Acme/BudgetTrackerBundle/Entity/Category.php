@@ -7,8 +7,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * 
- * 
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="Acme\BudgetTrackerBundle\Entity\CategoryRepository")
  * @UniqueEntity(fields={"name", "user"})
@@ -77,12 +75,6 @@ class Category
         return $this->user;
     }
 
-    /**
-     * Add expenses
-     *
-     * @param \Acme\BudgetTrackerBundle\Entity\Expense $expenses
-     * @return Category
-     */
     public function addExpense(\Acme\BudgetTrackerBundle\Entity\Expense $expenses)
     {
         $this->expenses[] = $expenses;
@@ -90,21 +82,11 @@ class Category
         return $this;
     }
 
-    /**
-     * Remove expenses
-     *
-     * @param \Acme\BudgetTrackerBundle\Entity\Expense $expenses
-     */
     public function removeExpense(\Acme\BudgetTrackerBundle\Entity\Expense $expenses)
     {
         $this->expenses->removeElement($expenses);
     }
 
-    /**
-     * Get expenses
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
     public function getExpenses()
     {
         return $this->expenses;

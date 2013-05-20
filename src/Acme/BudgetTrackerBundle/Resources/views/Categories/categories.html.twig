@@ -11,23 +11,21 @@
         
         <table class="big-spacer table table-striped">
             {% for cat in categories %}
-
                 <tr>
                     <td>
-                        {% if id==cat.id %}
-                        
-                            {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %}
-                   
+                        {% if id==cat.id %}                       
+                            
+                            {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %}                 
                             <form class="form-inline" action="{{ path('edit_category', { 'id': cat.id}) }}" method="post" {{ form_enctype(form) }}>
                                 {{ form_widget(form) }}
-
+                                                               
                                 <button type="submit" class="btn">
                                 <i class="icon-ok"></i> 
                                 </button>
                             </form>
                         
                         {% else %}
-                        
+                            
                         <span class="right-spacer"><strong>{{ cat.name }}</strong></span> 
                         <a href="{{ path('edit_category', { 'id': cat.id}) }}"><i class="icon-pencil right-spacer"></i></a>
                         <a href="{{ path('delete_category', { 'id': cat.id }) }}"><i class="icon-remove"></i></a>
@@ -35,33 +33,35 @@
                         {% endif %}
                     </td>
                 </tr>
-
             {% endfor %}
         </table>
+        
+        {% if app.session.hasFlash('notice') %}
+            <div class="flash-notice text-error big-spacer">
+                {{ app.session.flash('notice') }}
+            </div>
+        {% endif %}
         
         {% if id==null %}
         
             <p class="big-spacer"><strong>{{ 'add.new.category'|trans({}, 'messages')  }}<strong></p>
-
-            {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}
-                        
+            
+            {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}                       
             <form action="{{ path('create_category') }}" method="post" {{ form_enctype(form) }}>
                     {{ form_errors(form) }}
                     {{ form_widget(form) }}
                 <input class="little-spacer btn" type="submit" value="Submit"/>
             </form>
-                        
+             
         {% else %}
-
              <a href="{{ path('categories') }}">Go Back</a>
-
         {% endif %}
         
     </div>
 
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/editable.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/editable.js') }}"></script>        
     {%endblock%}
 
 {% endblock %}

@@ -62,3 +62,7 @@ edit_category:
 delete_category:
     pattern: /delete_category/{id}
     defaults: { _controller: AcmeBudgetTrackerBundle:Categories:deleteCategory }
+    
+create_expense:
+    pattern: /create_expense
+    defaults: { _controller: AcmeBudgetTrackerBundle:Expenses:createExpense }

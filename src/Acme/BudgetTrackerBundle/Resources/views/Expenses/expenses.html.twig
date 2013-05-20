@@ -13,20 +13,44 @@
 
     <div class="little-spacer text-center">
         
-        <h1>Expenses</h1>   
+        <h1>Expenses</h1>
+        
+        {% if newcommer == true %}
+        
+        <p class="big-spacer lead">
+            You shoulf first <a href="{{ path('categories') }}">create some categories</a>.
+            They will help you keep your expenses organised and filter them easily.
+            After creating categories, come back to start adding your expenses.
+        </p>
+        
+        {% else %}
    
-        {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %} 
+        {# {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %} #}
 
-         <form class="form-inline" action="{{ path('expenses') }}" method="post" {{ form_enctype(form) }}>
+         <form class="big-spacer" action="{{ path('create_expense') }}" method="post" {{ form_enctype(form) }}>
             
             {{ form_widget(form) }}
 
             <button type="submit" class="btn">
-                <i class="icon-ok"></i> 
+                Submit
             </button>
              
         </form>
         
+        <div class="big-spacer">
+            <h4>Expenses for today:</h4>
+            {% for exp in expenses %}        
+                <p>
+                    <b>{{ exp.product }} - {{ exp.price|number_format(2) }}</b> 
+                    {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                </p> 
+            {% endfor %}
+            <hr>    
+            <b>Sum: {{ sum }}</b>
+        </div>
+        
+        {% endif %}
+             
     </div>
 
     {%block javascript%}

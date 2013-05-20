@@ -10,9 +10,9 @@ Take report about whatever you are interested in.
 Future ideas to implement:
 
 * Bills system
-* Borrows and lands
-* Limits
-* Bank
+* Debts and loans
+* Limits (month, day)
+* Bank interest
 
 Helpers
 ========================
@@ -24,8 +24,6 @@ Helpers
 * [jQuery][5]
 * [Twitter Bootstrap][6]
 * [Datepicker for Bootstrap][7]
-
-Enjoy!
 
 [1]:  http://symfony.com/doc/2.1/book/installation.html
 [2]:  http://twig.sensiolabs.org/

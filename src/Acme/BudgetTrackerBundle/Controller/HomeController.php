@@ -2,7 +2,7 @@
 
 namespace Acme\BudgetTrackerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
 
 class HomeController extends Controller
 {

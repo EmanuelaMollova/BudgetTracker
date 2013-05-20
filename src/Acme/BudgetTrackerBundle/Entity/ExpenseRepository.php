@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ExpenseRepository extends EntityRepository
 {
+    public function findExpensesForDate($user, $date)
+    {
+        $q = $this
+            ->createQueryBuilder('e')
+            ->where('e.date = :date')
+            ->andWhere('e.user = :user')
+            ->setParameter('date', $date)
+            ->setParameter('user', $user)
+             ->getQuery();
+        
+        return $q->getResult();
+    }
 }

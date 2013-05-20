@@ -23,12 +23,18 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Category", mappedBy="category")
      */
     protected $categories;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Expense", mappedBy="expense")
+     */
+    protected $expenses;
 
     public function __construct()
     {
         parent::__construct();
         
         $this->categories = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
     }
 
     public function getId()
@@ -51,5 +57,22 @@ class User extends BaseUser
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    public function addExpense(\Acme\BudgetTrackerBundle\Entity\Expense $expenses)
+    {
+        $this->expenses[] = $expenses;
+    
+        return $this;
+    }
+
+    public function removeExpense(\Acme\BudgetTrackerBundle\Entity\Expense $expenses)
+    {
+        $this->expenses->removeElement($expenses);
+    }
+
+    public function getExpenses()
+    {
+        return $this->expenses;
     }
 }

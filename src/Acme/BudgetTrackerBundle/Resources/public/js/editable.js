@@ -18,13 +18,11 @@
 //        }
 //    })
 
-var nowTemp = new Date();
-var bl = $('#expense_description').datepicker({
-        format: 'dd/mm/yyyy',
+$('#expense_date').datepicker({
+        format: 'dd-mm-yyyy',
         weekStart: 1,
         autoclose: true,
         todayHighlight: true
     });
-    
-         
+            
 }) ();
