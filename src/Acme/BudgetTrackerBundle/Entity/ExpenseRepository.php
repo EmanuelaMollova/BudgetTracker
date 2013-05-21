@@ -24,4 +24,19 @@ class ExpenseRepository extends EntityRepository
         
         return $q->getResult();
     }
+
+    public function findExpensesForMonthAndCat($user, $month, $category)
+    {
+        $q = $this
+            ->createQueryBuilder('e')
+            ->where('e.date LIKE :month')
+            ->andWhere('e.user = :user')
+            ->andWhere('e.category = :category')
+            ->setParameter('month', "%$month")
+            ->setParameter('user', $user)
+            ->setParameter('category', $category)
+             ->getQuery();
+        
+        return $q->getResult();
+    } 
 }

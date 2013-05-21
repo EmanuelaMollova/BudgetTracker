@@ -28,6 +28,11 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Expense", mappedBy="expense")
      */
     protected $expenses;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Expense", mappedBy="expense")
+     */
+    protected $months;
 
     public function __construct()
     {
@@ -35,6 +40,7 @@ class User extends BaseUser
         
         $this->categories = new ArrayCollection();
         $this->expenses = new ArrayCollection();
+        $this->months = new ArrayCollection();
     }
 
     public function getId()
@@ -74,5 +80,22 @@ class User extends BaseUser
     public function getExpenses()
     {
         return $this->expenses;
+    }
+    
+    public function addMonth(\Acme\BudgetTrackerBundle\Entity\Month $months)
+    {
+        $this->months[] = $months;
+    
+        return $this;
+    }
+
+    public function removeMonth(\Acme\BudgetTrackerBundle\Entity\Month $months)
+    {
+        $this->expenses->removeElement($months);
+    }
+
+    public function getMonths()
+    {
+        return $this->months;
     }
 }

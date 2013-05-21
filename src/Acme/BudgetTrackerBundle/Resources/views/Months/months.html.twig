@@ -2,12 +2,34 @@
 
 {% block title %} Months {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block body %}
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Months'} %}
 
     <div class="little-spacer text-center">
-        <h1>Months</h1>   
+        <h1>Months</h1>
+        
+        <form class="big-spacer" action="{{ path('create_month') }}" method="post" {{ form_enctype(form) }}>
+            
+            {{ form_widget(form) }}
+
+            <button type="submit" class="btn">
+                Submit
+            </button>
+             
+        </form>
+        
     </div>
+
+    {%block javascript%}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('bundles/acmebudgettracker/js/month.js') }}"></script>
+    {%endblock%}
 
 {% endblock %}

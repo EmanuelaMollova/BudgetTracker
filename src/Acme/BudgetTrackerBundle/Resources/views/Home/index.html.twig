@@ -35,9 +35,22 @@
             <p class="lead big-spacer">
                We have other nice features, too... comming soon. 
             </p>
+        {% else %}
+            
+            <div class="big-spacer">
+                <h4>Expenses for the month:</h4>
+                {% for exp in expenses %}
+                    {% for e in exp %}
+                        <p>
+                            <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
+                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                        </p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            
         {% endif %}
-
+ 
     </div>
 
 {% endblock %}
-

@@ -25,29 +25,34 @@
         
         {% else %}
    
-        {# {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %} #}
+            {# {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %} #}
 
-         <form class="big-spacer" action="{{ path('create_expense') }}" method="post" {{ form_enctype(form) }}>
-            
-            {{ form_widget(form) }}
+            <form class="big-spacer" action="{{ path('create_expense') }}" method="post" {{ form_enctype(form) }}>
 
-            <button type="submit" class="btn">
-                Submit
-            </button>
-             
-        </form>
+               {{ form_widget(form) }}
+
+               <button type="submit" class="btn">
+                   Submit
+               </button>
+
+            </form>
         
-        <div class="big-spacer">
-            <h4>Expenses for today:</h4>
-            {% for exp in expenses %}        
-                <p>
-                    <b>{{ exp.product }} - {{ exp.price|number_format(2) }}</b> 
-                    {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
-                </p> 
-            {% endfor %}
-            <hr>    
-            <b>Sum: {{ sum }}</b>
-        </div>
+            {% if sum != 0 %}
+                <div class="big-spacer">
+
+                    <h4>Expenses for today:</h4>
+                    {% for exp in expenses %}        
+                        <p>
+                            <b>{{ exp.product }} - {{ exp.price|number_format(2) }}</b> 
+                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                        </p> 
+                    {% endfor %}
+                    
+                    <hr>    
+                    <b>Sum: {{ sum|number_format(2) }}</b>
+                    
+                </div>
+            {% endif %}
         
         {% endif %}
              

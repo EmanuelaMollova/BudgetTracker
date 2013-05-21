@@ -50,7 +50,7 @@ class Expense
     protected $price;
     
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string")
      */
     protected $date;
 

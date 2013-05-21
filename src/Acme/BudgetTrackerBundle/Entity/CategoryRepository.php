@@ -32,4 +32,15 @@ class CategoryRepository extends EntityRepository
        
         return $q->getSingleScalarResult();
     }
+    
+    public function findByUser($user)
+    {
+        $q = $this
+            ->createQueryBuilder('c')
+            ->where('c.user = :user')
+            ->setParameter('user', $user)
+             ->getQuery();
+       
+        return $q->getResult();
+    }
 }
