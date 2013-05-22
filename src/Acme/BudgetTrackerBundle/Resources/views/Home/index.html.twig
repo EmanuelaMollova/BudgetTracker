@@ -37,17 +37,42 @@
             </p>
         {% else %}
             
-            <div class="big-spacer">
+            {{ expenses|yaml_dump }}
+            
+            {#<div class="big-spacer">
                 <h4>Expenses for the month:</h4>
                 {% for exp in expenses %}
+                    {{ exp|yaml_dump }}
                     {% for e in exp %}
+                        {{ e|yaml_dump }}
+                        <p>
+                            <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
+                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                       {# </p>
+                    {% endfor %}
+                {% endfor %}
+            </div> #}
+            
+                 <div class="big-spacer">
+                <h4>Expenses for the month:</h4>
+                {% set foo = first_cat %}
+                {% for e in expenses %}
+                        
+                        {% if e.category.name == foo %}               
                         <p>
                             <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
                             {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
                         </p>
-                    {% endfor %}
+                        {% else %}
+                        {{ foo }}
+                        {% set foo = e.category.name %}
+                        <p>
+                            <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
+                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                        </p>
+                        {% endif %}
                 {% endfor %}
-            </div>
+            </div> 
             
         {% endif %}
  

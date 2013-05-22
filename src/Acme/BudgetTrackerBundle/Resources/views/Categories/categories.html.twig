@@ -13,7 +13,7 @@
             {% for cat in categories %}
                 <tr>
                     <td>
-                        {% if id==cat.id %}                       
+                      {#  {% if id==cat.id %} #}                       
                             
                             {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %}                 
                             <form class="form-inline" action="{{ path('edit_category', { 'id': cat.id}) }}" method="post" {{ form_enctype(form) }}>
@@ -24,13 +24,16 @@
                                 </button>
                             </form>
                         
-                        {% else %}
+                      {#  {% else %} #}
                             
-                        <span class="right-spacer"><strong>{{ cat.name }}</strong></span> 
-                        <a href="{{ path('edit_category', { 'id': cat.id}) }}"><i class="icon-pencil right-spacer"></i></a>
+                        <span class="right-spacer"><strong class="edit">{{ cat.name }}</strong></span> 
+                        {#<a href="{{ path('edit_category', { 'id': cat.id}) }}"><i class="icon-pencil right-spacer"></i></a>#}
                         <a href="{{ path('delete_category', { 'id': cat.id }) }}"><i class="icon-remove"></i></a>
-                        
-                        {% endif %}
+                                <script>
+            var token = "{{form._token.vars.value}}";
+            var path = "{{ path('edit_category', { 'id': cat.id}) }}";
+        </script>
+                      {#  {% endif %} #}
                     </td>
                 </tr>
             {% endfor %}
@@ -61,7 +64,8 @@
 
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/editable.js') }}"></script>        
+        <script src="{{ asset('bundles/acmebudgettracker/js/jquery.jeditable.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/category.js') }}"></script>  
     {%endblock%}
 
 {% endblock %}

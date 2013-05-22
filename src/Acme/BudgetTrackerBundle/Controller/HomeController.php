@@ -20,17 +20,31 @@ class HomeController extends Controller
         $today = new \DateTime;
         $date = $today->format('m-Y');
         
-        foreach ($all_categories as $cat)
-        {
-            //For each category creates array with name $category with expenses for this category for the given month
-            //and pushes all this arrays into $all
-            
-            $var = strtolower($cat->getName());
-            array_push($all, $$var = $this->repository->
-                    findExpensesForMonthAndCat($this->user, $date, $cat->getId()));
-        }
+//        foreach ($all_categories as $cat)
+//        {
+//            //For each category creates array with name $category with expenses for this category for the given month
+//            //and pushes all this arrays into $all
+//            
+//            $var = strtolower($cat->getName());
+//            array_push($all, $$var = $this->repository->
+//                    findExpensesForMonthAndCat($this->user, $date, $cat->getId()));
+//        }
         
-        $expenses = $all;
+        $expenses = $this->repository->findExpensesForMonth($this->user, $date);
+        
+        $first_cat = $expenses[0]->getCategory()->getName();
+        
+//        $total_sum = 0;
+//        
+//        foreach ($all as $al)
+//        {
+//            foreach($al as $a)
+//            {
+//                $total_sum += $a->getPrice();
+//            }
+//        }
+//        
+//        echo $total_sum;
         
         $newcommer = true;
            
@@ -40,9 +54,12 @@ class HomeController extends Controller
             $newcommer = false;
         }
         
+        //$expenses = array( array(1, 2, 3), 2, array(3, 5), 4, array(5, 'star', 'pool'), 6);
+        
         return $this->render('AcmeBudgetTrackerBundle:Home:index.html.twig', array(
             'newcommer' => $newcommer,
-            'expenses' => $expenses
+            'expenses' => $expenses,
+            'first_cat' => $first_cat
                     ));
     }
 }

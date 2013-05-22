@@ -8,4 +8,5 @@ TOD0:
 * translations
 * beautify
 * refactor
-* CRUD ???
+  * CRUD ???
+* remove redundant stuff

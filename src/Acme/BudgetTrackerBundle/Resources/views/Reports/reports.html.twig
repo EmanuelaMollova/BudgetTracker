@@ -8,6 +8,35 @@
 
     <div class="little-spacer text-center">
         <h1>Reports</h1>   
-    </div>
+        </div>
+        
+        Choose categories:
+        
+        <ul class="categories">
+        {% for cat in all_categories %}
+            <li>
+                <input type="checkbox" name="{{ cat.name }}" value="{{ cat.name }}">{{ cat.name }}
+            </li>
+        {% endfor %}
+            <a href="#" id="all">All</a> | 
+            <a href="#" id="none">None</a>
+        </ul>
+        
+        <form class="big-spacer" action="{{ path('reports') }}" method="post" {{ form_enctype(form) }}>
+
+               {{ form_widget(form) }}
+
+               <button type="submit" class="btn">
+                   Submit
+               </button>
+
+            </form>
+        
+    {%block javascript%}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/reports.js') }}"></script>
+    {%endblock%}
+        
+    
 
 {% endblock %}
