@@ -10,3 +10,13 @@ TOD0:
 * refactor
   * CRUD ???
 * remove redundant stuff
+* invalid / not existing URLs
+
+FEATURES:
+---------
+
+* diagrams
+* bills
+* limits
+* borrow/land
+* bank account

@@ -1,6 +1,12 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block title %} Reports {% endblock %}
+
 
 {% block body %}
     
@@ -8,21 +14,26 @@
 
     <div class="little-spacer text-center">
         <h1>Reports</h1>   
-        </div>
+        
         
         Choose categories:
         
+        <p>
+            <a href="#" id="all">All</a> | 
+            <a href="#" id="none">None</a>
+        </p>
+        
         <ul class="categories">
-        {% for cat in all_categories %}
+       {# {% for cat in all_categories %}
             <li>
                 <input type="checkbox" name="{{ cat.name }}" value="{{ cat.name }}">{{ cat.name }}
             </li>
         {% endfor %}
             <a href="#" id="all">All</a> | 
             <a href="#" id="none">None</a>
-        </ul>
+        </ul> #}
         
-        <form class="big-spacer" action="{{ path('reports') }}" method="post" {{ form_enctype(form) }}>
+        <form class="big-spacer" action="{{ path('take_report') }}" method="post" {{ form_enctype(form) }}>
 
                {{ form_widget(form) }}
 
@@ -31,12 +42,16 @@
                </button>
 
             </form>
+        </div>
+
+        {% for e in exp %}
+            <p>{{ e.product }} {{ e.date }}</p>
+        {% endfor %}
         
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/reports.js') }}"></script>
     {%endblock%}
         
-    
-
 {% endblock %}

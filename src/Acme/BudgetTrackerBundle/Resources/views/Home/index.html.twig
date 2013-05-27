@@ -37,45 +37,63 @@
             </p>
         {% else %}
             
-            {{ expenses|yaml_dump }}
+            {# Experienced users #}
             
-            {#<div class="big-spacer">
-                <h4>Expenses for the month:</h4>
-                {% for exp in expenses %}
-                    {{ exp|yaml_dump }}
-                    {% for e in exp %}
-                        {{ e|yaml_dump }}
-                        <p>
-                            <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
-                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
-                       {# </p>
-                    {% endfor %}
-                {% endfor %}
-            </div> #}
-            
-                 <div class="big-spacer">
-                <h4>Expenses for the month:</h4>
-                {% set foo = first_cat %}
+            <div class="big-spacer">
+                     
+                <h4>Remaining: {{ budget - sum_for_month }} from {{ budget }}</h4>
+                     
+                <h4 class="little-spacer">Expenses for the current month:</h4>
+                              
+                {% set current_cat = first_cat %}              
+                <h3>{{ first_cat }} </h3> 
+                <p><i class="icon-plus-sign"></i></p>
+                {% set sum = 0 %}               
                 {% for e in expenses %}
                         
-                        {% if e.category.name == foo %}               
-                        <p>
-                            <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
-                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
-                        </p>
+                        {% if e.category.name != current_cat %}
+                            
+                            SUM: {{ sum|number_format(2) }}
+                            {% set sum = 0 %}
+                            <h3>{{ e.category.name }}</h3>
+                            {% set current_cat = e.category.name %}
+                            {% set sum = sum + e.price %}
+                            
+                            <div class="products">
+                            <p>
+                                <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
+                                {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                            </p>
+                            </div>
+                            
                         {% else %}
-                        {{ foo }}
-                        {% set foo = e.category.name %}
-                        <p>
-                            <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
-                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
-                        </p>
+                            
+                            {% set sum = sum + e.price %}
+                            
+                            <div class="products">
+                            <p>
+                                <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
+                                {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                            </p>
+                            </div>
+                            
                         {% endif %}
+                            
                 {% endfor %}
-            </div> 
             
+                SUM: {{ sum|number_format(2) }}
+                            
+                <h3>{{sum_for_month|number_format(2)}}</h3>
+                
+            </div> 
+                    
         {% endif %}
  
     </div>
+
+    {%block javascript%}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/home.js') }}"></script>
+    {%endblock%}
 
 {% endblock %}

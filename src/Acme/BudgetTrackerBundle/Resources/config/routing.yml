@@ -70,3 +70,7 @@ create_expense:
 create_month:
     pattern: /create_month
     defaults: { _controller: AcmeBudgetTrackerBundle:Months:createMonth }
+    
+take_report:
+    pattern: /take_report
+    defaults: { _controller: AcmeBudgetTrackerBundle:Reports:takeReport }

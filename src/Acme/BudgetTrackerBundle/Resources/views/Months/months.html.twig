@@ -14,6 +14,10 @@
     <div class="little-spacer text-center">
         <h1>Months</h1>
         
+ {#               {% for m in all_months %}
+            {{m.name}} - {{m.budget}}
+        {% endfor %} #}
+        
         <form class="big-spacer" action="{{ path('create_month') }}" method="post" {{ form_enctype(form) }}>
             
             {{ form_widget(form) }}
@@ -23,6 +27,8 @@
             </button>
              
         </form>
+        
+
         
     </div>
 

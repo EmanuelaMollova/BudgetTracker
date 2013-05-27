@@ -26,10 +26,10 @@
                         
                       {#  {% else %} #}
                             
-                        <span class="right-spacer"><strong class="edit">{{ cat.name }}</strong></span> 
+                            <span class="right-spacer"><a href="{{ path('edit_category', { 'id': cat.id}) }}"><strong class="edit">{{ cat.name }}</strong></a></span> 
                         {#<a href="{{ path('edit_category', { 'id': cat.id}) }}"><i class="icon-pencil right-spacer"></i></a>#}
                         <a href="{{ path('delete_category', { 'id': cat.id }) }}"><i class="icon-remove"></i></a>
-                                <script>
+        <script>
             var token = "{{form._token.vars.value}}";
             var path = "{{ path('edit_category', { 'id': cat.id}) }}";
         </script>

@@ -6344,5 +6344,9 @@ Not from the original file
    text-align: center;   
 }
 
+.products {
+    display: none;
+}
+
 /*
 */

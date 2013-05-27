@@ -54,12 +54,21 @@ class HomeController extends Controller
             $newcommer = false;
         }
         
+        $sum_for_month = $this->repository->getSumByMonthAndUser('05-2013', $this->user);
+        
+        $current_month = $this->setRepository('Month')->findBy(array('name' => '05-2013', 'user' => $this->user));
+        
+        $budget = $current_month[0]->getBudget();
+        
+        
         //$expenses = array( array(1, 2, 3), 2, array(3, 5), 4, array(5, 'star', 'pool'), 6);
         
         return $this->render('AcmeBudgetTrackerBundle:Home:index.html.twig', array(
             'newcommer' => $newcommer,
             'expenses' => $expenses,
-            'first_cat' => $first_cat
+            'first_cat' => $first_cat,
+            'sum_for_month' => $sum_for_month,
+            'budget' => $budget
                     ));
     }
 }

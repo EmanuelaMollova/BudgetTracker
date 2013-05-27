@@ -12,4 +12,28 @@ use Doctrine\ORM\EntityRepository;
  */
 class MonthRepository extends EntityRepository
 {
+    public function countByNameAndUser($name, $user)
+    {
+        $q = $this
+            ->createQueryBuilder('m')
+            ->select('COUNT(m.id)') 
+            ->where('m.name = :name')
+            ->andWhere('m.user = :user')
+            ->setParameter('name', $name)
+            ->setParameter('user', $user)
+             ->getQuery();
+        
+        return $q->getSingleScalarResult();
+    }
+    
+        public function findByUser($user)
+    {
+        $q = $this
+            ->createQueryBuilder('m')
+            ->where('m.user = :user')
+            ->setParameter('user', $user)
+             ->getQuery();
+       
+        return $q->getResult();
+    }
 }

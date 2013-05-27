@@ -53,4 +53,35 @@ class ExpenseRepository extends EntityRepository
         
         return $q->getResult();
     } 
+    
+    public function getSumByMonthAndUser($month, $user)
+    {
+        $q = $this->createQueryBuilder('e')
+            ->add('select', 'SUM(e.price)')
+            ->where('e.date LIKE :month')
+            ->andWhere('e.user = :user')
+            ->setParameter('month', "%$month")
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        return $q->getSingleScalarResult();
+
+    }
+    
+    public function findBetweenDates($user, $date1, $date2)
+    {
+        $q = $this
+            ->createQueryBuilder('e')
+            ->where('e.date >= :date1')
+            ->andWhere('e.user = :user')
+            ->andWhere('e.date <= :date2')
+            ->setParameter('date1', $date1)
+            ->setParameter('date2', $date2)
+            ->setParameter('user', $user)
+             ->getQuery();
+        
+        return $q->getResult();
+    }
+
+
 }

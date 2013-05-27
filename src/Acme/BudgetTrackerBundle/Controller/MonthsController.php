@@ -24,23 +24,42 @@ class MonthsController extends Controller
         $this->em = $this->getEM();
         $this->user = $this->container->get('security.context')->getToken()->getUser();
         
+        $this->repo = $this->setRepository('Month');
+        
+                        
+        $all_months = $this->repo->findByUser($this->user);
+                
+        echo count($all_months);
+        die();
+        
+        
         $month = new Month();
         $form = $this->createForm(new MonthType(), $month);
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
+            
+            $same = $this->repo->
+                    countByNameAndUser($month->getName(), $this->user);
+            
+            echo $same;
 
-            if ($form->isValid()) {
+            if ($same == 0 && $form->isValid()) {
                 $month->setUser($this->user);
                 $this->em->persist($month);
                 $this->em->flush();
 
                 return $this->redirect($this->generateUrl('months'));
+            } else {
+                echo "YOU BAD PERSON!!!";
             }
         }
-                
+
+
+        
         return $this->render(
             'AcmeBudgetTrackerBundle:Months:months.html.twig', array(
+                'all_months' => $all_months,
                 'form' => $form->createView()));    
     }
 }
