@@ -24,6 +24,7 @@ Take report about whatever you are interested in.
 * [jQuery][5]
 * [Twitter Bootstrap][6]
 * [Datepicker for Bootstrap][7]
+* Jeditable[8]
 
 [1]:  http://symfony.com/doc/2.1/book/installation.html
 [2]:  http://twig.sensiolabs.org/
@@ -32,3 +33,4 @@ Take report about whatever you are interested in.
 [5]:  http://jquery.com/
 [6]:  http://twitter.github.io/bootstrap/
 [7]:  http://eternicode.github.io/bootstrap-datepicker/
+[8]:  http://www.appelsiini.net/projects/jeditable
