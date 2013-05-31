@@ -26,7 +26,7 @@ Take report about whatever you are interested in.
 * [Datepicker for Bootstrap][7]
 * [Jeditable][8]
 
-[1]:  http://symfony.com/doc/2.1/book/installation.html
+[1]:  http://symfony.com/
 [2]:  http://twig.sensiolabs.org/
 [3]:  http://www.doctrine-project.org/
 [4]:  https://github.com/FriendsOfSymfony/FOSUserBundle
