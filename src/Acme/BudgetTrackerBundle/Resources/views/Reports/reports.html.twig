@@ -7,24 +7,32 @@
 
 {% block title %} Reports {% endblock %}
 
-
 {% block body %}
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Reports'} %}
 
     <div class="little-spacer text-center">
-        <h1>Reports</h1>   
+        <h3>Reports</h3>   
+ 
+        <h4>Select for what time you would like your report</h4>        
         
+        <div>        
+            <select id="select_time">
+                <option value="years">For year(s)</option>
+                <option value="months">For month(s)</option>
+                <option value="days">For day(s)</option>
+            </select>
+        </div>
         
-        Choose categories:
+        <h4>Choose categories:</h4>
         
         <p>
             <a href="#" id="all">All</a> | 
             <a href="#" id="none">None</a>
         </p>
         
-        <ul class="categories">
-       {# {% for cat in all_categories %}
+        {#<ul class="categories">
+        {% for cat in all_categories %}
             <li>
                 <input type="checkbox" name="{{ cat.name }}" value="{{ cat.name }}">{{ cat.name }}
             </li>
@@ -32,21 +40,28 @@
             <a href="#" id="all">All</a> | 
             <a href="#" id="none">None</a>
         </ul> #}
+                
+        <form class="big-spacer" action="{{ path('reports') }}" method="post" {{ form_enctype(form) }}>
+
+            {{ form_widget(form) }}
+
+            <button type="submit" class="btn">
+                Submit
+            </button>
+
+        </form>
+    </div>
         
-        <form class="big-spacer" action="{{ path('take_report') }}" method="post" {{ form_enctype(form) }}>
-
-               {{ form_widget(form) }}
-
-               <button type="submit" class="btn">
-                   Submit
-               </button>
-
-            </form>
-        </div>
-
-        {% for e in exp %}
-            <p>{{ e.product }} {{ e.date }}</p>
+    {% if response != null %}
+        NOT NULL!
+        {% for r in response %}
+            <p>{{ r.product }} {{ r.category.name }}</p>
         {% endfor %}
+    {% endif %}
+
+    {#{% for e in exp %}
+        <p>{{ e.product }} {{ e.date }}</p>
+    {% endfor %}#}
         
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>

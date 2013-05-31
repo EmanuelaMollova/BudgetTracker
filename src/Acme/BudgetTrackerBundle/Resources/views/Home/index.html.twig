@@ -6,11 +6,11 @@
 
     <div class="little-spacer text-center">
 
-        <h1>Hello, {{app.user.username}}!</h1>
-
         {# Greeting and introduction to newcommers #}
         {% if newcommer == true %}
-        <h3>... and welcome to BudgetTracker!</h3>
+        
+            <h1>Hello, {{app.user.username}}!</h1>
+            <h3>... and welcome to BudgetTracker!</h3>
         
             <p class="lead big-spacer">
                 We suggest you start by 
@@ -31,64 +31,119 @@
                 you can visit <a href="{{ path('reports') }}">reports section</a>.
                 There you will see a list for just the expenses you are interested in.
             </p>
+            
+            <p class="lead">
+                If you want just a quick overview for the current month, the home
+                page will give you the needed information.
+            </p>
 
             <p class="lead big-spacer">
-               We have other nice features, too... comming soon. 
+               We have more nice features, too... comming soon. 
             </p>
+            
+        {% elseif expenses_for_current_month == null%}
+            
+            {# Created only categories, no expenses #}
+            <p class="lead big-spacer">
+                    <p class="lead little-spacer">Great!</p> 
+                    <p class="lead little-spacer">You have successfully created some categories.</p> 
+                    <p class="lead little-spacer">
+                        Please <a href="{{ path('expenses') }}">add some expenses</a>, too.
+                    </p>
+            </p>
+            
         {% else %}
             
             {# Experienced users #}
+            <h3>Expenses for the current month</h3>
             
-            <div class="big-spacer">
-                     
-                <h4>Remaining: {{ budget - sum_for_month }} from {{ budget }}</h4>
-                     
-                <h4 class="little-spacer">Expenses for the current month:</h4>
-                              
-                {% set current_cat = first_cat %}              
-                <h3>{{ first_cat }} </h3> 
-                <p><i class="icon-plus-sign"></i></p>
-                {% set sum = 0 %}               
-                {% for e in expenses %}
-                        
-                        {% if e.category.name != current_cat %}
-                            
-                            SUM: {{ sum|number_format(2) }}
-                            {% set sum = 0 %}
-                            <h3>{{ e.category.name }}</h3>
-                            {% set current_cat = e.category.name %}
-                            {% set sum = sum + e.price %}
-                            
-                            <div class="products">
-                            <p>
-                                <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
-                                {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
-                            </p>
-                            </div>
-                            
-                        {% else %}
-                            
-                            {% set sum = sum + e.price %}
-                            
-                            <div class="products">
-                            <p>
-                                <b>{{ e.product }} - {{ e.price|number_format(2) }}</b> 
-                                {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
-                            </p>
-                            </div>
-                            
-                        {% endif %}
-                            
-                {% endfor %}
+            {% if budget_for_current_month !=null %}
             
-                SUM: {{ sum|number_format(2) }}
-                            
-                <h3>{{sum_for_month|number_format(2)}}</h3>
-                
-            </div> 
+                {% if remaining > 0 %}
+                    <p class="lead text-success">Remaining: 
+                        <strong>{{ remaining }}</strong> 
+                        (from {{ budget_for_current_month|number_format(2) }})
+                    </p>
+                {% elseif remaining == 0 %}
+                    <p class="lead text-error">Remaining: 
+                        <strong>{{ remaining }}</strong> 
+                        (from {{ budget_for_current_month|number_format(2) }})
+                    </p>
                     
+                    <p class="lead text-error">
+                        You have spent all your budget of {{ budget_for_current_month|number_format(2) }}!
+                    </p>
+                {% else %}
+                    <p class="lead text-error">
+                        You have exceeded your budget of {{ budget_for_current_month|number_format(2) }}!
+                    </p>
+                    
+                    <p class="lead text-error">
+                        You have spent <strong>{{ remaining|abs }}</strong> more than you should!</p> 
+                    </p>
+                {% endif %}
+                    
+            {% endif %}
+
+            <button class="little-bottom-spacer btn {#btn-info#} toggle_expenses">
+                <i class="icon-chevron-down {#icon-white#}"></i> Show/hide expenses
+            </button>
+            
+            {# Displays categories, sums for them and expenses #}
+            {% set current_category = first_category %}                      
+            <h5>{{ first_category }}</h5> 
+
+            {% set sum = 0 %}
+            
+            {% for e in expenses_for_current_month %}
+                {% if e.category.name != current_category %}
+                    <strong>{{ sum|number_format(2) }}</strong>
+                    
+                    <div class="little-spacer progress span5 center">
+                        {% set percent = sum*100/sum_for_current_month//1 %}
+                        <div class="bar" style="width:{{ percent }}%;">
+                            {{ percent }}%
+                        </div>
+                    </div>
+                            
+                    {% set sum = 0 %}
+                            
+                    <h5>{{ e.category.name }}</h5>
+                
+                    {% set current_category = e.category.name %}
+                    {% set sum = sum + e.price %}
+                            
+                    <div class="products">
+                        <p>
+                            {{ e.product }} - {{ e.price|number_format(2) }} 
+                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                        </p>
+                    </div>                          
+                {% else %}                          
+                    {% set sum = sum + e.price %}
+
+                    <div class="products">
+                        <p>
+                            {{ e.product }} - {{ e.price|number_format(2) }} 
+                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                        </p>
+                    </div>
+                {% endif %}                   
+            {% endfor %}
+            
+            <strong>{{ sum|number_format(2) }}</strong>
+            
+            <div class="progress span5 center little-spacer">
+                {% set percent = sum*100/sum_for_current_month//1 %}
+                <div class="bar" style="width:{{ percent }}%;">
+                    {{ percent }}%
+                </div>
+            </div>
+                            
+            <p class="lead text-error">Spent: <strong>{{sum_for_current_month|number_format(2)}}</strong></p>
+                         
         {% endif %}
- 
+            
     </div>
 
     {%block javascript%}
@@ -97,3 +152,10 @@
     {%endblock%}
 
 {% endblock %}
+        
+{#----------------------------------------------------------------------------#}
+        
+{# TODO 1. <details><summary> ... for each category, not for all of them #}
+{# TODO 2. When many items are shown ??? pagination? pop-ups? #}
+{# TODO 3. Show sum for each category? or only the name and progress bar? #}
+{# TODO 4. Little space below the button #}

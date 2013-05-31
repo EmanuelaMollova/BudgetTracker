@@ -9,11 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExpensesController extends Controller
 {
-    private $user;
-    
     private function init()
     {
-        $this->user = $this->container->get('security.context')->getToken()->getUser();
+        $this->setUser();
         $this->repository = $this->setRepository('Expense');
     }
 

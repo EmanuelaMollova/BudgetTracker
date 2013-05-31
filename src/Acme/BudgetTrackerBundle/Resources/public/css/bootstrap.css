@@ -6348,5 +6348,19 @@ Not from the original file
     display: none;
 }
 
+.prbar{
+    widht: 50%
+}
+
+.center{ 
+    float: none; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+.little-down-spacer {
+    margin-bottom: 50px;
+}
+
 /*
 */

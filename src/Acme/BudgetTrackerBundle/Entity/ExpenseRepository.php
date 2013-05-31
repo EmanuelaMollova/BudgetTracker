@@ -82,6 +82,13 @@ class ExpenseRepository extends EntityRepository
         
         return $q->getResult();
     }
-
+    
+    public function findForCat($user, $q)
+    {
+         $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT e FROM AcmeBudgetTrackerBundle:Expense e WHERE e.user = ?1'.$q);
+        $query->setParameter(1, $user);
+        return $query->getResult();
+    }
 
 }

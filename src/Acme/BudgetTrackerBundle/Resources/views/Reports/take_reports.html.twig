@@ -14,39 +14,19 @@
 
     <div class="little-spacer text-center">
         <h1>Reports</h1>   
-        
-        
-        Choose categories:
-        
-        <p>
-            <a href="#" id="all">All</a> | 
-            <a href="#" id="none">None</a>
-        </p>
-        
-        <ul class="categories">
-       {# {% for cat in all_categories %}
-            <li>
-                <input type="checkbox" name="{{ cat.name }}" value="{{ cat.name }}">{{ cat.name }}
-            </li>
-        {% endfor %}
-            <a href="#" id="all">All</a> | 
-            <a href="#" id="none">None</a>
-        </ul> #}
-        
-        <form class="big-spacer" action="{{ path('take_report') }}" method="post" {{ form_enctype(form) }}>
 
-               {{ form_widget(form) }}
+        {{response}}
+        
+        {% if response != null %}
+            NOT NULL!
+            {% for r in response %}
+                <p>{{ r.product }} {{ r.category.name }}</p>
+            {% endfor %}
+        {% else %}
+                NULL :(
+        {% endif %}
 
-               <button type="submit" class="btn">
-                   Submit
-               </button>
 
-            </form>
-        </div>
-
-        {% for e in exp %}
-            <p>{{ e.product }} {{ e.date }}</p>
-        {% endfor %}
         
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>

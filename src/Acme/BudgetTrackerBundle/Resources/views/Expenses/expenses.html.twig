@@ -13,7 +13,7 @@
 
     <div class="little-spacer text-center">
         
-        <h1>Expenses</h1>
+        <h3>Expenses</h3>
         
         {% if newcommer == true %}
         
@@ -27,7 +27,7 @@
    
             {# {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %} #}
 
-            <form class="big-spacer" action="{{ path('create_expense') }}" method="post" {{ form_enctype(form) }}>
+            <form class="little-spacer" action="{{ path('create_expense') }}" method="post" {{ form_enctype(form) }}>
 
                {{ form_widget(form) }}
 
@@ -43,13 +43,13 @@
                     <h4>Expenses for today:</h4>
                     {% for exp in expenses %}        
                         <p>
-                            <b>{{ exp.product }} - {{ exp.price|number_format(2) }}</b> 
+                            {{ exp.product }} - {{ exp.price|number_format(2) }} 
                             {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
                         </p> 
                     {% endfor %}
                     
-                    <hr>    
-                    <b>Sum: {{ sum|number_format(2) }}</b>
+                    <hr class="span4 center">    
+                    <div><p><b>Sum: {{ sum|number_format(2) }}</b></p></div>
                     
                 </div>
             {% endif %}

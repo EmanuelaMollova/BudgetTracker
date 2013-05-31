@@ -11,6 +11,8 @@ TOD0:
   * CRUD ???
 * remove redundant stuff
 * invalid / not existing URLs
+* DO NOT WRITE IN Bootstrap file!
+* Charts/diagrams
 
 FEATURES:
 ---------

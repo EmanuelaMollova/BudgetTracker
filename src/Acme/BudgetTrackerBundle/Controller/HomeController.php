@@ -20,19 +20,25 @@ class HomeController extends Controller
         $category_repository = $this->setRepository('Category');    
         $number_of_categories = $category_repository->countByUser($this->user);
         
+        $template = 'AcmeBudgetTrackerBundle:Home:index.html.twig';
+        
         if($number_of_categories == 0){
-            $newcommer = true;          
+            return $this->render($template, array(
+                'newcommer' => true
+            ));
         } else {
-            $newcommer = false;
-            
             $today = new \DateTime;
             $current_month_string = $today->format('m-Y');
+            
             $expense_repository = $this->setRepository('Expense');
             $expenses_for_current_month = $expense_repository->
                     findExpensesForMonth($this->user, $current_month_string); 
             
             if(!$expenses_for_current_month){
-                echo "GO ADD EXPENSES";
+                return $this->render($template, array(
+                    'newcommer' => false,
+                    'expenses_for_current_month' => null
+                ));      
             } else {
                 $first_category = $expenses_for_current_month[0]->getCategory()->getName();
             
@@ -42,17 +48,24 @@ class HomeController extends Controller
                 $current_month_object = $this->setRepository('Month')
                         ->findBy(array('name' => $current_month_string, 'user' => $this->user)); 
                 
-                $budget_for_current_month = $current_month_object[0]->getBudget();
-            }         
+                if($current_month_object){
+                    $budget_for_current_month = $current_month_object[0]->getBudget();
+                    $remaining = number_format($budget_for_current_month - $sum_for_current_month, 2, '.', ''); 
+                } else {
+                    $budget_for_current_month = null;
+                    $remaining = null;
+                }   
+            }
+            
+            return $this->render($template, array(
+                'newcommer' => false,
+                'expenses_for_current_month' => $expenses_for_current_month,
+                'first_category' => $first_category,
+                'sum_for_current_month' => $sum_for_current_month,
+                'budget_for_current_month' => $budget_for_current_month,
+                'remaining' => $remaining
+            ));
         }
-        
-        return $this->render('AcmeBudgetTrackerBundle:Home:index.html.twig', array(
-            'newcommer' => $newcommer,
-            'expenses' => $expenses_for_current_month,
-            'first_category' => $first_category,
-            'sum_for_current_month' => $sum_for_current_month,
-            'budget_for_current_month' => $budget_for_current_month
-        ));
     }
 }
  
@@ -66,8 +79,8 @@ class HomeController extends Controller
 //        
 //        foreach ($all_categories as $cat)
 //        {
-//            //For each category creates array with name $category with expenses for this category for the given month
-//            //and pushes all this arrays into $all
+//            //For each category creates array with name $category with expenses 
+//            //for this category for the given month and pushes all this arrays into $all
 //            
 //            $var = strtolower($cat->getName());
 //            array_push($all, $$var = $this->repository->

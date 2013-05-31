@@ -1,3 +1,5 @@
-$('.icon-plus-sign').on('click', function(){
-   $('.products').fadeIn('slow'); 
+$(document).ready(function(){
+    $('.toggle_expenses').on('click', function(){
+        $('.products').fadeToggle(); 
+    });
 });
