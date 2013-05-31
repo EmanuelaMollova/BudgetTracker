@@ -28,15 +28,20 @@ class HomeController extends Controller
             $today = new \DateTime;
             $current_month_string = $today->format('m-Y');
             $expense_repository = $this->setRepository('Expense');
-            $expenses_for_current_month = $expense_repository->findExpensesForMonth($this->user, $current_month_string); 
+            $expenses_for_current_month = $expense_repository->
+                    findExpensesForMonth($this->user, $current_month_string); 
             
             if(!$expenses_for_current_month){
                 echo "GO ADD EXPENSES";
             } else {
                 $first_category = $expenses_for_current_month[0]->getCategory()->getName();
             
-                $sum_for_current_month = $expense_repository->getSumByMonthAndUser($current_month_string, $this->user);     
-                $current_month_object = $this->setRepository('Month')->findBy(array('name' => $current_month_string, 'user' => $this->user));        
+                $sum_for_current_month = $expense_repository->
+                        getSumByMonthAndUser($current_month_string, $this->user);
+                
+                $current_month_object = $this->setRepository('Month')
+                        ->findBy(array('name' => $current_month_string, 'user' => $this->user)); 
+                
                 $budget_for_current_month = $current_month_object[0]->getBudget();
             }         
         }
