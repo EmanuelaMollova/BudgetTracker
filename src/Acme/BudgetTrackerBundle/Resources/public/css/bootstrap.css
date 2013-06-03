@@ -6333,7 +6333,7 @@ Not from the original file
 }
 
 .little-spacer {
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .right-spacer {
@@ -6360,6 +6360,10 @@ Not from the original file
 
 .little-down-spacer {
     margin-bottom: 50px;
+}
+
+hr-colored {
+  border-top: 1px solid #7C2B57;
 }
 
 /*

@@ -13,6 +13,8 @@ TOD0:
 * invalid / not existing URLs
 * DO NOT WRITE IN Bootstrap file!
 * Charts/diagrams
+* Clean .js files
+* When try to access page for logged users and you are unlogged, redirect to homepage
 
 FEATURES:
 ---------

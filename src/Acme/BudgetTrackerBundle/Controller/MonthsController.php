@@ -11,10 +11,15 @@ class MonthsController extends Controller
 {
     public function monthsAction()
     {
+        $this->setUser();
+        $month_repository = $this->setRepository('Month');
         $month = new Month();
         $form = $this->createForm(new MonthType(), $month);
         
+        $all_months = $month_repository->findByUser($this->user); 
+        
         return $this->render('AcmeBudgetTrackerBundle:Months:months.html.twig', array(
+            'all_months' => $all_months,
             'form' => $form->createView()
         ));
     }
@@ -22,27 +27,20 @@ class MonthsController extends Controller
     public function createMonthAction(Request $request)
     {
         $this->em = $this->getEM();
-        $this->user = $this->container->get('security.context')->getToken()->getUser();
+        $this->setUser();
         
-        $this->repo = $this->setRepository('Month');
-        
-                        
-        $all_months = $this->repo->findByUser($this->user);
-                
-        echo count($all_months);
-        die();
-        
-        
+        $month_repository = $this->setRepository('Month');
+                       
+        $all_months = $month_repository->findByUser($this->user);
+
         $month = new Month();
         $form = $this->createForm(new MonthType(), $month);
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
             
-            $same = $this->repo->
+            $same = $month_repository->
                     countByNameAndUser($month->getName(), $this->user);
-            
-            echo $same;
 
             if ($same == 0 && $form->isValid()) {
                 $month->setUser($this->user);
@@ -51,12 +49,10 @@ class MonthsController extends Controller
 
                 return $this->redirect($this->generateUrl('months'));
             } else {
-                echo "YOU BAD PERSON!!!";
+                $this->get('session')->setFlash('notice', 'The budget for this month is already set!');
             }
         }
-
-
-        
+      
         return $this->render(
             'AcmeBudgetTrackerBundle:Months:months.html.twig', array(
                 'all_months' => $all_months,

@@ -44,13 +44,16 @@
         {% elseif expenses_for_current_month == null%}
             
             {# Created only categories, no expenses #}
-            <p class="lead big-spacer">
-                    <p class="lead little-spacer">Great!</p> 
-                    <p class="lead little-spacer">You have successfully created some categories.</p> 
-                    <p class="lead little-spacer">
-                        Please <a href="{{ path('expenses') }}">add some expenses</a>, too.
-                    </p>
-            </p>
+                <h1>Hello, {{app.user.username}}!</h1>
+                <p class="lead big-spacer">
+                    You don't have expenses for the current month yet.
+                </p>
+                <p class="lead little-spacer">
+                    You can add some from <a href="{{ path('expenses') }}">here</a>.
+                </p>
+                <p class="lead little-spacer">
+                    And you can <a href="{{ path('months') }}">add your budget</a>, too (if you still haven't added it :).
+                </p> 
             
         {% else %}
             
@@ -86,12 +89,12 @@
             {% endif %}
 
             <button class="little-bottom-spacer btn {#btn-info#} toggle_expenses">
-                <i class="icon-chevron-down {#icon-white#}"></i> Show/hide expenses
+                <i class="icon-chevron-down {#icon-white#}"></i> Show/hide products
             </button>
             
             {# Displays categories, sums for them and expenses #}
             {% set current_category = first_category %}                      
-            <h5>{{ first_category }}</h5> 
+            <h5 class="little-spacer"><u>{{ first_category }}</u></h5> 
 
             {% set sum = 0 %}
             
@@ -108,7 +111,7 @@
                             
                     {% set sum = 0 %}
                             
-                    <h5>{{ e.category.name }}</h5>
+                    <h5><u>{{ e.category.name }}</u></h5>
                 
                     {% set current_category = e.category.name %}
                     {% set sum = sum + e.price %}
@@ -158,4 +161,4 @@
 {# TODO 1. <details><summary> ... for each category, not for all of them #}
 {# TODO 2. When many items are shown ??? pagination? pop-ups? #}
 {# TODO 3. Show sum for each category? or only the name and progress bar? #}
-{# TODO 4. Little space below the button #}
+{# TODO 4. Underline with <u> ??? #}  

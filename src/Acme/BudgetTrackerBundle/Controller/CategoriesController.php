@@ -76,15 +76,43 @@ class CategoriesController extends Controller
     
 public function editCategoryAction(Request $request, Category $category)
 {   
+    $this->init();
     //check if exists/valid
+    if ($request->isMethod('POST')) {
+        //get the text sent from jeditable
+        $name = $request->get('value');
+        
+        $same = $this->repository->
+                    countByNameAndUser($name, $this->user);
+        
+        if (count($same) == 0) {
+            $name = $request->get('value');
+            $category->setName($name);
 
-    //get the text sent from jeditable
-    $name = $request->get('value');
-    $category->setName($name);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($category);
+            $em->flush();
+        } else { 
+            ?>
 
-    $em = $this->getDoctrine()->getManager();
-    $em->persist($category);
-    $em->flush();
+            <script>alert('This value is used! Choose another!')
+                $.ajax({
+          url: "",
+          context: document.body,
+          success: function(s,x){
+            $(this).html(s);
+          }
+        });
+        </script>
+            <?php
+            $this->get('session')->setFlash('notice', 'This value is already used!');
+            return new Response($name);
+            //return $this->redirect($this->generateUrl('categories'));         
+        }
+    } else {
+        echo "Not post";
+    }
+
     //return the name value to jeditable so it can display it
     return new Response($name);     
 }

@@ -11,13 +11,19 @@
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Months'} %}
 
-    <div class="little-spacer text-center">
+    <div class="little-spacer text-center"> 
         <h1>Months</h1>
         
- {#               {% for m in all_months %}
-            {{m.name}} - {{m.budget}}
-        {% endfor %} #}
+ 
         
+        {% if app.session.hasFlash('notice') %}
+            <div class="flash-notice text-error big-spacer">
+                {{ app.session.flash('notice') }}
+            </div>
+        {% endif %}
+
+        
+
         <form class="big-spacer" action="{{ path('create_month') }}" method="post" {{ form_enctype(form) }}>
             
             {{ form_widget(form) }}
@@ -27,15 +33,16 @@
             </button>
              
         </form>
-        
+    </div> 
 
-        
-    </div>
+            {% for m in all_months %}
+            <p>{{m.name}} - {{m.budget}}</p>
+        {% endfor %}
 
     {%block javascript%}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
-    <script src="{{ asset('bundles/acmebudgettracker/js/month.js') }}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/month.js') }}"></script>
     {%endblock%}
 
 {% endblock %}

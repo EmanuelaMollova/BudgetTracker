@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+    {#<link href="{{ asset('bundles/acmebudgettracker/css/datetimepicker.css') }}" rel="stylesheet" type="text/css" />#}
 {% endblock %}
 
 {% block title %} Reports {% endblock %}
@@ -11,7 +12,7 @@
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Reports'} %}
 
-    <div class="little-spacer text-center">
+    <div class="little-spacer text-center"> 
         <h3>Reports</h3>   
  
         <h4>Select for what time you would like your report</h4>        
@@ -30,6 +31,7 @@
             <a href="#" id="all">All</a> | 
             <a href="#" id="none">None</a>
         </p>
+    </div>
         
         {#<ul class="categories">
         {% for cat in all_categories %}
@@ -41,7 +43,8 @@
             <a href="#" id="none">None</a>
         </ul> #}
                 
-        <form class="big-spacer" action="{{ path('reports') }}" method="post" {{ form_enctype(form) }}>
+        {% form_theme form 'AcmeBudgetTrackerBundle:Form:checkbox.html.twig' %}
+        <form class="big-spacer span5 offset5" action="{{ path('reports') }}" method="post" {{ form_enctype(form) }}>
 
             {{ form_widget(form) }}
 
@@ -50,12 +53,11 @@
             </button>
 
         </form>
-    </div>
         
     {% if response != null %}
         NOT NULL!
         {% for r in response %}
-            <p>{{ r.product }} {{ r.category.name }}</p>
+            <p>{{ r.product }} {{ r.category.name }} {{ r.date }}</p>
         {% endfor %}
     {% endif %}
 
@@ -65,8 +67,11 @@
         
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
+        
+        {#<script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datetimepicker.min.js') }}"></script>#}
+       <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script> 
         <script src="{{ asset('bundles/acmebudgettracker/js/reports.js') }}"></script>
+        
     {%endblock%}
         
 {% endblock %}

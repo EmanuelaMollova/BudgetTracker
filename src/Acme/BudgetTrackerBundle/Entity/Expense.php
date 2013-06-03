@@ -40,7 +40,7 @@ class Expense
     protected $product;
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable = true)
      */
     protected $description;
     
@@ -50,7 +50,7 @@ class Expense
     protected $price;
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="date")
      */
     protected $date;
 

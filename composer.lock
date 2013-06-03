@@ -1,6 +1,32 @@
 {
-    "hash": "93e8c392592e62a7ae61f99d1f88259f",
+    "hash": "ba23c8f81b42da1872cd6e1ea80c4bc1",
     "packages": [
+        {
+            "name": "beberlei/DoctrineExtensions",
+            "version": "v0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beberlei/DoctrineExtensions.git",
+                "reference": "v0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/beberlei/DoctrineExtensions/zipball/v0.1",
+                "reference": "v0.1",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "DoctrineExtensions": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2012-05-16 00:04:34"
+        },
         {
             "name": "doctrine/common",
             "version": "2.3.0",

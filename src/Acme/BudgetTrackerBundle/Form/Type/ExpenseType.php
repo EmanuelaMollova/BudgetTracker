@@ -17,20 +17,20 @@ class ExpenseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('product', 'text',array(
-            'label'  => 'Product'
+            'label'  => 'Product:'
         ));
         
         $builder->add('description', 'text', array(
-            'label' => 'Description',
+            'label' => 'Description: (optional)',
             'required' => false
         ));
         
         $builder->add('price', 'number', array(
-            'label' => 'Price'
+            'label' => 'Price:'
         ));
         
-        $builder->add('date', 'text', array(
-            'label' => 'Date'
+        $builder->add('date', 'date', array(
+            'label' => 'Date:'
         ));
         
         $user = $this->user;

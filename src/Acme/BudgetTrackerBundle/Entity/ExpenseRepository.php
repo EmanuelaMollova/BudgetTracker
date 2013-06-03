@@ -42,6 +42,11 @@ class ExpenseRepository extends EntityRepository
     
     public function findExpensesForMonth($user, $month)
     {
+        $emConfig = $this->getEntityManager()->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
+        
         $q = $this
             ->createQueryBuilder('e')
             ->where('e.date LIKE :month')
@@ -90,5 +95,12 @@ class ExpenseRepository extends EntityRepository
         $query->setParameter(1, $user);
         return $query->getResult();
     }
-
+    
+    public function findForCatsAndTimes($user, $q)
+    {
+         $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT e FROM AcmeBudgetTrackerBundle:Expense e WHERE e.user = ?1'.$q);
+        $query->setParameter(1, $user);
+        return $query->getResult();
+    }
 }

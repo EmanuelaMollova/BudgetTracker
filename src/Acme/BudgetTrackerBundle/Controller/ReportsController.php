@@ -16,7 +16,7 @@ class ReportsController extends Controller
         //$all_categories = $cat_repo->findByUser($this->user);
         
         $repo = $this->setRepository('Expense');
-        //$exp = $repo->findBetweenDates($this->user, '14-05-2013	', '21-05-2013');
+        //$exp = $repo->findBetweenDates($this->user, '14-05-2013', '21-05-2013');
         
         //var_dump($exp);
         
@@ -32,7 +32,23 @@ class ReportsController extends Controller
             $cats = $params['month']['categories'];
 
             //create query for categories
-            $query='AND (e.category='.$cats[0];
+
+            $start_date = $params['month']['start_date'];
+            $end_date = $params['month']['end_date'];
+            
+//            echo $start_date;
+//            var_dump($end_date);
+            
+            $query = '';
+            
+            //finish the query for time
+            var_dump($start_date);
+            
+            if( $start_date != ""){
+                $query .= " AND e.date >= '".$start_date."'";
+            }
+            
+            $query .=' AND (e.category='.$cats[0];
             
             array_shift($cats);
             foreach ($cats as $c)
@@ -42,8 +58,12 @@ class ReportsController extends Controller
             
             $query .= ')';
             
-            $response = $repo->findForCat($this->user, $query);
+            echo $query;
+            $response = $repo->findForCatsAndTimes($this->user, $query); 
+            
+            //$response = $repo->findBetweenDates($this->user, $start_date, $end_date);
         }
+        
 
         return $this->render('AcmeBudgetTrackerBundle:Reports:reports.html.twig', array(
             //'all_categories' => $all_categories,
