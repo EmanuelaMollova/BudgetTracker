@@ -6,6 +6,7 @@ use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
 use Acme\BudgetTrackerBundle\Entity\Expense;
 use Acme\BudgetTrackerBundle\Form\Type\ExpenseType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ExpensesController extends Controller
 {
@@ -72,6 +73,25 @@ class ExpensesController extends Controller
 
     public function createExpenseAction(Request $request)
     {   
+            $params = $request->request->all();
+
+            $expense = $params['expense']['product'] .' - '. $params['expense']['price'] ;
+            
+//            var_dump($expense);
+//             
+//            
+//            die();
+
+            if($expense!=""){
+               $return=array("responseCode"=>200,  "expense"=>$expense);
+            }
+            else{
+               $return=array("responseCode"=>400, "expense"=>"You have to write your expense!");
+            }
+
+            $return=json_encode($return);//jscon encode the array
+            return new Response($return,200,array('Content-Type'=>'application/json'));//make sure it has the correct content type
+        
         $this->init();
         $newcommer = false;
         $this->em = $this->getDoctrine()->getEntityManager();
