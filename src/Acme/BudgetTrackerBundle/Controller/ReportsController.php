@@ -11,6 +11,7 @@ class ReportsController extends Controller
 {
     public function reportsAction(Request $request)
     {   $response = null;
+        $first_category = null;
          $this->user = $this->container->get('security.context')->getToken()->getUser();
         //$cat_repo = $this->setRepository('Category');
         //$all_categories = $cat_repo->findByUser($this->user);
@@ -74,14 +75,18 @@ class ReportsController extends Controller
          //   echo $query;
             $response = $repo->findForCatsAndTimes($this->user, $start_dateObj, $end_dateObj, $query); 
             
+            if($response){
+            $first_category = $response[0]->getCategory()->getName();
+            } 
             //$response = $repo->findBetweenDates($this->user, $start_date, $end_date);
         }
         
-
+        
         return $this->render('AcmeBudgetTrackerBundle:Reports:reports.html.twig', array(
             //'all_categories' => $all_categories,
             //'exp' => $exp,
             'response' => $response,
+            'first_category' => $first_category,
             'form' => $form->createView()
         ));
     }

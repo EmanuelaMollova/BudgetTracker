@@ -18,8 +18,20 @@ class MonthsController extends Controller
         
         $all_months = $month_repository->findByUser($this->user); 
         
+        $names = array();
+        
+        foreach ($all_months as $mn)
+        {
+            array_push($names, $mn->getName());
+        }
+        
+        $names = json_encode($names);
+        
+        var_dump($names);
+        
         return $this->render('AcmeBudgetTrackerBundle:Months:months.html.twig', array(
             'all_months' => $all_months,
+            'names' => $names,
             'form' => $form->createView()
         ));
     }

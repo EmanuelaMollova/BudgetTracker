@@ -101,7 +101,7 @@ class ExpenseRepository extends EntityRepository
     public function findForCatsAndTimes($user, $start_date, $end_date, $q)
     {
          $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT e FROM AcmeBudgetTrackerBundle:Expense e WHERE e.user = ?1 AND e.date >= ?2 AND e.date < ?3'.$q);
+        $query = $em->createQuery('SELECT e FROM AcmeBudgetTrackerBundle:Expense e WHERE e.user = ?1 AND e.date >= ?2 AND e.date < ?3'.$q. 'ORDER BY e.category, e.date');
         $query->setParameter(1, $user);
         $query->setParameter(2, $start_date);
         $query->setParameter(3, $end_date);

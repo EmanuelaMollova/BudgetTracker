@@ -30,8 +30,7 @@ class ExpenseType extends AbstractType
         ));
         
         $builder->add('date', 'text', array(
-            'label' => 'Date:',
-            //'widget' => 'single_text'
+            'label' => 'Date:'
         ));
         
         $user = $this->user;

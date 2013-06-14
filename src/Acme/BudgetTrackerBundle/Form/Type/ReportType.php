@@ -21,7 +21,7 @@ class ReportType extends AbstractType
         $builder->add('categories', 'entity', array(
             'class' => 'AcmeBudgetTrackerBundle:Category',
             'property' => 'name',
-            'label' => 'Categories: ',
+            'label' => ' ',
             'required' => true,
             'multiple' =>true,
             'expanded' => true,

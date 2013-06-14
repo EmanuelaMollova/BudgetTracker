@@ -26,13 +26,7 @@
         </div> #}
         
         <h4>Choose categories:</h4>
-        
-        <p>
-            <a href="#" id="all">All</a> | 
-            <a href="#" id="none">None</a>
-        </p>
-    </div>
-        
+
         {#<ul class="categories">
         {% for cat in all_categories %}
             <li>
@@ -42,24 +36,78 @@
             <a href="#" id="all">All</a> | 
             <a href="#" id="none">None</a>
         </ul> #}
-                
+        
         {% form_theme form 'AcmeBudgetTrackerBundle:Form:checkbox.html.twig' %}
-        <form class="big-spacer span5 offset5" action="{{ path('reports') }}" method="post" {{ form_enctype(form) }}>
+        <form class="big-spacer" action="{{ path('reports') }}" method="post" {{ form_enctype(form) }}>
 
-            {{ form_widget(form) }}
-
+           {# {{ form_widget(form) }} #}
+            
+            {{ form_errors(form) }}
+            {{ form_widget(form._token) }}
+            {{ form_row(form.categories) }}
+            
+            <p>
+                <a href="#" id="all">All</a> | 
+                <a href="#" id="none">None</a>
+            </p>
+            
+            {{ form_row(form.start_date) }}   
+            {{ form_row(form.end_date) }}
+            
             <button type="submit" class="btn">
                 Submit
-            </button>
-
+            </button> 
+            
         </form>
-        
+
     {% if response != null %}
-        NOT NULL!
-        {% for r in response %}
-            <p>{{ r.product }} {{ r.category.name }} {{ r.date|date("d-m-Y") }}</p>
-        {% endfor %}
+        
+        {% set current_category = first_category %}                      
+            <h5 class="little-spacer"><u>{{ first_category }}</u></h5> 
+
+            {% set sum = 0 %}
+            
+            {% for r in response %}
+                {% if r.category.name != current_category %}
+                    <strong>{{ sum|number_format(2) }}</strong>
+                                       
+                    {% set sum = 0 %}
+                            
+                    <h5><u>{{ r.category.name }}</u></h5>
+                
+                    {% set current_category = r.category.name %}
+                    {% set sum = sum + r.price %}
+                            
+                    <div class="">
+                        <p>
+                            {{ r.product }} - {{ r.price|number_format(2) }}, {{r.date|date("d-m-Y")}}
+                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                        </p>
+                    </div>                          
+                {% else %}                          
+                    {% set sum = sum + r.price %}
+
+                    <div class="">
+                        <p>
+                            {{ r.product }} - {{ r.price|number_format(2) }}, {{r.date|date("d-m-Y")}} 
+                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
+                        </p>
+                    </div>
+                {% endif %}                   
+            {% endfor %}
+                            
+            {#<p class="lead text-error">Spent: <strong>{{sum_for_current_month|number_format(2)}}</strong></p>#}
+   
+   {#     {% for r in response %}
+            <p>{{ r.product }} {{ r.category.name }} {{ r.date|date("d-m-Y") }} </p>
+        {% endfor %}#}
+    {% else %}
+            <p>There are no expenses!</p>
     {% endif %}
+            
+            
+            
+                </div>
 
     {#{% for e in exp %}
         <p>{{ e.product }} {{ e.date }}</p>

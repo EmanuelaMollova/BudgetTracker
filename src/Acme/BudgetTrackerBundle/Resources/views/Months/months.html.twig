@@ -14,8 +14,6 @@
     <div class="little-spacer text-center"> 
         <h1>Months</h1>
         
- 
-        
         {% if app.session.hasFlash('notice') %}
             <div class="flash-notice text-error big-spacer">
                 {{ app.session.flash('notice') }}
@@ -38,11 +36,51 @@
             {% for m in all_months %}
             <p>{{m.name}} - {{m.budget}}</p>
         {% endfor %}
+            
+            <div id="container" style="width:80%; height:300px;"></div>
+            
+            
 
     {%block javascript%}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+       	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+            {# <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> #}
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/month.js') }}"></script>
+       {# <script src="http://code.highcharts.com/highcharts.js"></script>#}
     {%endblock%}
+        
+        <script>
+            
+var months = {{ names }};
+             months = json_parse(months);
+             console.log(months);
+            
+                $('#container').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Budget for months'
+        },
+        xAxis: {
+            categories: months
+        },
+        yAxis: {
+            title: {
+                text: 'Money'
+            }
+        },
+        series: [{
+            name: 'Spend',
+            data: [],
+            color: 'red'
+        }, {
+            name: 'Saved',
+            data: [],
+            color: 'green'
+        }]
+    });
+    </script>
 
 {% endblock %}
