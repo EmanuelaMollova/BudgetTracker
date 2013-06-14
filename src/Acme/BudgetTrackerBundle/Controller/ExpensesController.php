@@ -32,12 +32,22 @@ class ExpensesController extends Controller
         }
         
         //Set the current date for searching all expenses for today
-        $today = new \DateTime;
-        $date = $today->format('d-m-Y');
-        //var_dump($date);
+       $today = new \DateTime('now');
+       $today = $today->format('d-m-Y');
         
-        $expenses_for_today = $this->repository->findExpensesForDate($this->user, $date);
+        $fromDate = new \DateTime(); // Have for example 2013-06-10 09:53:21
+        $fromDate->setTime(0, 0, 0);
         
+       $toDate = new \DateTime();
+       $toDate->modify('+1 day');
+       $toDate->setTime(0, 0, 0);
+        
+        $expenses_for_today = $this->repository->findExpensesForDate($this->user, $fromDate, $toDate);
+       
+        // var_dump($expenses_for_today); echo '<br>';        
+//        var_dump($fromDate); echo '<br>';
+//        var_dump($toDate); echo '<br>';
+
         //Find the sum spent today
         $sum = 0;
         
@@ -48,7 +58,7 @@ class ExpensesController extends Controller
         $expense = new Expense();
         
         //Set the current date to be default
-        $expense->setDate($date);
+        $expense->setDate($today);
 
         $form = $this->createForm(new ExpenseType($this->user), $expense);
 
@@ -74,11 +84,11 @@ class ExpensesController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
             
-            
-            
             //Convert string date to DateTime object and send it to database as object
-//            $dateObj = \DateTime::createfromformat('d-m-Y', $expense->getDate());
-//            $expense->setDate($dateObj);
+            $dateObj = \DateTime::createfromformat('d-m-Y', $expense->getDate());
+            $expense->setDate($dateObj);
+//            var_dump($dateObj);
+//            die();
             
             if ($form->isValid()) {
                 $expense->setUser($this->user);

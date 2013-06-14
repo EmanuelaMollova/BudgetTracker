@@ -28,7 +28,7 @@ class HomeController extends Controller
             ));
         } else {
             $today = new \DateTime;
-            $current_month_string = $today->format('m-Y');
+            $current_month_string = $today->format('m');
             
             $expense_repository = $this->setRepository('Expense');
             $expenses_for_current_month = $expense_repository->
@@ -46,7 +46,9 @@ class HomeController extends Controller
                         getSumByMonthAndUser($current_month_string, $this->user);
                 
                 $current_month_object = $this->setRepository('Month')
-                        ->findBy(array('name' => $current_month_string, 'user' => $this->user)); 
+                        ->findBy(array('name' => $today->format('m-Y'), 'user' => $this->user)); 
+                
+                //var_dump($current_month_string);
                 
                 if($current_month_object){
                     $budget_for_current_month = $current_month_object[0]->getBudget();

@@ -12,13 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class ExpenseRepository extends EntityRepository
 {
-    public function findExpensesForDate($user, $date)
+    public function findExpensesForDate($user, $fromDate, $toDate)
     {
         $q = $this
             ->createQueryBuilder('e')
-            ->where('e.date = :date')
+            ->where('e.date >= :fromDate')
+            ->andWhere('e.date < :toDate')
             ->andWhere('e.user = :user')
-            ->setParameter('date', $date)
+            ->setParameter('fromDate', $fromDate)
+            ->setParameter('toDate', $toDate)
             ->setParameter('user', $user)
              ->getQuery();
         
@@ -49,10 +51,10 @@ class ExpenseRepository extends EntityRepository
         
         $q = $this
             ->createQueryBuilder('e')
-            ->where('e.date LIKE :month')
+            ->where('MONTH(e.date) = :month')
             ->andWhere('e.user = :user')
             ->orderBy('e.category', 'ASC')
-            ->setParameter('month', "%$month")
+            ->setParameter('month', $month)
             ->setParameter('user', $user)
              ->getQuery();
         
@@ -63,9 +65,9 @@ class ExpenseRepository extends EntityRepository
     {
         $q = $this->createQueryBuilder('e')
             ->add('select', 'SUM(e.price)')
-            ->where('e.date LIKE :month')
+            ->where('MONTH(e.date) = :month')
             ->andWhere('e.user = :user')
-            ->setParameter('month', "%$month")
+            ->setParameter('month', $month)
             ->setParameter('user', $user)
             ->getQuery();
 
@@ -96,11 +98,13 @@ class ExpenseRepository extends EntityRepository
         return $query->getResult();
     }
     
-    public function findForCatsAndTimes($user, $q)
+    public function findForCatsAndTimes($user, $start_date, $end_date, $q)
     {
          $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT e FROM AcmeBudgetTrackerBundle:Expense e WHERE e.user = ?1'.$q);
+        $query = $em->createQuery('SELECT e FROM AcmeBudgetTrackerBundle:Expense e WHERE e.user = ?1 AND e.date >= ?2 AND e.date < ?3'.$q);
         $query->setParameter(1, $user);
+        $query->setParameter(2, $start_date);
+        $query->setParameter(3, $end_date);
         return $query->getResult();
     }
 }

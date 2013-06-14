@@ -2,10 +2,17 @@ $(document).ready(function(){
      $('.edit').editable(path, {
          cancel    : 'Cancel',
          submit    : 'Save',
-         tooltip   : 'Click to edit',
-         cssclass : 'editable'
-     }).$('button').addClass('btn');
+         tooltip   : 'Click to edit'
+     });
 });
+$('.close').on('click', function(){
+    console.log(works);
+});
+
+$('.alert').alert();
+    
+    //$("input[type=text]").val()
+//});
 
 //------------------------------------------------------------------------------
 

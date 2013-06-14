@@ -21,6 +21,9 @@ class ReportsController extends Controller
         //var_dump($exp);
         
         $report = new Report();
+        $today = new \DateTime();
+        $date = $today->format('d-m-Y');
+        $report->setEndDate($date);
         $form = $this->createForm(new ReportType($this->user), $report);
         
         if ($request->isMethod('POST')) {
@@ -33,20 +36,30 @@ class ReportsController extends Controller
 
             //create query for categories
 
+            
+            
             $start_date = $params['month']['start_date'];
             $end_date = $params['month']['end_date'];
             
-//            echo $start_date;
-//            var_dump($end_date);
+            $start_dateObj = \DateTime::createfromformat('d-m-Y', $start_date);
+            $start_dateObj->setTime(0, 0, 0);
+            
+            $end_dateObj = \DateTime::createfromformat('d-m-Y', $end_date);
+            $end_dateObj->setTime(0, 0, 0);
+            $end_dateObj->modify('+1 day');
+
+//            echo 'Start Date Obj <br>';
+//            var_dump($start_dateObj); echo '<br>';
+//            echo 'End Date Obj <br>';
+//            var_dump($end_dateObj); echo '<br>';
             
             $query = '';
             
             //finish the query for time
-            var_dump($start_date);
             
-            if( $start_date != ""){
-                $query .= " AND e.date >= '".$start_date."'";
-            }
+//            if( $start_date != ""){
+//                $query .= " AND e.date >= ".$start_dateObj;
+//            }
             
             $query .=' AND (e.category='.$cats[0];
             
@@ -58,8 +71,8 @@ class ReportsController extends Controller
             
             $query .= ')';
             
-            echo $query;
-            $response = $repo->findForCatsAndTimes($this->user, $query); 
+         //   echo $query;
+            $response = $repo->findForCatsAndTimes($this->user, $start_dateObj, $end_dateObj, $query); 
             
             //$response = $repo->findBetweenDates($this->user, $start_date, $end_date);
         }

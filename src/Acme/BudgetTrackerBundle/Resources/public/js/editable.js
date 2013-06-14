@@ -23,5 +23,5 @@ $('#expense_date').datepicker({
         weekStart: 1,
         autoclose: true
     });
-            
+        
 }) ();

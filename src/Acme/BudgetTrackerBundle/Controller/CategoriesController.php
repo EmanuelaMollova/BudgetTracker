@@ -93,19 +93,17 @@ public function editCategoryAction(Request $request, Category $category)
             $em->persist($category);
             $em->flush();
         } else { 
-            ?>
 
-            <script>alert('This value is used! Choose another!')
-                $.ajax({
-          url: "",
-          context: document.body,
-          success: function(s,x){
-            $(this).html(s);
-          }
-        });
-        </script>
-            <?php
-            $this->get('session')->setFlash('notice', 'This value is already used!');
+
+           
+                $response = new Response();
+                $response->setContent('              <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">OK</button>
+            <strong>This value is already used!</strong> Please choose another.
+        </div>');
+                $response->send();
+
+            //$this->get('session')->setFlash('notice', 'This value is already used!');
             return new Response($name);
             //return $this->redirect($this->generateUrl('categories'));         
         }

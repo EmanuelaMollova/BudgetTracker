@@ -6366,5 +6366,13 @@ hr-colored {
   border-top: 1px solid #7C2B57;
 }
 
+/*input::-webkit-calendar-picker-indicator{
+    display: none;
+}
+
+input[type="date"]::-webkit-input-placeholder{ 
+    visibility: hidden !important;
+}*/
+
 /*
 */

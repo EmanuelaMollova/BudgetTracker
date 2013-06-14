@@ -15,7 +15,7 @@
     <div class="little-spacer text-center"> 
         <h3>Reports</h3>   
  
-        <h4>Select for what time you would like your report</h4>        
+       {# <h4>Select for what time you would like your report</h4>        
         
         <div>        
             <select id="select_time">
@@ -23,7 +23,7 @@
                 <option value="months">For month(s)</option>
                 <option value="days">For day(s)</option>
             </select>
-        </div>
+        </div> #}
         
         <h4>Choose categories:</h4>
         
@@ -57,7 +57,7 @@
     {% if response != null %}
         NOT NULL!
         {% for r in response %}
-            <p>{{ r.product }} {{ r.category.name }} {{ r.date }}</p>
+            <p>{{ r.product }} {{ r.category.name }} {{ r.date|date("d-m-Y") }}</p>
         {% endfor %}
     {% endif %}
 

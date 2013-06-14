@@ -35,11 +35,11 @@ class ReportType extends AbstractType
         
         
         $builder->add('start_date', 'text',array(
-            'label'  => 'For'
+            'label'  => 'From'
         ));
         
         $builder->add('end_date','text', array(
-            'label' => 'and to (optional)',
+            'label' => 'to',
             'required' => false
         )); 
     }
