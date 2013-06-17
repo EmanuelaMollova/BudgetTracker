@@ -19,16 +19,32 @@
 //          }
 //        });
     
-//        $('#none').on('click', function (e) {
-//        e.preventDefault();
+//        $('#none').on('click', function () {
 //        $("input[type='checkbox']").removeAttr('checked');
 //    });
 //    
-//    $('#all').on('click', function (e) {
-//        e.preventDefault();
+//    $('#all').on('click', function () {
 //        $("input[type='checkbox']").attr('checked', 'checked');
 //    });
-    
 
+ 
+$('u').on('mouseover', function(){
+       $(this).css('cursor', 'pointer'); 
+    });
+    
+    $('u').on('click', function(ev){
+        ev.preventDefault();
+        var elem = $(this).text();
+        $('.'+elem).fadeToggle();
+    });
+    
+    $('.toggle_expenses').on('click', function(){
+       $('.products').fadeToggle();  
+    });
+    
+    $('#chbx').on('click', function(){
+        $("input[type='checkbox']").prop("checked", $('#chbx').prop("checked"))
+    });
+    
    
 }) ();

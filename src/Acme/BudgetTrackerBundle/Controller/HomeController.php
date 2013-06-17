@@ -16,6 +16,8 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
+        //user, expense_repo, category_repo, month_repo
+        
         $this->setUser();               
         $category_repository = $this->setRepository('Category');    
         $number_of_categories = $category_repository->countByUser($this->user);
@@ -28,11 +30,10 @@ class HomeController extends Controller
             ));
         } else {
             $today = new \DateTime;
-            $current_month_string = $today->format('m');
             
             $expense_repository = $this->setRepository('Expense');
             $expenses_for_current_month = $expense_repository->
-                    findExpensesForMonth($this->user, $current_month_string); 
+                    findExpensesByMonth($this->user, $today->format('Y'), $today->format('m')); 
             
             if(!$expenses_for_current_month){
                 return $this->render($template, array(
@@ -43,15 +44,13 @@ class HomeController extends Controller
                 $first_category = $expenses_for_current_month[0]->getCategory()->getName();
             
                 $sum_for_current_month = $expense_repository->
-                        getSumByMonthAndUser($current_month_string, $this->user);
+                        getSumByMonth($this->user, $today->format('Y'), $today->format('m'));
                 
-                $current_month_object = $this->setRepository('Month')
-                        ->findBy(array('name' => $today->format('m-Y'), 'user' => $this->user)); 
+                $current_month = $this->setRepository('Month')
+                        ->findMonth($today->format('m'), $today->format('Y'), $this->user); 
                 
-                //var_dump($current_month_string);
-                
-                if($current_month_object){
-                    $budget_for_current_month = $current_month_object[0]->getBudget();
+                if($current_month){
+                    $budget_for_current_month = $current_month[0]->getBudget();
                     $remaining = number_format($budget_for_current_month - $sum_for_current_month, 2, '.', ''); 
                 } else {
                     $budget_for_current_month = null;

@@ -63,7 +63,7 @@
             {% if budget_for_current_month !=null %}
             
                 {% if remaining > 0 %}
-                    <p class="lead text-success">Remaining: 
+                    <p class="lead little-spacer text-success">Remaining: 
                         <strong>{{ remaining }}</strong> 
                         (from {{ budget_for_current_month|number_format(2) }})
                     </p>
@@ -88,71 +88,32 @@
                     
             {% endif %}
 
-            <button class="little-bottom-spacer btn {#btn-info#} toggle_expenses">
-                <i class="icon-chevron-down {#icon-white#}"></i> Show/hide products
-            </button>
-            
-            {# Displays categories, sums for them and expenses #}
-            {% set current_category = first_category %}                      
-            <h5 class="little-spacer"><u>{{ first_category }}</u></h5> 
-
-            {% set sum = 0 %}
-            
-            {% for e in expenses_for_current_month %}
-                {% if e.category.name != current_category %}
-                    <strong>{{ sum|number_format(2) }}</strong>
-                    
-                    <div class="little-spacer progress span5 center">
-                        {% set percent = sum*100/sum_for_current_month//1 %}
-                        <div class="bar" style="width:{{ percent }}%;">
-                            {{ percent }}%
-                        </div>
-                    </div>
-                            
-                    {% set sum = 0 %}
-                            
-                    <h5><u>{{ e.category.name }}</u></h5>
-                
-                    {% set current_category = e.category.name %}
-                    {% set sum = sum + e.price %}
-                            
-                    <div class="products">
-                        <p>
-                            {{ e.product }} - {{ e.price|number_format(2) }} 
-                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
-                        </p>
-                    </div>                          
-                {% else %}                          
-                    {% set sum = sum + e.price %}
-
-                    <div class="products">
-                        <p>
-                            {{ e.product }} - {{ e.price|number_format(2) }} 
-                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
-                        </p>
-                    </div>
-                {% endif %}                   
-            {% endfor %}
-            
-            <strong>{{ sum|number_format(2) }}</strong>
-            
-            <div class="progress span5 center little-spacer">
-                {% set percent = sum*100/sum_for_current_month//1 %}
-                <div class="bar" style="width:{{ percent }}%;">
-                    {{ percent }}%
-                </div>
-            </div>
-                            
-            <p class="lead text-error">Spent: <strong>{{sum_for_current_month|number_format(2)}}</strong></p>
-                         
-        {% endif %}
+            {% include 'AcmeBudgetTrackerBundle::display_expenses.html.twig' with {
+                'first_category': first_category, 
+                'expenses_for_current_month': expenses_for_current_month,
+                'progressbar': true,
+                'sum_for_current_month': sum_for_current_month,
+                'details': false} %}
+           {% endif %}         
             
     </div>
 
+    {% set a = 'Emi' %}
+    {% set b = 'iss cool' %}
+
+    {% set c = a ~ b %}
+    
+    <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+    
+{{ c }}
+
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/home.js') }}"></script>
     {%endblock%}
+        
+
 
 {% endblock %}
         

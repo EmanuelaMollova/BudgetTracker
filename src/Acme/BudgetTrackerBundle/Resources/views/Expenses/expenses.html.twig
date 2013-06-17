@@ -40,7 +40,7 @@
             {% if sum != 0 %}
                 <div class="big-spacer">
 
-                    <h4>Expenses for today:</h4>
+                    <h4 class="little-bottom-spacer">Expenses for today:</h4>
                     {% for exp in expenses %}        
                         <p>
                             {{ exp.product }} - {{ exp.price|number_format(2) }} 
@@ -64,6 +64,8 @@
         <script src="{{ asset('bundles/acmebudgettracker/js/editable.js') }}"></script>
     {%endblock%}
 
+
+        
 {% endblock %}
         
 {# TODO 1. Color the hr! #}

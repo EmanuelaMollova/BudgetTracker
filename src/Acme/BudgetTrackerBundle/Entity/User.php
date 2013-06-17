@@ -98,4 +98,27 @@ class User extends BaseUser
     {
         return $this->months;
     }
+
+    /**
+     * Add categories
+     *
+     * @param \Acme\BudgetTrackerBundle\Entity\Category $categories
+     * @return User
+     */
+    public function addCategorie(\Acme\BudgetTrackerBundle\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+    
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \Acme\BudgetTrackerBundle\Entity\Category $categories
+     */
+    public function removeCategorie(\Acme\BudgetTrackerBundle\Entity\Category $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
 }

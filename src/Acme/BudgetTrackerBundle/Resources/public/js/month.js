@@ -1,5 +1,5 @@
 (function(){
-    $('#month_name').datepicker({
+    $('#month_date').datepicker({
             format: 'mm-yyyy',
             startView: 1,
             minViewMode: 1,

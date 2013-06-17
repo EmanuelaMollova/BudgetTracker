@@ -40,7 +40,7 @@ class ReportType extends AbstractType
         
         $builder->add('end_date','text', array(
             'label' => 'to',
-            'required' => false
+            'required' => true
         )); 
     }
 

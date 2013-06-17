@@ -17,10 +17,7 @@ class ReportsController extends Controller
         //$all_categories = $cat_repo->findByUser($this->user);
         
         $repo = $this->setRepository('Expense');
-        //$exp = $repo->findBetweenDates($this->user, '14-05-2013', '21-05-2013');
-        
-        //var_dump($exp);
-        
+
         $report = new Report();
         $today = new \DateTime();
         $date = $today->format('d-m-Y');
@@ -32,13 +29,9 @@ class ReportsController extends Controller
         
             $params = $request->request->all();
 
-            
             $cats = $params['month']['categories'];
 
             //create query for categories
-
-            
-            
             $start_date = $params['month']['start_date'];
             $end_date = $params['month']['end_date'];
             
@@ -48,19 +41,8 @@ class ReportsController extends Controller
             $end_dateObj = \DateTime::createfromformat('d-m-Y', $end_date);
             $end_dateObj->setTime(0, 0, 0);
             $end_dateObj->modify('+1 day');
-
-//            echo 'Start Date Obj <br>';
-//            var_dump($start_dateObj); echo '<br>';
-//            echo 'End Date Obj <br>';
-//            var_dump($end_dateObj); echo '<br>';
             
             $query = '';
-            
-            //finish the query for time
-            
-//            if( $start_date != ""){
-//                $query .= " AND e.date >= ".$start_dateObj;
-//            }
             
             $query .=' AND (e.category='.$cats[0];
             
@@ -72,15 +54,22 @@ class ReportsController extends Controller
             
             $query .= ')';
             
-         //   echo $query;
             $response = $repo->findForCatsAndTimes($this->user, $start_dateObj, $end_dateObj, $query); 
             
             if($response){
             $first_category = $response[0]->getCategory()->getName();
             } 
             //$response = $repo->findBetweenDates($this->user, $start_date, $end_date);
+            
+                    return $this->render('AcmeBudgetTrackerBundle:Reports:take_reports.html.twig', array(
+            //'all_categories' => $all_categories,
+            //'exp' => $exp,
+            'start_date' => $start_dateObj->format('d F Y'),
+            'end_date' => $end_dateObj->format('d F Y'),
+            'response' => $response,
+            'first_category' => $first_category
+        ));
         }
-        
         
         return $this->render('AcmeBudgetTrackerBundle:Reports:reports.html.twig', array(
             //'all_categories' => $all_categories,
@@ -131,7 +120,7 @@ class ReportsController extends Controller
            // die();
            
            return $this->render(
-            'AcmeBudgetTrackerBundle:Reports:reports.html.twig', array(
+            'AcmeBudgetTrackerBundle:Reports:take_reports.html.twig', array(
                 'request' => $request,
                 'report' => $report,
                 'response' => $response,

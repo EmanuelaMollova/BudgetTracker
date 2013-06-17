@@ -42,37 +42,45 @@ class ExpenseRepository extends EntityRepository
         return $q->getResult();
     } 
     
-    public function findExpensesForMonth($user, $month)
+    //used
+    public function findExpensesByMonth($user, $year, $month)
     {
         $emConfig = $this->getEntityManager()->getConfiguration();
         $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
         $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
-        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
         
         $q = $this
             ->createQueryBuilder('e')
-            ->where('MONTH(e.date) = :month')
-            ->andWhere('e.user = :user')
+            ->where('e.user = :user')
+            ->andWhere('YEAR(e.date) = :year')
+            ->andWhere('MONTH(e.date) = :month')                     
             ->orderBy('e.category', 'ASC')
-            ->setParameter('month', $month)
             ->setParameter('user', $user)
+            ->setParameter('year', $year)
+            ->setParameter('month', $month)
              ->getQuery();
         
         return $q->getResult();
     } 
     
-    public function getSumByMonthAndUser($month, $user)
+    //used
+    public function getSumByMonth($user, $year, $month)
     {
+        $emConfig = $this->getEntityManager()->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        
         $q = $this->createQueryBuilder('e')
             ->add('select', 'SUM(e.price)')
-            ->where('MONTH(e.date) = :month')
-            ->andWhere('e.user = :user')
-            ->setParameter('month', $month)
+            ->where('e.user = :user')
+            ->andWhere('YEAR(e.date) = :year')
+            ->andWhere('MONTH(e.date) = :month')
             ->setParameter('user', $user)
+            ->setParameter('year', $year)
+            ->setParameter('month', $month)
             ->getQuery();
 
         return $q->getSingleScalarResult();
-
     }
     
     public function findBetweenDates($user, $date1, $date2)

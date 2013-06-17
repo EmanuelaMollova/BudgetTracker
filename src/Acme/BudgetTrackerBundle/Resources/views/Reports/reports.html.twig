@@ -25,7 +25,7 @@
             </select>
         </div> #}
         
-        <h4>Choose categories:</h4>
+        <h4 class="big-spacer">Choose categories:</h4>
 
         {#<ul class="categories">
         {% for cat in all_categories %}
@@ -38,21 +38,28 @@
         </ul> #}
         
         {% form_theme form 'AcmeBudgetTrackerBundle:Form:checkbox.html.twig' %}
-        <form class="big-spacer" action="{{ path('reports') }}" method="post" {{ form_enctype(form) }}>
+        <form class="little-spacer" action="{{ path('take_report') }}" method="post" {{ form_enctype(form) }}>
 
            {# {{ form_widget(form) }} #}
             
             {{ form_errors(form) }}
             {{ form_widget(form._token) }}
+            
+            <div class="checkboxes text-left offset7">
             {{ form_row(form.categories) }}
             
-            <p>
-                <a href="#" id="all">All</a> | 
-                <a href="#" id="none">None</a>
-            </p>
+           {# <p>
+                <span id="all"><u>All</u></span> | 
+                <span id="none"><u>None</u></span>
+            </p> #}
             
+            <input id="chbx" type="checkbox" {#onclick="toggleChecked(this.checked)"#}><b> Select / Deselect All</b>
+            </div>
+            
+            <div class="big-spacer">
             {{ form_row(form.start_date) }}   
             {{ form_row(form.end_date) }}
+            </div>
             
             <button type="submit" class="btn">
                 Submit
@@ -60,59 +67,20 @@
             
         </form>
 
-    {% if response != null %}
+ {#   {% if response != null %}
         
-        {% set current_category = first_category %}                      
-            <h5 class="little-spacer"><u>{{ first_category }}</u></h5> 
-
-            {% set sum = 0 %}
-            
-            {% for r in response %}
-                {% if r.category.name != current_category %}
-                    <strong>{{ sum|number_format(2) }}</strong>
-                                       
-                    {% set sum = 0 %}
-                            
-                    <h5><u>{{ r.category.name }}</u></h5>
-                
-                    {% set current_category = r.category.name %}
-                    {% set sum = sum + r.price %}
-                            
-                    <div class="">
-                        <p>
-                            {{ r.product }} - {{ r.price|number_format(2) }}, {{r.date|date("d-m-Y")}}
-                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
-                        </p>
-                    </div>                          
-                {% else %}                          
-                    {% set sum = sum + r.price %}
-
-                    <div class="">
-                        <p>
-                            {{ r.product }} - {{ r.price|number_format(2) }}, {{r.date|date("d-m-Y")}} 
-                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
-                        </p>
-                    </div>
-                {% endif %}                   
-            {% endfor %}
-                            
-            {#<p class="lead text-error">Spent: <strong>{{sum_for_current_month|number_format(2)}}</strong></p>#}
-   
-   {#     {% for r in response %}
-            <p>{{ r.product }} {{ r.category.name }} {{ r.date|date("d-m-Y") }} </p>
-        {% endfor %}#}
+       {% include 'AcmeBudgetTrackerBundle::display_expenses.html.twig' with {
+                'first_category': first_category,
+                'expenses_for_current_month': response, 
+                'progressbar': false} %}
+        
+        
     {% else %}
             <p>There are no expenses!</p>
-    {% endif %}
-            
-            
-            
+    {% endif %} #}
+     
                 </div>
-
-    {#{% for e in exp %}
-        <p>{{ e.product }} {{ e.date }}</p>
-    {% endfor %}#}
-        
+       
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         

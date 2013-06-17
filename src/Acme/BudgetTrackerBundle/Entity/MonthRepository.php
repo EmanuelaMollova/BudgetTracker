@@ -31,9 +31,31 @@ class MonthRepository extends EntityRepository
         $q = $this
             ->createQueryBuilder('m')
             ->where('m.user = :user')
+            ->orderBy('m.date', 'DESC')
+            ->setMaxResults(12)
+            ->setFirstResult(0)
             ->setParameter('user', $user)
              ->getQuery();
        
         return $q->getResult();
+    }
+    
+    public function findMonth($month, $year, $user)
+    {
+        $q = $this
+            ->createQueryBuilder('m')
+            ->where('m.user = :user')
+            ->andWhere('YEAR(m.date) = :year')
+            ->andWhere('MONTH(m.date) = :month')
+                
+            ->setParameter('month', $month)
+            ->setParameter('year', $year)
+            ->setParameter('user', $user)
+            
+            
+             ->getQuery();
+       
+        return $q->getResult();
+        
     }
 }

@@ -22,9 +22,13 @@ class Month
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
      */
     protected $name;
+    
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $date;
     
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="fos_user")
@@ -44,7 +48,7 @@ class Month
 
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = $this->getDate()->format('F').' '.$this->getDate()->format('Y');
     
         return $this;
     }
@@ -76,5 +80,28 @@ class Month
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Month
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

@@ -40,25 +40,20 @@ class Expense
     protected $product;
     
     /**
-     * @ORM\Column(type="string", length=300)
+     * @ORM\Column(type="string", nullable = true)
      */
     protected $description;
     
     /**
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      */
     protected $price;
     
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     protected $date;
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
     public function getId()
     {
         return $this->id;
@@ -76,7 +71,7 @@ class Expense
         return $this->product;
     }
 
-    public function setDescription($description)
+    public function setDescription($description = null)
     {
         $this->description = $description;
     
@@ -122,5 +117,17 @@ class Expense
     public function getCategory()
     {
         return $this->category;
+    }
+
+    public function setUser(\Acme\BudgetTrackerBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
     }
 }

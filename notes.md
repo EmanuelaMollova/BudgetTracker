@@ -1,3 +1,12 @@
+PAGES:
+------
+
+* HomePage - ready
+* Expenses - AJAX?
+* Reports - Beautify and Diagrams???
+* Categories - Validate Duplicates
+
+
 TOD0:
 -----
 

@@ -4,10 +4,9 @@ namespace Acme\BudgetTrackerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * 
- * 
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="Acme\BudgetTrackerBundle\Entity\CategoryRepository")
  * @UniqueEntity(fields={"name", "user"})
@@ -28,8 +27,6 @@ class Category
 
     public function __construct()
     {
-        parent::__construct();
-        
         $this->expenses = new ArrayCollection();
     }
 
@@ -76,5 +73,22 @@ class Category
     public function getUser()
     {
         return $this->user;
+    }
+
+    public function addExpense(\Acme\BudgetTrackerBundle\Entity\Expense $expenses)
+    {
+        $this->expenses[] = $expenses;
+    
+        return $this;
+    }
+
+    public function removeExpense(\Acme\BudgetTrackerBundle\Entity\Expense $expenses)
+    {
+        $this->expenses->removeElement($expenses);
+    }
+
+    public function getExpenses()
+    {
+        return $this->expenses;
     }
 }

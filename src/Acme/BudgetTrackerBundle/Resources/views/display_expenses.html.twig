@@ -1,0 +1,131 @@
+<button class="little-bottom-spacer btn {#btn-info#} toggle_expenses">
+    <i class="icon-chevron-down {#icon-white#}"></i> Show/hide all products
+</button>
+
+{# Displays categories, sums for them and expenses #}
+{% set current_category = first_category %}
+
+<h5 class="little-spacer"><u>{{ first_category }} </u></h5> 
+
+{% set chart = '[' ~ first_category ~ ', ' %}
+
+    <div class=" products {{first_category}}">
+    
+        
+        {% set sum = 0 %}
+        {% for e in expenses_for_current_month %}
+            {% if e.category.name != current_category %}
+        
+    </div>
+       
+                <strong>{{ sum|number_format(2) }}</strong>
+                {% set chart = chart ~ sum ~ '], ' %}
+                
+
+
+                {% if progressbar == 'true' %}
+                    <div class="little-spacer progress span5 center">
+                        {% set percent = sum*100/sum_for_current_month//1 %}
+                        <div class="bar" style="width:{{ percent }}%;">
+                            {{ percent }}%
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% set sum = 0 %}
+
+                
+                <h5><u>{{ e.category.name }}</u></h5>
+
+                {% set current_category = e.category.name %}
+                {% set chart = chart ~ '[' ~ current_category ~ ', ' %}
+                {% set sum = sum + e.price %}
+
+                <div class="products {{current_category}}">
+
+                {# <div class="products"> #}
+                <p>
+                    {{ e.product }} - {{ e.price|number_format(2) }} 
+                    {% if details == true %}
+                    {{ e.description }}, {{ e.date|date("d-m-Y") }}
+                    {% endif %}
+                </p>
+                {# </div> #}
+                {# </div> #}
+
+            {% else %}                          
+                {% set sum = sum + e.price %}
+
+                {# <div class="products"> #}
+                <p>
+                    <p>{{ e.product }} - {{ e.price|number_format(2) }}</p> 
+                    {% if details == true %}
+                    <p>{{ e.description }}, {{ e.date|date("d-m-Y") }}</p>
+                    {% endif %}
+                </p>
+                {# </div> #}
+            {% endif %}                   
+{% endfor %}
+
+       </div> 
+
+<strong>{{ sum|number_format(2) }}</strong>
+{% set chart = chart  ~ sum ~ ']' %}
+
+{{ chart }}
+
+{% if progressbar == 'true' %}
+<div class="progress span5 center little-spacer">
+    {% set percent = sum*100/sum_for_current_month//1 %}
+    <div class="bar" style="width:{{ percent }}%;">
+        {{ percent }}%
+    </div>
+</div>
+
+
+<p class="lead text-error">Spent: <strong>{{sum_for_current_month|number_format(2)}}</strong></p> 
+{% endif %}
+
+                <script>
+            
+            $(function () {
+        $('#container').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Browser market shares at a specific website, 2010'
+            },
+            tooltip: {
+        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+            	percentageDecimals: 1
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    {{ chart }}
+                ]
+            }]
+        });
+    });
+            
+        </script>
+
+
