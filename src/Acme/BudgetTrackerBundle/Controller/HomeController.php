@@ -11,13 +11,14 @@ class HomeController extends Controller
 {
     /*
      * Finds if the user is brand new or experienced. In the second case finds
-     * all his expenses for the current month, the sum, spent for them and the
-     * budget for the month (if set) and gives them to the template.
+     * all his expenses for the current month, the sum, spent for them, the
+     * budget for the month (if set) and remaining money and gives them to the 
+     * template.
      */
+    
+    //user, expense_repo, category_repo, month_repo
     public function indexAction()
     {
-        //user, expense_repo, category_repo, month_repo
-        
         $this->setUser();               
         $category_repository = $this->setRepository('Category');    
         $number_of_categories = $category_repository->countByUser($this->user);
@@ -33,7 +34,7 @@ class HomeController extends Controller
             
             $expense_repository = $this->setRepository('Expense');
             $expenses_for_current_month = $expense_repository->
-                    findExpensesByMonth($this->user, $today->format('Y'), $today->format('m')); 
+                findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user); 
             
             if(!$expenses_for_current_month){
                 return $this->render($template, array(
@@ -43,15 +44,15 @@ class HomeController extends Controller
             } else {
                 $first_category = $expenses_for_current_month[0]->getCategory()->getName();
             
-                $sum_for_current_month = $expense_repository->
-                        getSumByMonth($this->user, $today->format('Y'), $today->format('m'));
+                $spent_for_current_month = $expense_repository->
+                    getSumByMonth($today->format('m'), $today->format('Y'), $this->user);
                 
                 $current_month = $this->setRepository('Month')
-                        ->findMonth($today->format('m'), $today->format('Y'), $this->user); 
+                    ->findMonth($today->format('m'), $today->format('Y'), $this->user); 
                 
                 if($current_month){
                     $budget_for_current_month = $current_month[0]->getBudget();
-                    $remaining = number_format($budget_for_current_month - $sum_for_current_month, 2, '.', ''); 
+                    $remaining = number_format($budget_for_current_month - $spent_for_current_month, 2, '.', ''); 
                 } else {
                     $budget_for_current_month = null;
                     $remaining = null;
@@ -62,7 +63,7 @@ class HomeController extends Controller
                 'newcommer' => false,
                 'expenses_for_current_month' => $expenses_for_current_month,
                 'first_category' => $first_category,
-                'sum_for_current_month' => $sum_for_current_month,
+                'spent_for_current_month' => $spent_for_current_month,
                 'budget_for_current_month' => $budget_for_current_month,
                 'remaining' => $remaining
             ));

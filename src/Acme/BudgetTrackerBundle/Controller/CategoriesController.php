@@ -24,7 +24,11 @@ class CategoriesController extends Controller
         $this->categories = $this->repository->findByUser($this->user);
     }
 
-    //Displays all categories
+    /*
+     * Displays all categories
+     */
+    
+    // category, user
     public function categoriesAction()
     {
         $this->init();
@@ -32,20 +36,20 @@ class CategoriesController extends Controller
         $category = new Category();
         $form = $this->createForm(new CategoryType(), $category);
 
-        $id = null;
-        
         return $this->render(
             'AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
                 'categories' => $this->categories, 
-                'id' => $id, 
                 'form' => $form->createView()));
     }
    
-    //Creates new category
+    /*
+     * Creates new categories
+     */
+    
+    //category, user
     public function createCategoryAction(Request $request)
     {
         $this->init();
-        $id = null;
 
         $category = new Category();
         $form = $this->createForm(new CategoryType(), $category);
@@ -70,49 +74,75 @@ class CategoriesController extends Controller
         return $this->render(
             'AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
                 'categories' => $this->categories, 
-                'id' => $id, 
                 'form' => $form->createView()));    
     }
     
-public function editCategoryAction(Request $request, Category $category)
-{   
-    $this->init();
-    //check if exists/valid
-    if ($request->isMethod('POST')) {
-        //get the text sent from jeditable
-        $name = $request->get('value');
-        
-        $same = $this->repository->
-                    countByNameAndUser($name, $this->user);
-        
-        if (count($same) == 0) {
+    /*
+     * Edits existing categories
+     */
+    public function editCategoryAction(Request $request, Category $category)
+    {   
+        $this->init();
+
+        if ($request->isMethod('POST')) {
+            //get the text sent from jeditable
             $name = $request->get('value');
-            $category->setName($name);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
-            $em->flush();
-        } else { 
-                $response = new Response();
-                $response->setContent('              <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert">OK</button>
-            <strong>This value is already used!</strong> Please choose another.
-        </div>');
-                $response->send();
+            $same = $this->repository->
+                        countByNameAndUser($name, $this->user);
 
-            //$this->get('session')->setFlash('notice', 'This value is already used!');
-           // return new Response($name);
-            //return $this->redirect($this->generateUrl('categories'));         
+            if (count($same) == 0) {
+                $name = $request->get('value');
+                $category->setName($name);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($category);
+                $em->flush();
+            } else { 
+                    $response = new Response();
+                    $response->setContent('
+                        <div class="alert alert-error">
+                            <button type="button" class="close" data-dismiss="alert">OK</button>
+                            <strong>This value is already used!</strong> Please choose another.
+                        </div>
+                    ');
+                    $response->send();
+
+                //$this->get('session')->setFlash('notice', 'This value is already used!');
+                //return $this->redirect($this->generateUrl('categories'));         
+            }
+        } else {
+            echo "Not post";
         }
-    } else {
-        echo "Not post";
-    }
 
-    //return the name value to jeditable so it can display it
-    return new Response($name);     
+        //return the name value to jeditable so it can display it
+        return new Response($name);     
+    }
+  
+    //Deletes category
+    public function deleteCategoryAction($id)
+    {  
+        $this->init();
+        
+        $category = $this->repository->find($id);
+        
+        $exp_rep = $this->setRepository('Expense');
+        $expenses = $exp_rep->findExpensesCountByCategory($category, $this->user);
+        
+        if ($expenses == 0){           
+            $this->em->remove($category);
+            $this->em->flush();
+        } else {
+            $this->get('session')->setFlash('notice', 'You cannot delete this category because there are some expenses for it.');
+        }
+        
+        return $this->redirect($this->generateUrl('categories'));
+    }
 }
-   
-    //Edits existing category
+
+//------------------------------------------------------------------------------
+
+//Edits existing category
 //    public function editCategoryAction(Request $request, $id)
 //    {
 //        $this->init();
@@ -139,17 +169,3 @@ public function editCategoryAction(Request $request, Category $category)
 //                'id' => $id, 
 //                'form' => $form->createView()));      
 //    }
-    
-    //Deletes category
-    public function deleteCategoryAction($id)
-    {  
-        $this->init();
-        
-        $category = $this->repository->find($id);
-        
-        $this->em->remove($category);
-        $this->em->flush();
-        
-        return $this->redirect($this->generateUrl('categories'));
-    }
-}

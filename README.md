@@ -25,6 +25,7 @@ Take report about whatever you are interested in.
 * [Twitter Bootstrap][6]
 * [Datepicker for Bootstrap][7]
 * [Jeditable][8]
+* [Highcharts JS][9]
 
 [1]:  http://symfony.com/
 [2]:  http://twig.sensiolabs.org/
@@ -34,3 +35,4 @@ Take report about whatever you are interested in.
 [6]:  http://twitter.github.io/bootstrap/
 [7]:  http://eternicode.github.io/bootstrap-datepicker/
 [8]:  http://www.appelsiini.net/projects/jeditable
+[9]:  http://www.highcharts.com/

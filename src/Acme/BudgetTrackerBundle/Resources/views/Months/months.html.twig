@@ -29,81 +29,74 @@
             </button>
              
         </form>
-    
-         <div class="big-spacer" id="container" style="width:100%; height:400px;"></div>
+        
+        {% if all_months %}
+            <div class="big-spacer" id="container" style="width:100%; height:400px;"></div>
 
-         {#   {% for m in all_months %}
-            <p>{{m.name}} - {{m.budget}}</p>
-        {% endfor %} #}
-            
-         <table class="table table-hover big-spacer">
-             <tr>
-                 <th>Month</th>
-                 <th>Budget</th>
-                 <th>Spent</th>
-                 <th>Saved</th>
-             </tr>
-             
-             <h4 class="big-spacer">All months</h4>
-             
-             {% if all_months_count > 0 %}
-             {% for i in 0..all_months_count-1 %}
-             <tr>
-                     <td>{{ months[i] }}</td>
-                     <td>{{ budget[i] }}</td>
-                     <td class="text-error">{{ spent[i] }}</td>
-                     {% if saved[i] >= 0 %}<td class="text-success">{{ saved[i] }}{% else %}<td class="text-error"><b>Overspent: {{ -saved[i] }}{% endif %}</b></td>
-                     </tr>
-             {% endfor %}
-            {% endif %}
-                
-         </table>
+            <table class="table table-hover big-spacer">
+                <tr>
+                    <th>Month</th>
+                    <th>Budget</th>
+                    <th>Spent</th>
+                    <th>Saved</th>
+                </tr>
 
-           
-            
-          </div>   
+                <h4 class="big-spacer">All months</h4>
+
+                {% if all_months_count > 0 %}
+                    {% for i in 0..all_months_count-1 %}
+                        <tr>
+                            <td>{{ all_months[i].name }}</td>
+                            <td>{{ budget[i]|number_format(2) }}</td>
+                            <td class="text-error">{{ spent[i]|number_format(2) }}</td>
+                            {% if saved[i] >= 0 %}
+                                <td class="text-success">{{ saved[i]|number_format(2) }}
+                            {% else %}
+                                <td class="text-error"><b>Overspent: {{ -saved[i]|number_format(2) }}
+                            {% endif %}
+                            </b></td>
+                        </tr>
+                    {% endfor %}
+               {% endif %}
+            </table>
+        {% endif %}
+    </div>   
 
     {%block javascript%}
        	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="http://code.highcharts.com/highcharts.js"></script>
-            {# <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> #}
+        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/month.js') }}"></script>
-       {# <script src="http://code.highcharts.com/highcharts.js"></script>#}
     {%endblock%}
-
         
-        {% if data != null %}
-        <script>
-            
-        $('#container').highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Budget for months'
-        },
-        xAxis: {
-            categories: [{{ data|raw }}]
-        },
-        yAxis: {
-            title: {
-                text: 'Money'
-            }
-        },
-        series: [{
-            name: 'Spent',
-            data: [{{ spent_joined }}],
-            color: '#AA3333'
-        }, {
-            name: 'Budget',
-            data: [{{ budget_joined }}],
-            color: '#759E1A'
-        }]
-    }); 
-            
-         
-            
-    </script>
-{% endif %}
+    {% if month_names_for_chart != null %}
+        <script>           
+            $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Budget for months'
+                },
+                xAxis: {
+                    categories: [{{ month_names_for_chart|raw }}]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Money'
+                    }
+                },
+                series: [{
+                    name: 'Spent',
+                    data: [{{ spent_joined }}],
+                    color: '#AA3333'
+                }, {
+                    name: 'Budget',
+                    data: [{{ budget_joined }}],
+                    color: '#759E1A'
+                }]
+            });         
+        </script>
+    {% endif %}
 {% endblock %}

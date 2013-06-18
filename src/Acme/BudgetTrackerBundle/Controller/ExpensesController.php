@@ -7,6 +7,9 @@ use Acme\BudgetTrackerBundle\Entity\Expense;
 use Acme\BudgetTrackerBundle\Form\Type\ExpenseType;
 use Symfony\Component\HttpFoundation\Request;
 
+/*
+ * Creates new expenses and show all the expenses for the current day
+ */
 class ExpensesController extends Controller
 {
     private function init()
@@ -15,84 +18,75 @@ class ExpensesController extends Controller
         $this->repository = $this->setRepository('Expense');
     }
 
+    /*
+     * If the user has some categories displays the form for adding new expenses.
+     * Finds all the expenses for the day and their sum.
+     */
+    
+    //user, expense_repo, category_repo
     public function expensesAction()
     {
         $this->init();
         
-        //If the user has categories, show the form for adding expenses
         $newcommer = false;
+
+        $category_repository = $this->setRepository('Category'); 
+        $number_of_categories = $category_repository->countByUser($this->user);
         
-        //Take the count of all categories for the current user to see if he is brand new
-        $category_repository = $this->setRepository('Category');
-        //TODO taka ili da ima countByUser?
-        $all_categories = $category_repository->findByUser($this->user);
-        
-        if(count($all_categories) == 0){
+        if($number_of_categories == 0){
             $newcommer = true;
         }
         
-        //Set the current date for searching all expenses for today
-       $today = new \DateTime('now');
-       $today = $today->format('d-m-Y');
+        //Set the current date for searching all expenses for today     
+        $from_date = new \DateTime();
+        $from_date->setTime(0, 0, 0);
         
-        $fromDate = new \DateTime(); // Have for example 2013-06-10 09:53:21
-        $fromDate->setTime(0, 0, 0);
+        $to_date = new \DateTime();
+        $to_date->modify('+1 day');
+        $to_date->setTime(0, 0, 0);
         
-       $toDate = new \DateTime();
-       $toDate->modify('+1 day');
-       $toDate->setTime(0, 0, 0);
-        
-        $expenses_for_today = $this->repository->findExpensesForDate($this->user, $fromDate, $toDate);
-       
-        // var_dump($expenses_for_today); echo '<br>';        
-//        var_dump($fromDate); echo '<br>';
-//        var_dump($toDate); echo '<br>';
+        $expenses_for_today = $this->repository->findExpensesForDate($from_date, $to_date, $this->user);
 
-        //Find the sum spent today
-        $sum = 0;
+        $spent_for_today = $this->repository->findSumBetweenDates($from_date, $to_date, $this->user);
         
-        foreach ($expenses_for_today as $exp) {
-            $sum += $exp->getPrice();
-        }
-    
+        $today = new \DateTime('now');
+        $today = $today->format('d-m-Y');
+        
         $expense = new Expense();
-        
-        //Set the current date to be default
         $expense->setDate($today);
-
         $form = $this->createForm(new ExpenseType($this->user), $expense);
 
         return $this->render(
                 'AcmeBudgetTrackerBundle:Expenses:expenses.html.twig', array(
                     'newcommer' => $newcommer,
                     'expenses' => $expenses_for_today,
-                    'sum' => $sum,
+                    'spent_for_today' => $spent_for_today,
                     'form' => $form->createView()));
     }
 
+    /*
+     * Adds new expenses.
+     */
+    
+    //user
     public function createExpenseAction(Request $request)
     {   
         $this->init();
         $newcommer = false;
-        $this->em = $this->getDoctrine()->getEntityManager();
+        $this->em = $this->getEM();
         
         $expense = new Expense();
         $form = $this->createForm(new ExpenseType($this->user), $expense);
-        
-        //$categories = $this->repository->findByUser($this->user);
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
             
             //Convert string date to DateTime object and send it to database as object
-            $dateObj = \DateTime::createfromformat('d-m-Y', $expense->getDate());
-            $expense->setDate($dateObj);
-//            var_dump($dateObj);
-//            die();
+            $date_object = \DateTime::createfromformat('d-m-Y', $expense->getDate());
+            $expense->setDate($date_object);
             
             if ($form->isValid()) {
-                $expense->setUser($this->user);
-                
+                $expense->setUser($this->user);             
                 $this->em->persist($expense);
                 $this->em->flush();
 
@@ -106,3 +100,8 @@ class ExpensesController extends Controller
         }
     }
 }
+
+//------------------------------------------------------------------------------
+
+//TODO 1. Add several expenses with one submit
+//TODO 2. AJAX?

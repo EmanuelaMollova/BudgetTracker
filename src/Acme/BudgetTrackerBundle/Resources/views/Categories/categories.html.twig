@@ -8,23 +8,25 @@
 
     <div class="little-spacer text-center">       
         <h3>Categories</h3> 
- 
-        <table class="big-spacer table table-striped">
-            {% for cat in categories %}
-                <tr>
-                    <td>
-                        <span class="right-spacer"><strong id="{{cat.id}}"class="edit">{{ cat.name }}</strong>
+        
+        {% if categories %}
+            <table class="big-spacer table table-striped">
+                {% for cat in categories %}
+                    <tr>
+                        <td>
+                            <span class="right-spacer"><strong id="{{cat.id}}"class="edit">{{ cat.name }}</strong>
 
-                        <script>
-                            var path = "{{ path('edit_category', { 'id': cat.id}) }}";
-                        </script>
+                            <script>
+                                var path = "{{ path('edit_category', { 'id': cat.id}) }}";
+                            </script>
 
-                        <a href="{{ path('delete_category', { 'id': cat.id }) }}"><i class="icon-remove"></i></a>
+                            <a href="{{ path('delete_category', { 'id': cat.id }) }}"><i class="icon-remove"></i></a>
 
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
         
         {% if app.session.hasFlash('notice') %}
             <div class="flash-notice text-error big-spacer">
@@ -46,8 +48,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/category.js') }}"></script> 
         <script src="{{ asset('bundles/acmebudgettracker/js/jquery.jeditable.js') }}"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>
-        
+        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>      
     {%endblock%}
 
 {% endblock %}

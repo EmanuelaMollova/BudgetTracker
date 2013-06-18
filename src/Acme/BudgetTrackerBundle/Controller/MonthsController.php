@@ -9,10 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MonthsController extends Controller
 {
+    /*
+     * Finds all months, the budget, the sum which is spent and the sum which is saved
+     * and gives this information to the chart and table in the template.
+     */
+    
+    //user, month, expense
     public function monthsAction()
     {
-        $data = null;
-        $budgets = null;
         $this->setUser();
         $month_repository = $this->setRepository('Month');
         $expense_repository = $this->setRepository('Expense');
@@ -23,35 +27,30 @@ class MonthsController extends Controller
         $all_months_count = count($all_months);
         $months_for_chart = (array_slice($all_months, $all_months_count-12, 12));
         
-        $months = array();
-        $names = array();
+        $month_names_for_chart = array();
         $spent = array();
         $budget = array();
         $saved = array();
         
         foreach ($all_months as $m)
         {
-            array_push($months, $m->getName());
-            
-            $sum = $expense_repository->getSumByMonth($this->user, $m->getDate()->format('Y'), $m->getDate()->format('m'));
+            $sum = $expense_repository->getSumByMonth($m->getDate()->format('m'), $m->getDate()->format('Y'),  $this->user);
             if(!$sum){
                 $sum = 0;
             }
             
-            array_push($spent, $sum);
-            
-           array_push($budget, $m->getBudget());
-           array_push($saved, $m->getBudget() - $sum);
-  
+            array_push($spent, $sum);           
+            array_push($budget, $m->getBudget());
+            array_push($saved, $m->getBudget() - $sum);
         }  
         
         foreach ($months_for_chart as $m)
         {
-            array_push($names, "'".$m->getName()."'");
+            array_push($month_names_for_chart, "'".$m->getName()."'");
         }
         
-        if($names){
-            $data = join($names, ', ');
+        if($month_names_for_chart){
+            $month_names_for_chart = join($month_names_for_chart, ', ');
         }
         
         $spent_joined = join(array_slice($spent, $all_months_count-12, 12), ', ');
@@ -59,23 +58,26 @@ class MonthsController extends Controller
 
         return $this->render('AcmeBudgetTrackerBundle:Months:months.html.twig', array(
             'all_months' => $all_months,
-            'data' => $data,
-            'months' => $months,
-            'names' => $names,
-            'spent' => $spent,
+            'all_months_count' => $all_months_count,          
+            'month_names_for_chart' => $month_names_for_chart,
             'spent_joined' => $spent_joined,
-            'budget_joined' => $budget_joined,
+            'budget_joined' => $budget_joined,           
+            'spent' => $spent,           
             'budget' => $budget,
-            'all_months_count' => $all_months_count,
             'saved' => $saved,
             'form' => $form->createView()
         ));
     }
     
+    /*
+     * Creates new month
+     */
+    
+    //user, month
     public function createMonthAction(Request $request)
     {
-        $data = null;
-        $budgets = null;
+        $duplicate = false;
+        
         $this->em = $this->getEM();
         $this->setUser();
         
@@ -89,23 +91,15 @@ class MonthsController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
             
-             
+            $date_obj = \DateTime::createfromformat('m-Y', $month->getDate());
+            $month->setDate($date_obj);
             
-
-            
-            
-            
-            $dateObj = \DateTime::createfromformat('m-Y', $month->getDate());
-            $month->setDate($dateObj);
-            $name = $dateObj->format('F').' '.$dateObj->format('Y');
+            $name = $date_obj->format('F').' '.$date_obj->format('Y');
             $month->setName($name);
             
-                        $same = $month_repository->
-                    countByNameAndUser($month->getName(), $this->user);
-
-                        var_dump($same);
-            //die();
-                        
+            $same = $month_repository->
+                countByNameAndUser($month->getName(), $this->user);
+ 
             if ($same == 0 && $form->isValid()) {
                 $month->setUser($this->user);
                 $this->em->persist($month);
@@ -117,12 +111,10 @@ class MonthsController extends Controller
                 return $this->redirect($this->generateUrl('months'));
             }
         }
-      
+        
         return $this->render(
             'AcmeBudgetTrackerBundle:Months:months.html.twig', array(
                 'all_months' => $all_months,
-                'data' => $data,
-                'budgets' => $budgets,
                 'form' => $form->createView()));    
     }
 }

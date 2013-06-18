@@ -21,7 +21,7 @@ class ExpenseType extends AbstractType
         ));
         
         $builder->add('description', 'text', array(
-            'label' => 'Description: (optional)',
+            'label' => 'Description (optional):',
             'required' => false
         ));
         

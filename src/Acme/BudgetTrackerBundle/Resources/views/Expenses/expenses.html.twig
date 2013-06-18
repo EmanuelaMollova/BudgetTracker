@@ -11,45 +11,42 @@
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Expenses'} %}
 
-    <div class="little-spacer text-center">
+    <div class="text-center little-spacer">
         
         <h3>Expenses</h3>
         
         {% if newcommer == true %}
         
-        <p class="big-spacer lead">
-            You shoulf first <a href="{{ path('categories') }}">create some categories</a>.
-            They will help you keep your expenses organised and filter them easily.
-            After creating categories, come back to start adding your expenses.
-        </p>
+            <div class="lead little-spacer">
+                <p>You should first <a href="{{ path('categories') }}">create some categories</a>.</p>
+                <p>They will help you keep your expenses organised and filter them easily.</p>
+                <p>After creating categories, come back to start adding your expenses.</p>
+            </div>
         
         {% else %}
-   
-            {# {% form_theme form 'AcmeBudgetTrackerBundle:Form:inline.html.twig' %} #}
 
             <form class="little-spacer" action="{{ path('create_expense') }}" method="post" {{ form_enctype(form) }}>
 
-               {{ form_widget(form) }}
+                {{ form_widget(form) }}
 
-               <button type="submit" class="btn">
-                   Submit
-               </button>
+                <button type="submit" class="btn">
+                    Submit
+                </button>
 
             </form>
         
-            {% if sum != 0 %}
+            {% if spent_for_today != 0 %}
                 <div class="big-spacer">
 
                     <h4 class="little-bottom-spacer">Expenses for today:</h4>
                     {% for exp in expenses %}        
                         <p>
                             {{ exp.product }} - {{ exp.price|number_format(2) }} 
-                            {#{{ exp.date|date("d-m-Y") }}, {{ exp.category.name }}#}
                         </p> 
                     {% endfor %}
                     
                     <hr class="hr-colored span4 center">    
-                    <div><p><b>Sum: {{ sum|number_format(2) }}</b></p></div>
+                    <div><b>Sum: {{ spent_for_today|number_format(2) }}</b></div>
                     
                 </div>
             {% endif %}
@@ -63,10 +60,10 @@
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/editable.js') }}"></script>
     {%endblock%}
-
-
         
 {% endblock %}
+        
+{# -------------------------------------------------------------------------- #}        
         
 {# TODO 1. Color the hr! #}
 {# TODO 2. Add several expenses with one submit #}

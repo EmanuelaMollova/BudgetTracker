@@ -3,7 +3,6 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
-    {#<link href="{{ asset('bundles/acmebudgettracker/css/datetimepicker.css') }}" rel="stylesheet" type="text/css" />#}
 {% endblock %}
 
 {% block title %} Reports {% endblock %}
@@ -14,80 +13,54 @@
 
     <div class="little-spacer text-center"> 
         <h3>Reports</h3>   
- 
-       {# <h4>Select for what time you would like your report</h4>        
-        
-        <div>        
-            <select id="select_time">
-                <option value="years">For year(s)</option>
-                <option value="months">For month(s)</option>
-                <option value="days">For day(s)</option>
-            </select>
-        </div> #}
-        
-        <h4 class="big-spacer">Choose categories:</h4>
 
-        {#<ul class="categories">
-        {% for cat in all_categories %}
-            <li>
-                <input type="checkbox" name="{{ cat.name }}" value="{{ cat.name }}">{{ cat.name }}
-            </li>
-        {% endfor %}
-            <a href="#" id="all">All</a> | 
-            <a href="#" id="none">None</a>
-        </ul> #}
-        
-        {% form_theme form 'AcmeBudgetTrackerBundle:Form:checkbox.html.twig' %}
-        <form class="little-spacer" action="{{ path('take_report') }}" method="post" {{ form_enctype(form) }}>
-
-           {# {{ form_widget(form) }} #}
-            
-            {{ form_errors(form) }}
-            {{ form_widget(form._token) }}
-            
-            <div class="checkboxes text-left offset7">
-            {{ form_row(form.categories) }}
-            
-           {# <p>
-                <span id="all"><u>All</u></span> | 
-                <span id="none"><u>None</u></span>
-            </p> #}
-            
-            <input id="chbx" type="checkbox" {#onclick="toggleChecked(this.checked)"#}><b> Select / Deselect All</b>
+        {% if newcommer == true %}
+            <div class="lead little-spacer">
+                <p>
+                    You should first <a href="{{ path('categories') }}">create some categories</a>
+                    and list your expesnses.
+                </p>
+                <p>After that you will be able to get reports.</p>
             </div>
-            
-            <div class="big-spacer">
-            {{ form_row(form.start_date) }}   
-            {{ form_row(form.end_date) }}
-            </div>
-            
-            <button type="submit" class="btn little-spacer">
-                Submit
-            </button> 
-            
-        </form>
-
- {#   {% if response != null %}
         
-       {% include 'AcmeBudgetTrackerBundle::display_expenses.html.twig' with {
-                'first_category': first_category,
-                'expenses_for_current_month': response, 
-                'progressbar': false} %}
-        
-        
-    {% else %}
-            <p>There are no expenses!</p>
-    {% endif %} #}
-     
+        {% else %}
+            
+            {% if app.session.hasFlash('notice') %}
+                <div class="flash-notice text-error little-spacer lead">
+                    {{ app.session.flash('notice') }}
                 </div>
+            {% endif %}
+        
+            <h4 class="big-spacer">Choose categories:</h4>
+
+            {% form_theme form 'AcmeBudgetTrackerBundle:Form:checkbox.html.twig' %}
+            <form class="little-spacer" action="{{ path('take_report') }}" method="post" {{ form_enctype(form) }}>
+
+                {{ form_errors(form) }}
+                {{ form_widget(form._token) }}
+
+                <div class="checkboxes text-left offset7">
+                    {{ form_row(form.categories) }}
+                    <input id="chbx" type="checkbox"><b> Select / Deselect All</b>
+                </div>
+
+                <div class="big-spacer">
+                    {{ form_row(form.start_date) }}   
+                    {{ form_row(form.end_date) }}
+                </div>
+
+                <button type="submit" class="btn little-spacer">
+                    Submit
+                </button> 
+
+            </form>
+        {% endif %}
+    </div>
        
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        
-        {#<script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datetimepicker.min.js') }}"></script>#}
-       <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script> 
-        <script src="{{ asset('bundles/acmebudgettracker/js/reports.js') }}"></script>
-        
+        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script> 
+        <script src="{{ asset('bundles/acmebudgettracker/js/reports.js') }}"></script>       
     {%endblock%}
         
 {% endblock %}

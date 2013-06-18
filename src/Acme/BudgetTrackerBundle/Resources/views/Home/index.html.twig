@@ -4,7 +4,7 @@
 
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Home'} %}
 
-    <div class="little-spacer text-center">
+    <div class="text-center little-spacer ">
 
         {# Greeting and introduction to newcommers #}
         {% if newcommer == true %}
@@ -52,7 +52,8 @@
                     You can add some from <a href="{{ path('expenses') }}">here</a>.
                 </p>
                 <p class="lead little-spacer">
-                    And you can <a href="{{ path('months') }}">add your budget</a>, too (if you still haven't added it :).
+                    And you can <a href="{{ path('months') }}">add your budget</a>
+                    , too (if you still haven't added it :).
                 </p> 
             
         {% else %}
@@ -60,13 +61,15 @@
             {# Experienced users #}
             <h3>Expenses for the current month</h3>
             
+            {# If budget is set - show remaining money #}
             {% if budget_for_current_month !=null %}
             
                 {% if remaining > 0 %}
-                    <p class="lead little-spacer text-success">Remaining: 
+                    <p class="lead text-success little-spacer ">Remaining: 
                         <strong>{{ remaining }}</strong> 
                         (from {{ budget_for_current_month|number_format(2) }})
                     </p>
+                    
                 {% elseif remaining == 0 %}
                     <p class="lead text-error">Remaining: 
                         <strong>{{ remaining }}</strong> 
@@ -76,6 +79,7 @@
                     <p class="lead text-error">
                         You have spent all your budget of {{ budget_for_current_month|number_format(2) }}!
                     </p>
+                    
                 {% else %}
                     <p class="lead text-error">
                         You have exceeded your budget of {{ budget_for_current_month|number_format(2) }}!
@@ -88,40 +92,27 @@
                     
             {% endif %}
 
+            {# Display all categories and expenses #}
             {% include 'AcmeBudgetTrackerBundle::display_expenses.html.twig' with {
                 'first_category': first_category, 
-                'expenses_for_current_month': expenses_for_current_month,
+                'expenses': expenses_for_current_month,                
+                'total_sum': spent_for_current_month,
                 'progressbar': true,
-                'sum_for_current_month': sum_for_current_month,
                 'details': false,
                 'highchart': false} %}
            {% endif %}         
             
     </div>
 
- {#   {% set a = 'Emi' %}
-    {% set b = 'iss cool' %}
-
-    {% set c = a ~ b %}
-    
-    <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-    
-{{ c }}     #}
-
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/home.js') }}"></script>
-     {#   <script src="http://code.highcharts.com/highcharts.js"></script>
+
+    {%endblock%}
         
-    
-        
-#}
-{%endblock%}
 {% endblock %} 
         
 {#----------------------------------------------------------------------------#}
         
-{# TODO 1. <details><summary> ... for each category, not for all of them #}
-{# TODO 2. When many items are shown ??? pagination? pop-ups? #}
-{# TODO 3. Show sum for each category? or only the name and progress bar? #}
-{# TODO 4. Underline with <u> ??? #}  
+{# TODO 1. When many items are shown ??? pagination? pop-ups? #}
+{# TODO 2. Underline with <u> ??? #}  
