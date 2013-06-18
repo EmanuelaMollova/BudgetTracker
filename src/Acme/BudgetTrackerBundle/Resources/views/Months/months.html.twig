@@ -12,17 +12,15 @@
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Months'} %}
 
     <div class="little-spacer text-center"> 
-        <h1>Months</h1>
+        <h3>Months</h3>
         
         {% if app.session.hasFlash('notice') %}
-            <div class="flash-notice text-error big-spacer">
+            <div class="flash-notice text-error little-spacer lead">
                 {{ app.session.flash('notice') }}
             </div>
         {% endif %}
 
-        
-
-        <form class="big-spacer" action="{{ path('create_month') }}" method="post" {{ form_enctype(form) }}>
+        <form class="little-spacer" action="{{ path('create_month') }}" method="post" {{ form_enctype(form) }}>
             
             {{ form_widget(form) }}
 
@@ -38,6 +36,29 @@
             <p>{{m.name}} - {{m.budget}}</p>
         {% endfor %} #}
             
+         <table class="table table-hover big-spacer">
+             <tr>
+                 <th>Month</th>
+                 <th>Budget</th>
+                 <th>Spent</th>
+                 <th>Saved</th>
+             </tr>
+             
+             <h4 class="big-spacer">All months</h4>
+             
+             {% if all_months_count > 0 %}
+             {% for i in 0..all_months_count-1 %}
+             <tr>
+                     <td>{{ months[i] }}</td>
+                     <td>{{ budget[i] }}</td>
+                     <td class="text-error">{{ spent[i] }}</td>
+                     {% if saved[i] >= 0 %}<td class="text-success">{{ saved[i] }}{% else %}<td class="text-error"><b>Overspent: {{ -saved[i] }}{% endif %}</b></td>
+                     </tr>
+             {% endfor %}
+            {% endif %}
+                
+         </table>
+
            
             
           </div>   
@@ -72,12 +93,12 @@
         },
         series: [{
             name: 'Spent',
-            data: [{{ spent }}],
-            color: '#FF5050'
+            data: [{{ spent_joined }}],
+            color: '#AA3333'
         }, {
             name: 'Budget',
-            data: [{{ budget }}],
-            color: '#33CC33'
+            data: [{{ budget_joined }}],
+            color: '#759E1A'
         }]
     }); 
             

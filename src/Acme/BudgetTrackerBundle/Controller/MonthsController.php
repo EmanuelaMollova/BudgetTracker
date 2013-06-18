@@ -19,15 +19,19 @@ class MonthsController extends Controller
         $month = new Month();
         $form = $this->createForm(new MonthType(), $month);
         
-        $all_months = array_reverse($month_repository->findByUser($this->user)); 
+        $all_months = $month_repository->findByUser($this->user); 
+        $all_months_count = count($all_months);
+        $months_for_chart = (array_slice($all_months, $all_months_count-12, 12));
         
+        $months = array();
         $names = array();
         $spent = array();
         $budget = array();
+        $saved = array();
         
         foreach ($all_months as $m)
         {
-            array_push($names, "'".$m->getName()."'");
+            array_push($months, $m->getName());
             
             $sum = $expense_repository->getSumByMonth($this->user, $m->getDate()->format('Y'), $m->getDate()->format('m'));
             if(!$sum){
@@ -37,23 +41,33 @@ class MonthsController extends Controller
             array_push($spent, $sum);
             
            array_push($budget, $m->getBudget());
+           array_push($saved, $m->getBudget() - $sum);
   
         }  
         
-        
+        foreach ($months_for_chart as $m)
+        {
+            array_push($names, "'".$m->getName()."'");
+        }
         
         if($names){
             $data = join($names, ', ');
         }
         
-        $spent = join($spent, ', ');
-        $budget = join($budget, ', ');
+        $spent_joined = join(array_slice($spent, $all_months_count-12, 12), ', ');
+        $budget_joined = join(array_slice($budget,$all_months_count-12, 12), ', ');
 
         return $this->render('AcmeBudgetTrackerBundle:Months:months.html.twig', array(
             'all_months' => $all_months,
             'data' => $data,
+            'months' => $months,
+            'names' => $names,
             'spent' => $spent,
+            'spent_joined' => $spent_joined,
+            'budget_joined' => $budget_joined,
             'budget' => $budget,
+            'all_months_count' => $all_months_count,
+            'saved' => $saved,
             'form' => $form->createView()
         ));
     }
@@ -100,6 +114,7 @@ class MonthsController extends Controller
                 return $this->redirect($this->generateUrl('months'));
             } else {
                 $this->get('session')->setFlash('notice', 'The budget for this month is already set!');
+                return $this->redirect($this->generateUrl('months'));
             }
         }
       

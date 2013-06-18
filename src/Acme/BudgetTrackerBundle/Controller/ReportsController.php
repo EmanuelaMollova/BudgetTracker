@@ -22,6 +22,7 @@ class ReportsController extends Controller
         $today = new \DateTime();
         $date = $today->format('d-m-Y');
         $report->setEndDate($date);
+        $report->setStartDate($date);
         $form = $this->createForm(new ReportType($this->user), $report);
         
         if ($request->isMethod('POST')) {
@@ -56,6 +57,8 @@ class ReportsController extends Controller
             
             $response = $repo->findForCatsAndTimes($this->user, $start_dateObj, $end_dateObj, $query); 
             
+            $total_sum = $repo->findSumBetweenDates($this->user, $start_dateObj, $end_dateObj);
+            
             if($response){
             $first_category = $response[0]->getCategory()->getName();
             } 
@@ -67,7 +70,8 @@ class ReportsController extends Controller
             'start_date' => $start_dateObj->format('d F Y'),
             'end_date' => $end_dateObj->format('d F Y'),
             'response' => $response,
-            'first_category' => $first_category
+            'first_category' => $first_category,
+            'total_sum' => $total_sum
         ));
         }
         

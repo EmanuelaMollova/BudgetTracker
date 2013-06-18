@@ -93,29 +93,31 @@
                 'expenses_for_current_month': expenses_for_current_month,
                 'progressbar': true,
                 'sum_for_current_month': sum_for_current_month,
-                'details': false} %}
+                'details': false,
+                'highchart': false} %}
            {% endif %}         
             
     </div>
 
-    {% set a = 'Emi' %}
+ {#   {% set a = 'Emi' %}
     {% set b = 'iss cool' %}
 
     {% set c = a ~ b %}
     
     <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     
-{{ c }}
+{{ c }}     #}
 
     {%block javascript%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        <script src="http://code.highcharts.com/highcharts.js"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/home.js') }}"></script>
-    {%endblock%}
+     {#   <script src="http://code.highcharts.com/highcharts.js"></script>
         
-
-
-{% endblock %}
+    
+        
+#}
+{%endblock%}
+{% endblock %} 
         
 {#----------------------------------------------------------------------------#}
         

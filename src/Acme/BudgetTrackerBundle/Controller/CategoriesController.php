@@ -93,9 +93,6 @@ public function editCategoryAction(Request $request, Category $category)
             $em->persist($category);
             $em->flush();
         } else { 
-
-
-           
                 $response = new Response();
                 $response->setContent('              <div class="alert alert-error">
             <button type="button" class="close" data-dismiss="alert">OK</button>
@@ -104,7 +101,7 @@ public function editCategoryAction(Request $request, Category $category)
                 $response->send();
 
             //$this->get('session')->setFlash('notice', 'This value is already used!');
-            return new Response($name);
+           // return new Response($name);
             //return $this->redirect($this->generateUrl('categories'));         
         }
     } else {

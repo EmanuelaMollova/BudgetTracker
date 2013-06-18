@@ -26,7 +26,7 @@ class MonthRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
     
-        public function findByUser($user)
+        public function findByUserLimit($user)
     {
         $q = $this
             ->createQueryBuilder('m')
@@ -34,6 +34,18 @@ class MonthRepository extends EntityRepository
             ->orderBy('m.date', 'DESC')
             ->setMaxResults(12)
             ->setFirstResult(0)
+            ->setParameter('user', $user)
+             ->getQuery();
+       
+        return $q->getResult();
+    }
+    
+            public function findByUser($user)
+    {
+        $q = $this
+            ->createQueryBuilder('m')
+            ->where('m.user = :user')
+            ->orderBy('m.date', 'ASC')
             ->setParameter('user', $user)
              ->getQuery();
        

@@ -1,28 +1,46 @@
-<button class="little-bottom-spacer btn {#btn-info#} toggle_expenses">
+{% if highchart == true %}
+<div id="container" style="min-width: 300px; height: 300px; margin: 0 auto"></div>
+{% endif %}
+
+<button class="little-spacer btn {#btn-info#} toggle_expenses">
     <i class="icon-chevron-down {#icon-white#}"></i> Show/hide all products
 </button>
+
+
 
 {# Displays categories, sums for them and expenses #}
 {% set current_category = first_category %}
 
-<h5 class="little-spacer"><u>{{ first_category }} </u></h5> 
+<h4 class="little-spacer text-info"><u>{{ first_category }} </u></h4> 
 
-{% set chart = '[' ~ first_category ~ ', ' %}
+{% if highchart == true %}
+    {% set chart = '["' ~ first_category ~ '", ' %}
+{% endif %}
 
-    <div class=" products {{first_category}}">
-    
-        
+<div class=" products {{first_category}}">
+    {% if details == true %}
+        <table class="table table-hover"><tr>
+             <th>Product</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            </tr><tr>
+    {% endif %}
+      
         {% set sum = 0 %}
         {% for e in expenses_for_current_month %}
             {% if e.category.name != current_category %}
-        
-    </div>
-       
-                <strong>{{ sum|number_format(2) }}</strong>
-                {% set chart = chart ~ sum ~ '], ' %}
+    
+        {% if details == true %}
+        </tr></table>
+        {% endif %}
+</div>
+                <strong>Sum: {{ sum|number_format(2) }}</strong>
                 
-
-
+                {% if highchart == true %}
+                    {% set chart = chart ~ sum ~ '], ' %}
+                {% endif %}
+                
                 {% if progressbar == 'true' %}
                     <div class="little-spacer progress span5 center">
                         {% set percent = sum*100/sum_for_current_month//1 %}
@@ -33,23 +51,51 @@
                 {% endif %}
 
                 {% set sum = 0 %}
-
+     
+                <h4 class="little-spacer text-info"><u>{{ e.category.name }}</u></h4>
                 
-                <h5><u>{{ e.category.name }}</u></h5>
 
                 {% set current_category = e.category.name %}
-                {% set chart = chart ~ '[' ~ current_category ~ ', ' %}
                 {% set sum = sum + e.price %}
+                
+                {% if highchart == true %}
+                    {% set chart = chart ~ '["' ~ current_category ~ '", ' %}
+                {% endif %}
 
                 <div class="products {{current_category}}">
+                    
+                    {% if details == true %}
+                    <table class="table table-hover text-left"><tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            </tr><tr>
+                    
 
                 {# <div class="products"> #}
-                <p>
-                    {{ e.product }} - {{ e.price|number_format(2) }} 
+               
+                            
+                        {# <p>
+                     {{ e.product }} - {{ e.price|number_format(2) }} 
+                    
                     {% if details == true %}
-                    {{ e.description }}, {{ e.date|date("d-m-Y") }}
+                        {{ e.description }}, {{ e.date|date("d-m-Y") }}
                     {% endif %}
-                </p>
+                </p> #}
+                            
+                            
+                         <td>{{ e.product }}</td> 
+                        <td>{{ e.price|number_format(2) }}</td> 
+                        <td>{{ e.date|date("d-m-Y") }}</td> 
+                        <td>{% if e.description %}{{ e.description }}{% else %} - {% endif %}</td> </tr> <tr>
+                    
+                    {% else %}
+                             <p>
+                     {{ e.product }} - {{ e.price|number_format(2) }} 
+                     </p>
+                                    
+                    {% endif %}
                 {# </div> #}
                 {# </div> #}
 
@@ -57,75 +103,102 @@
                 {% set sum = sum + e.price %}
 
                 {# <div class="products"> #}
-                <p>
-                    <p>{{ e.product }} - {{ e.price|number_format(2) }}</p> 
+                
+                
+                {% if details == true %}
+                        <td>{{ e.product }}</td> 
+                        <td>{{ e.price|number_format(2) }}</td> 
+                        <td>{{ e.date|date("d-m-Y") }}</td> 
+                         <td>{% if e.description %}{{ e.description }}{% else %} - {% endif %}</td> </tr> <tr>
+                  {% else %}
+                                 <p>
+                     {{ e.product }} - {{ e.price|number_format(2) }} 
+                     </p>
+                     {% endif %}
+
+                {#<p>
+                     <p>{{ e.product }} - {{ e.price|number_format(2) }}</p> 
+                    
                     {% if details == true %}
-                    <p>{{ e.description }}, {{ e.date|date("d-m-Y") }}</p>
+                        <p>{{ e.description }}, {{ e.date|date("d-m-Y") }}</p>
                     {% endif %}
-                </p>
+                </p> #}
+                
+                
                 {# </div> #}
             {% endif %}                   
-{% endfor %}
+        {% endfor %}
 
-       </div> 
+                  {% if details == true %}
+                </tr></table>
+                {% endif %}
+                    </div> 
 
-<strong>{{ sum|number_format(2) }}</strong>
-{% set chart = chart  ~ sum ~ ']' %}
+    <strong>Sum: {{ sum|number_format(2) }}</strong>
+        
+    {% if highchart == true %}
+        {% set chart = chart  ~ sum ~ ']' %}
+    {% endif %}
 
-{{ chart }}
-
-{% if progressbar == 'true' %}
-<div class="progress span5 center little-spacer">
-    {% set percent = sum*100/sum_for_current_month//1 %}
-    <div class="bar" style="width:{{ percent }}%;">
-        {{ percent }}%
+    {% if progressbar == 'true' %}
+    <div class="progress span5 center little-spacer">
+        {% set percent = sum*100/sum_for_current_month//1 %}
+        <div class="bar" style="width:{{ percent }}%;">
+            {{ percent }}%
+        </div>
     </div>
-</div>
 
+    
+    {% endif %}
+    
+    <p class="lead text-error little-spacer">Total: <strong>{{sum_for_current_month|number_format(2)}}</strong></p> 
 
-<p class="lead text-error">Spent: <strong>{{sum_for_current_month|number_format(2)}}</strong></p> 
-{% endif %}
+    {% if highchart == true %}
+        
 
-                <script>
-            
+        {%block javascript%}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+            <script src="http://code.highcharts.com/highcharts.js"></script>
+        {%endblock%}
+
+        <script>
             $(function () {
-        $('#container').highcharts({
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false
-            },
-            title: {
-                text: 'Browser market shares at a specific website, 2010'
-            },
-            tooltip: {
-        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-            	percentageDecimals: 1
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        connectorColor: '#000000',
-                        formatter: function() {
-                            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+                $('#container').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: 'Expenses'
+                    },
+                    tooltip: {
+                        formatter: function () {
+                            return this.point.name + ': <b>' + Highcharts.numberFormat(this.percentage, 0) + '%</b>';
                         }
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Browser share',
-                data: [
-                    {{ chart }}
-                ]
-            }]
-        });
-    });
-            
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                color: '#000000',
+                                connectorColor: '#000000',
+                                formatter: function() {
+                                    return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'Total',
+                        data: [
+                        {{ chart|raw }}
+                        ]
+                    }]
+                });
+            });    
         </script>
-
-
+    {% endif %}

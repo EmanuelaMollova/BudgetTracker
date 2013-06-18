@@ -25,6 +25,7 @@ class ReportType extends AbstractType
             'required' => true,
             'multiple' =>true,
             'expanded' => true,
+            'attr'     => array('checked'   => 'checked'),
             'query_builder' => function ($repository) use ($user)
                 { return $repository->createQueryBuilder('cat')
                                     ->select('cat')

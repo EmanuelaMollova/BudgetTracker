@@ -4,14 +4,15 @@ $(document).ready(function(){
          submit    : 'Save',
          tooltip   : 'Click to edit'
      });
-});
-$('.close').on('click', function(){
-    console.log(works);
+     
+     $('.alert').on('click', function(){
+         $("input[type=text]").val('');
+     });
 });
 
-$('.alert').alert();
+
     
-    //$("input[type=text]").val()
+    
 //});
 
 //------------------------------------------------------------------------------

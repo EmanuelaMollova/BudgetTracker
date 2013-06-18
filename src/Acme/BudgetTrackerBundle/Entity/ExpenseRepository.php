@@ -83,19 +83,21 @@ class ExpenseRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
     
-    public function findBetweenDates($user, $date1, $date2)
+    //used
+    public function findSumBetweenDates($user, $start_date, $end_date)
     {
         $q = $this
             ->createQueryBuilder('e')
-            ->where('e.date >= :date1')
+            ->add('select', 'SUM(e.price)')
+            ->where('e.date >= :start_date')
             ->andWhere('e.user = :user')
-            ->andWhere('e.date <= :date2')
-            ->setParameter('date1', $date1)
-            ->setParameter('date2', $date2)
+            ->andWhere('e.date <= :end_date')
+            ->setParameter('start_date', $start_date)
+            ->setParameter('end_date', $end_date)
             ->setParameter('user', $user)
              ->getQuery();
         
-        return $q->getResult();
+        return $q->getSingleScalarResult();
     }
     
     public function findForCat($user, $q)
