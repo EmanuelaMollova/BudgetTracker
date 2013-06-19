@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ExpensesController extends Controller
 {
+    
+    //TODO one action for display and add
     private function init()
     {
         $this->setUser();

@@ -40,6 +40,16 @@ class Month
      * @ORM\Column(type="float")
      */
     protected $budget;
+    
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $transfered;
+    
+    public function __construct()
+    {
+        $this->transfered = 0;
+    }
 
     public function getId()
     {
@@ -68,6 +78,18 @@ class Month
     public function getBudget()
     {
         return $this->budget;
+    }
+    
+        public function setTransfered($transfered)
+    {
+        $this->transfered = $transfered;
+    
+        return $this;
+    }
+
+    public function getTransfered()
+    {
+        return $this->transfered;
     }
 
     public function setUser(\Acme\BudgetTrackerBundle\Entity\User $user = null)

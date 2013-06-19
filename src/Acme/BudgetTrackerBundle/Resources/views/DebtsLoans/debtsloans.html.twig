@@ -1,0 +1,116 @@
+{# TODO NOTIFICATIONS REPORTS MONEY - TO COUNT LOANS AND DEBTS TOO AND SO ON   ZAPOR AKO NE SA VYRNATI ZAEMI ? BILLS (U)  #}
+
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block title %} Debts & Loans {% endblock %}
+
+{% block body %}
+    
+    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Debts & Loans', 'debts': 2} %}
+
+    <div class="text-center little-spacer">
+        <h3>Debts & Loans</h3>   
+            
+        <form class="little-spacer" action="{{ path('debts_loans') }}" method="post" {{ form_enctype(form) }}>
+
+                {{ form_widget(form) }}
+
+                <button type="submit" class="btn little-spacer">
+                    Submit
+                </button>
+
+            </form>
+        
+        
+        {% if active_debts %}
+        <h4 class="big-spacer">Debts you should return:</h4>
+        <table class="table table-hover little-spacer">
+            <tr>
+                <th> Return to </th>
+                <th>Sum</th>
+                <th>Date when taken</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            {% for d in active_debts %}              
+                <tr>
+                    <td>{{d.name}}</td>
+                    <td>{{d.price|number_format(2)}}</td>
+                    <td>{{d.date|date('d-m-Y')}}</td>
+                    <td>{% if d.description %} {{ d.description }} {% else %} - {% endif %}<td>
+                    <td><a href="{{path('return', {'id': d.id}) }}">Mark as returned</a></td>
+                </tr>                
+            {% endfor %}
+         </table>
+        {% endif %}
+        
+            {% if passive_debts %}
+        <h4 class="big-spacer">Debts you already have returned:</h4>
+        <table class="table table-hover little-spacer">
+            <tr>
+                <th> Return to </th>
+                <th>Sum</th>
+                <th>Date when taken</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            {% for d in passive_debts %}
+                <tr class="linethr">
+                    <td>{{d.name}}</td>
+                    <td>{{d.price|number_format(2)}}</td>
+                    <td>{{d.date|date('d-m-Y')}}</td>
+                    <td>{% if d.description %} {{ d.description }} {% else %} - {% endif %}<td>
+                    <td><a href="{{path('return', {'id': d.id}) }}">Mark as unreturned</a></td>
+                </tr>
+                
+            {% endfor %}
+        </table>
+        {% endif %}
+        
+        {% if active_loans %}
+        <h4 class="big-spacer">Loans you should receive back:</h4>
+        <table class="table table-hover little-spacer">
+            <tr>
+                <th></th>
+                <th>Receive from</th>
+                <th>Sum</th>
+                <th>Date when given</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            
+            {% for d in active_loans %}
+                
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{d.name}}</td>
+                    <td>{{d.price|number_format(2)}}</td>
+                    <td>{{d.date|date('d-m-Y')}}</td>
+                    <td>{% if d.description %} {{ d.description }} {% else %} - {% endif %}<td>
+                    <td><a href="">Mark as returned</a></td>
+                </tr>
+                
+            {% endfor %}
+
+        
+        </table>
+                {% else %}
+            
+            <p class="lead text-success little-spacer">You have no loans to receive!</p> 
+        {% endif %}
+
+        
+    </div>
+
+
+    {%block javascript%}
+        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script> 
+        <script src="{{ asset('bundles/acmebudgettracker/js/reports.js') }}"></script>      
+    {%endblock%}
+        
+{% endblock %}

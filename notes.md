@@ -5,6 +5,11 @@ PAGES:
 * Expenses - AJAX?
 * Reports - Beautify and Diagrams???
 * Categories - Validate Duplicates
+* NOTIFICATIONS 
+* Debts, loans - the return what happens to money?
+* REPORTS, MONEY - TO COUNT LOANS AND DEBTS, TOO
+* ZAPOR AKO NE SA VYRNATI ZAEMI ? 
+* BILLS (U)  
 
 
 TOD0:

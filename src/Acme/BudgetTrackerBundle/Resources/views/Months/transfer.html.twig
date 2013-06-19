@@ -1,0 +1,53 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} Months {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bundles/acmebudgettracker/css/jquery-ui-1.10.3.custom.min_1.css') }}" rel="stylesheet" type="text/css" />
+    
+{% endblock %}
+
+{% block body %}
+    
+    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Months'} %}
+
+    <div class="little-spacer text-center"> 
+        <h3>Transfers</h3>
+        
+         <form class="little-spacer" action="{{ path('transfer', { 'id': id}) }}" method="post" {{ form_enctype(form) }}>
+            
+            {{ form_widget(form) }}
+
+            <button type="submit" class="btn little-spacer">
+                Submit
+            </button>
+             
+        </form>
+        
+     </div>   
+
+    {%block javascript%}
+       	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/jquery-ui-1.10.3.custom.min_1.js') }}"></script>       
+        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/transfer.js') }}"></script>
+    {%endblock%}
+        
+    <script>
+        (function(){   
+    $('#transfer_destination').datepicker({
+            format: 'mm-yyyy',
+            startView: 1,
+            minViewMode: 1,
+            autoclose: true,
+            startDate: '{{ start_date }}'
+    });
+    
+    $('#transfer_money').spinner({ max: {{ max }} });
+})();
+    </script>
+{% endblock %}

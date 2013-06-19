@@ -74,3 +74,20 @@ create_month:
 take_report:
     pattern: /take_report
     defaults: { _controller: AcmeBudgetTrackerBundle:Reports:reports }
+    
+bank_interest:
+    pattern: /bank_interest
+    defaults: { _controller: AcmeBudgetTrackerBundle:Banks:banks }
+    
+transfer:
+    pattern: /transfer/{id}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Months:transfer }
+    
+debts_loans:
+    pattern: /debts_loans
+    defaults: { _controller: AcmeBudgetTrackerBundle:DebtsLoans:debtsLoans }
+    
+return:
+    pattern: /return/{id}
+    defaults: { _controller: AcmeBudgetTrackerBundle:DebtsLoans:return }
+    

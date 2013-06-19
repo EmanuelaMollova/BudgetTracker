@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} Bank Interest {% endblock %}
+
+{% block body %}
+    
+    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Bank interest'} %}
+
+    <div class="little-spacer text-center">       
+        <h3>Bank Interest</h3> 
+        
+        <p class="lead text-success">You have saved <b>{{ saved_sum }}</b> so far!</p>
+        
+        <h4>Calculate what your profit will be if you deposit them in a bank</h4>
+        
+        <p> Deposit <input id="sum" type="text" value="{{ saved_sum }}"> of them</p> 
+        <p>in a bank with interest of <input id="bank_interest" type="text"> </p>
+        <p>for <input id="period" type="text"> months.</p>
+        
+        <button class="btn">Calculate</button>
+        
+        <div class="results">
+        <p>You will gain <span id="profit"><span>.</p>
+        <p>Your saved sum will then be <span id="new_sum"></span>.</p>
+        </div>
+        
+     </div> 
+
+    {%block javascript%}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/banks.js') }}"></script> 
+        <script src="{{ asset('bundles/acmebudgettracker/js/jquery.jeditable.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>      
+    {%endblock%}
+
+{% endblock %}

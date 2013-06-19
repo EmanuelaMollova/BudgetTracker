@@ -6366,8 +6366,13 @@ Not from the original file
     margin-bottom: 45px;
 }
 
-hr-colored {
+.hr-colored {
   border-top: 1px solid #7C2B57;
+}
+
+.linethr {
+    color: green;
+    text-decoration:line-through
 }
 
 /*input::-webkit-calendar-picker-indicator{

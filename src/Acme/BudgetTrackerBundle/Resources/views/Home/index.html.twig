@@ -2,10 +2,12 @@
 
 {% block body %}
 
-    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Home'} %}
+    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Home', 'debts': active_debts} %}
 
     <div class="text-center little-spacer ">
 
+        
+        
         {# Greeting and introduction to newcommers #}
         {% if newcommer == true %}
         

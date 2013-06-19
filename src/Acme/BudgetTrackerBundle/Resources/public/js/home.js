@@ -1,4 +1,9 @@
 $(document).ready(function(){
+    $('span').on('click', function(ev){
+        ev.preventDefault();
+       alert("BAAAAAAAAAAAA!"); 
+    });
+    
     $('u').on('mouseover', function(){
        $(this).css('cursor', 'pointer'); 
     });

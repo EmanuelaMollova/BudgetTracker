@@ -1,12 +1,17 @@
 <div class="navbar navbar-inverse navbar-static-top"> 
     <div class="navbar-inner">
         
-        <a class="brand" href="{{ path('home') }}">BudgetTracker</a>
+        <a class="brand" href="{{ path('home') }}">
+           {# {% if debts > 0  %} #}
+                <span class="badge badge-important">{{ debts|default(0) }}</span>
+            {#{%endif%}#} 
+            BudgetTracker
+        </a>
         
         <ul class="nav">
 
             <li{% if var == "Expenses" %} class="active"{% endif %}>
-                <a href="{{ path('expenses') }}">Expenses</a>
+                <a href="{{ path('expenses') }}"> Expenses</a>
             </li>
 
             <li{% if var == "Reports" %} class="active"{% endif %}>
@@ -21,17 +26,17 @@
                 <a href="{{ path('months') }}">Months</a>
             </li>
             
-            {#<li{% if var == "Months" %} class="active"{% endif %}>
+            <li{% if var == "Debts & Loans" %} class="active"{% endif %}>
+                <a href="{{ path('debts_loans') }}">Debts & Loans</a>
+            </li>
+            
+            {#<li{% if var == "Bills" %} class="active"{% endif %}>
                 <a href="{{ path('months') }}">Bills</a>
-            </li>
-            
-            <li{% if var == "Months" %} class="active"{% endif %}>
-                <a href="{{ path('months') }}">Savings</a>
-            </li>
-            
-            <li{% if var == "Months" %} class="active"{% endif %}>
-                <a href="{{ path('months') }}">Options</a>
             </li>#}
+            
+            <li{% if var == "Bank interest" %} class="active"{% endif %}>
+                <a href="{{ path('bank_interest') }}">Bank Interest</a>
+            </li>
 
         </ul>
         
@@ -44,7 +49,7 @@
                 </a>
             </li>
             
-            <li><a href={{ path('fos_user_security_logout') }}>Logout</a></li>
+            <li><a href={{ path('fos_user_security_logout') }}>Logout</a> </li>
             
         </ul>
         

@@ -20,7 +20,13 @@ class HomeController extends Controller
     public function indexAction()
     {
         $this->setUser();               
-        $category_repository = $this->setRepository('Category');    
+        $category_repository = $this->setRepository('Category');
+        
+        $dl_repository = $this->setRepository('DebtLoan');
+        
+        $active_debts = count($dl_repository->findByReturnedUserAndCategory($this->user, 0));
+        
+        
         $number_of_categories = $category_repository->countByUser($this->user);
         
         $template = 'AcmeBudgetTrackerBundle:Home:index.html.twig';
@@ -61,6 +67,7 @@ class HomeController extends Controller
             
             return $this->render($template, array(
                 'newcommer' => false,
+                'active_debts' => $active_debts,
                 'expenses_for_current_month' => $expenses_for_current_month,
                 'first_category' => $first_category,
                 'spent_for_current_month' => $spent_for_current_month,

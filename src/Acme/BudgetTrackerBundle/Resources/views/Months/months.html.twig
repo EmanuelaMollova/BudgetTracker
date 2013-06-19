@@ -24,7 +24,7 @@
             
             {{ form_widget(form) }}
 
-            <button type="submit" class="btn">
+            <button type="submit" class="btn little-spacer">
                 Submit
             </button>
              
@@ -39,6 +39,9 @@
                     <th>Budget</th>
                     <th>Spent</th>
                     <th>Saved</th>
+                    <th>Transfered</th>
+                    <th></th>
+                    
                 </tr>
 
                 <h4 class="big-spacer">All months</h4>
@@ -55,6 +58,8 @@
                                 <td class="text-error"><b>Overspent: {{ -saved[i]|number_format(2) }}
                             {% endif %}
                             </b></td>
+                            <td>{% if  all_months[i].transfered > 0 %}{{ all_months[i].transfered|number_format(2) }} {% else %} - {% endif %}</td>
+                            <td>{% if saved[i] > 0 %}<a href="{{path('transfer', { 'id': all_months[i].id}) }}">Transfer to another month</a>{% endif %}</td>
                         </tr>
                     {% endfor %}
                {% endif %}
