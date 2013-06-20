@@ -128,6 +128,35 @@
         </div>
     {% endif %}
     
+    {% if active_loans %}
+    
+        <h4 class="little-spacer text-info"><u>Loans</u></h4>
+        <div class="products Loans">
+        {% for a in active_loans %}
+            <p>
+                To {{a.name}} - {{a.price|number_format(2)}}
+            </p>
+        {% endfor %}
+        </div>
+        <strong>Sum: {{ sum_of_active_loans|number_format(2) }}</strong>
+        
+        {% if highchart == true %}
+            {% set chart = chart  ~ sum ~ ']' %}
+        {% endif %}
+
+        {% if progressbar == 'true' %}
+            <div class="progress span5 center little-spacer">
+                {% set percent = sum_of_active_loans*100/total_sum//1 %}
+                <div class="bar" style="width:{{ percent }}%;">
+                    {{ percent }}%
+                </div>
+            </div>
+        {% endif %}
+        
+    {% endif %}
+    
+    
+    
     <p class="lead text-error little-spacer">Total: <strong>{{total_sum|number_format(2)}}</strong></p> 
 
     {% if highchart == true %}

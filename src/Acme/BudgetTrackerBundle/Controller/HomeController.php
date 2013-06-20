@@ -23,10 +23,7 @@ class HomeController extends Controller
         $category_repository = $this->setRepository('Category');
         
         $dl_repository = $this->setRepository('DebtLoan');
-        
-        $active_debts = count($dl_repository->findByReturnedUserAndCategory($this->user, 0));
-        
-        
+
         $number_of_categories = $category_repository->countByUser($this->user);
         
         $template = 'AcmeBudgetTrackerBundle:Home:index.html.twig';
@@ -41,33 +38,55 @@ class HomeController extends Controller
             $expense_repository = $this->setRepository('Expense');
             $expenses_for_current_month = $expense_repository->
                 findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user); 
+            $dl_repository = $this->setRepository('DebtLoan');
+            $active_loans = $dl_repository->findByMonth($this->user, 1, $today->format('m'), $today->format('Y'), 0);
             
-            if(!$expenses_for_current_month){
+        
+            if(!$expenses_for_current_month && !$active_loans){
                 return $this->render($template, array(
                     'newcommer' => false,
                     'expenses_for_current_month' => null
                 ));      
             } else {
-                $first_category = $expenses_for_current_month[0]->getCategory()->getName();
+                
+                if($expenses_for_current_month){
+                    $first_category = $expenses_for_current_month[0]->getCategory()->getName();
             
-                $spent_for_current_month = $expense_repository->
+                    $spent_for_expenses = $expense_repository->
                     getSumByMonth($today->format('m'), $today->format('Y'), $this->user);
                 
-                $current_month = $this->setRepository('Month')
+                    $current_month = $this->setRepository('Month')
                     ->findMonth($today->format('m'), $today->format('Y'), $this->user); 
                 
-                if($current_month){
+                    if($current_month){
                     $budget_for_current_month = $current_month[0]->getBudget();
-                    $remaining = number_format($budget_for_current_month - $spent_for_current_month, 2, '.', ''); 
-                } else {
-                    $budget_for_current_month = null;
-                    $remaining = null;
-                }   
+                    $remaining = number_format($budget_for_current_month - $spent_for_expenses, 2, '.', ''); 
+                    } else {
+                        $budget_for_current_month = null;
+                        $remaining = null;
+                   }
+                   if(!$active_loans){
+                    $sum_of_active_loans = 0;
+                   }
+                }
+                if($active_loans){
+                    $sum_of_active_loans = $dl_repository->getSumByCategoryAndMonth($this->user, 1, $today->format('m'), $today->format('Y'), 0);
+                    if(!$expenses_for_current_month){
+                        $first_category = null;
+                        $spent_for_expenses = 0;
+                    }
+                    
+                }
+                
+                $spent_for_current_month = $spent_for_expenses + $sum_of_active_loans;
+                
+                   
             }
             
             return $this->render($template, array(
                 'newcommer' => false,
-                'active_debts' => $active_debts,
+                'active_loans' => $active_loans,
+                'sum_of_active_loans' => $sum_of_active_loans,
                 'expenses_for_current_month' => $expenses_for_current_month,
                 'first_category' => $first_category,
                 'spent_for_current_month' => $spent_for_current_month,

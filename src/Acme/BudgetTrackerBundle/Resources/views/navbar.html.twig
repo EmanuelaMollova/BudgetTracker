@@ -3,9 +3,11 @@
         
         <a class="brand" href="{{ path('home') }}">
            {# {% if debts > 0  %} #}
-                <span class="badge badge-important">{{ debts|default(0) }}</span>
+                {% if notifications_count() > 0 %}<span class="badge badge-important"> {{ notifications_count() }} </span>{%endif%}
             {#{%endif%}#} 
             BudgetTracker
+            
+            
         </a>
         
         <ul class="nav">
@@ -55,3 +57,4 @@
         
     </div>
 </div>
+

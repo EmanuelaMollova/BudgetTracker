@@ -6352,6 +6352,14 @@ Not from the original file
     display: none;
 }
 
+.loans {
+    display:none;
+}
+
+.debts {
+    display:none;
+}
+
 .prbar{
     widht: 50%
 }
@@ -6374,6 +6382,22 @@ Not from the original file
     color: green;
     text-decoration:line-through
 }
+
+.popover {
+    top: 71px !important;
+    left: 379px !important;
+    background-color: red;
+}
+
+.box {
+        width: 200px;
+        /*background: red;*/
+        padding: 2em;
+        position: absolute;
+        top: 45px !important;
+        left: 0px !important;
+}
+
 
 /*input::-webkit-calendar-picker-indicator{
     display: none;

@@ -48,6 +48,8 @@ class ExpensesController extends Controller
         $to_date->setTime(0, 0, 0);
         
         $expenses_for_today = $this->repository->findExpensesForDate($from_date, $to_date, $this->user);
+        
+        $dl_repository = $this->setRepository('DebtLoan');
 
         $spent_for_today = $this->repository->findSumBetweenDates($from_date, $to_date, $this->user);
         

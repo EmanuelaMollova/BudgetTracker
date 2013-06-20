@@ -172,17 +172,20 @@ class MonthsController extends Controller
         }
         
                 return $this->render(
-            'AcmeBudgetTrackerBundle:Months:transfer.html.twig', array(
-                'start_date' => $start_date,
-                'max' => $transfer->getMoney(),
-                'form' => $form->createView(),
-                'id' => $id
+                'AcmeBudgetTrackerBundle:Months:transfer.html.twig', array(
+               // 'start_date' => $start_date,
+               // 'max' => $transfer->getMoney(),
+               // 'id' => $id,
+                'form' => $form->createView()
+                
             ));  
      }
         
         return $this->render(
             'AcmeBudgetTrackerBundle:Months:transfer.html.twig', array(
                 'start_date' => $start_date,
+                'id' => $id,
+                 'max' => $transfer->getMoney(),
                 'form' => $form->createView()
             ));
     }

@@ -17,6 +17,7 @@ class DebtsLoansController extends Controller
     
     public function debtsLoansAction(Request $request)
     {
+        
         $this->init();
 
         $category_repository = $this->setRepository('Category'); 
@@ -48,10 +49,10 @@ class DebtsLoansController extends Controller
         
         $dl_repository = $this->setRepository('DebtLoan');
         
-        $active_debts = $dl_repository->findByReturnedUserAndCategory($this->user, 0);
-        $active_loans = $dl_repository->findByReturnedUserAndCategory($this->user, 1);
-        $passive_debts = $dl_repository->findByReturnedUserAndCategory($this->user, 0, 1);
-        $passive_loans = $dl_repository->findByReturnedUserAndCategory($this->user, 1, 1);
+        $active_debts = $dl_repository->findByCategory($this->user, 0);
+        $active_loans = $dl_repository->findByCategory($this->user, 1);
+        $passive_debts = $dl_repository->findByCategory($this->user, 0, 1);
+        $passive_loans = $dl_repository->findByCategory($this->user, 1, 1);
         
                 
         return $this->render('AcmeBudgetTrackerBundle:DebtsLoans:debtsloans.html.twig', array(
@@ -59,11 +60,19 @@ class DebtsLoansController extends Controller
             'active_loans' => $active_loans,
             'passive_debts' => $passive_debts,
             'passive_loans' => $passive_loans,
+            'notifications' => $this->notifications,
             'form' => $form->createView()
         ));
     }
     
-     public function returnAction($id)
+    public function setNotificationsAction() {
+        $this->setNotifications();
+        return $this->render('AcmeBudgetTrackerBundle::navbar.html.twig', array(
+            'debts' => $this->notifications,
+        ));
+    }
+
+        public function returnAction($id)
     {   
           $dl_repository = $this->setRepository('DebtLoan');
           $dl = $dl_repository->findById($id);

@@ -37,7 +37,7 @@ class BanksController extends Controller
             $saved_sum += $s;
         }
         
-        var_dump($saved_sum);
+        //var_dump($saved_sum);
         
         return $this->render(
             'AcmeBudgetTrackerBundle:Banks:banks.html.twig', array(

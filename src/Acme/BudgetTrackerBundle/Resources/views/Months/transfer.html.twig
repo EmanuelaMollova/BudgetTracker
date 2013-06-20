@@ -2,6 +2,8 @@
 
 {% block title %} Months {% endblock %}
 
+
+
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
@@ -10,6 +12,9 @@
 {% endblock %}
 
 {% block body %}
+    
+    {{start_date}}
+    
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Months'} %}
 
@@ -28,8 +33,9 @@
         
      </div>   
 
+    {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
     {%block javascript%}
-       	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+       	{#<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>#}
 	<script src="http://code.highcharts.com/highcharts.js"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/jquery-ui-1.10.3.custom.min_1.js') }}"></script>       

@@ -6,12 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    protected $user; 
+    protected $user;
+    protected $notifications;
     
     protected function setUser()
     {
         $this->user = $this->container->get('security.context')->getToken()->getUser();
     }
+    
+
     
     /*
      * Gets EntityManager

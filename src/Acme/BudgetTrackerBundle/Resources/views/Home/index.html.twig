@@ -2,10 +2,11 @@
 
 {% block body %}
 
-    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Home', 'debts': active_debts} %}
+    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Home'} %}
 
     <div class="text-center little-spacer ">
-
+ 
+        
         
         
         {# Greeting and introduction to newcommers #}
@@ -60,6 +61,8 @@
             
         {% else %}
             
+
+                
             {# Experienced users #}
             <h3>Expenses for the current month</h3>
             
@@ -106,8 +109,9 @@
             
     </div>
 
+    {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
     {%block javascript%}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>#}
         <script src="{{ asset('bundles/acmebudgettracker/js/home.js') }}"></script>
 
     {%endblock%}

@@ -66,9 +66,11 @@
             </table>
         {% endif %}
     </div>   
+        
+    {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
 
     {%block javascript%}
-       	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+       	{#<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>#}
 	<script src="http://code.highcharts.com/highcharts.js"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
