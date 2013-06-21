@@ -34,9 +34,10 @@ class MonthsController extends Controller
         $budget = array();
         $saved = array();
         
+        $this->setDebtsLoansIds();
         foreach ($all_months as $m)
         {
-            $sum = $expense_repository->getSumByMonth($m->getDate()->format('m'), $m->getDate()->format('Y'),  $this->user);
+            $sum = $expense_repository->findSumByMonth($m->getDate()->format('m'), $m->getDate()->format('Y'),  $this->user, $this->debts_id);
             if(!$sum){
                 $sum = 0;
             }

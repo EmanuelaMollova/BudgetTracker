@@ -1,34 +1,17 @@
-(function(){  
-    $('#month_start_date').datepicker({
+$(document).ready(function(){
+    $('#month_from_date').datepicker({
         format: 'dd-mm-yyyy',
         weekStart: 1,
         autoclose: true
     });
 
-    $('#month_end_date').datepicker({
+    $('#month_to_date').datepicker({
         format: 'dd-mm-yyyy',
         weekStart: 1,
         autoclose: true
     });
-            
-//                            $.ajax({
-//          url: "",
-//          context: document.body,
-//          success: function(s,x){
-//            $(this).html(s);
-//          }
-//        });
-    
-//        $('#none').on('click', function () {
-//        $("input[type='checkbox']").removeAttr('checked');
-//    });
-//    
-//    $('#all').on('click', function () {
-//        $("input[type='checkbox']").attr('checked', 'checked');
-//    });
 
- 
-$('u').on('mouseover', function(){
+    $('u').on('mouseover', function(){
        $(this).css('cursor', 'pointer'); 
     });
     
@@ -45,6 +28,4 @@ $('u').on('mouseover', function(){
     $('#chbx').on('click', function(){
         $("input[type='checkbox']").prop("checked", $('#chbx').prop("checked"))
     });
-    
-   
-}) ();
+});

@@ -12,25 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ExpenseRepository extends EntityRepository
 {
-    
-    public function findExpensesForDate($fromDate, $toDate, $user, $category)
-    {
-        $q = $this
-            ->createQueryBuilder('e')
-            ->where('e.date >= :fromDate')
-            ->andWhere('e.date < :toDate')
-            ->andWhere('e.user = :user')
-            ->andWhere('e.category <> :category')
-            ->setParameter('fromDate', $fromDate)
-            ->setParameter('toDate', $toDate)
-            ->setParameter('user', $user)
-            ->setParameter('category', $category)
-             ->getQuery();
-        
-        return $q->getResult();
-    }
-    
-    //used
+    //used Home
     public function findExpensesByMonth($month, $year, $user, $category, $returned = 0)
     {
         $emConfig = $this->getEntityManager()->getConfiguration();
@@ -55,8 +37,8 @@ class ExpenseRepository extends EntityRepository
         return $q->getResult();
     } 
     
-    //used
-    public function getSumByMonth($month, $year, $user, $returned = 0)
+    //used Home
+    public function findSumByMonth($month, $year, $user, $category, $returned = 0)
     {
         $emConfig = $this->getEntityManager()->getConfiguration();
         $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
@@ -67,41 +49,69 @@ class ExpenseRepository extends EntityRepository
             ->where('MONTH(e.date) = :month')
             ->andWhere('YEAR(e.date) = :year')
             ->andWhere('e.user = :user') 
+            ->andWhere('e.category <> :category')
             ->andWhere('e.returned = :returned') 
             ->setParameter('month', $month)
             ->setParameter('year', $year)
             ->setParameter('user', $user)
+             ->setParameter('category', $category)
             ->setParameter('returned', $returned)
             ->getQuery();
 
         return $q->getSingleScalarResult();
     }
     
-    //used
-    public function findSumBetweenDates($start_date, $end_date, $user)
+    //used Expense
+    public function findExpensesBetweenDates($from_date, $to_date, $user, $category, $returned = 0)
+    {
+        $q = $this
+            ->createQueryBuilder('e')
+            ->where('e.date >= :from_date')
+            ->andWhere('e.date < :to_date')
+            ->andWhere('e.user = :user')
+            ->andWhere('e.category <> :category')
+            ->andWhere('e.returned = :returned') 
+            ->setParameter('from_date', $from_date)
+            ->setParameter('to_date', $to_date)
+            ->setParameter('user', $user)
+            ->setParameter('category', $category)
+            ->setParameter('returned', $returned)
+            ->getQuery();
+        
+        return $q->getResult();
+    }
+    
+    //used Expense
+    public function findSumBetweenDates($from_date, $to_date, $user, $category, $returned = 0)
     {
         $q = $this
             ->createQueryBuilder('e')
             ->add('select', 'SUM(e.price)')
-            ->where('e.date >= :start_date')
-            ->andWhere('e.date < :end_date')
+            ->where('e.date >= :from_date')
+            ->andWhere('e.date < :to_date')
             ->andWhere('e.user = :user')
-            ->setParameter('start_date', $start_date)
-            ->setParameter('end_date', $end_date)
+            ->andWhere('e.category <> :category')
+            ->andWhere('e.returned = :returned') 
+            ->setParameter('from_date', $from_date)
+            ->setParameter('to_date', $to_date)
             ->setParameter('user', $user)
+            ->setParameter('category', $category)
+            ->setParameter('returned', $returned)
              ->getQuery();
         
         return $q->getSingleScalarResult();
     }
   
-    public function findByCategoriesAndDates($start_date, $end_date, $q, $user, $category)
+    //user Reports
+    public function findByCategoriesAndDates($start_date, $end_date, $q, $user, $category, $returned = 0)
     {
          $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT e FROM AcmeBudgetTrackerBundle:Expense e WHERE e.user = ?1 AND e.date >= ?2 AND e.date < ?3 AND e.category <> ?4'.$q. 'ORDER BY e.category, e.date');
+        $query = $em->createQuery('SELECT e FROM AcmeBudgetTrackerBundle:Expense e WHERE e.user = ?1 AND e.date >= ?2 AND e.date < ?3 AND e.category <> ?4 AND e.returned = ?5'.$q. 'ORDER BY e.category, e.date');
         $query->setParameter(1, $user);
         $query->setParameter(2, $start_date);
         $query->setParameter(3, $end_date);
         $query->setParameter(4, $category);
+        $query->setParameter(5, $returned);
         
         return $query->getResult();
     }
@@ -122,7 +132,7 @@ class ExpenseRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
 
-
+    //used Categoru ako ne trqbva drugade da stane count
     public function findByCategory($user, $category, $returned = 0)
     {
         $q = $this

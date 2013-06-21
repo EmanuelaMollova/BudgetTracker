@@ -12,30 +12,27 @@
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Reports'} %}
 
     <div class="text-center little-spacer">
-        <h3>Report for expenses from <b>{{ start_date }}</b> to <b>{{ end_date }}</b></h3>   
-        
-        
-        
-        {% if expenses != null %}
-        
+        <h3>Report for expenses from <b>{{ from_date }}</b> to <b>{{ to_date }}</b></h3>   
+
+        {% if expenses != null %}       
             {% include 'AcmeBudgetTrackerBundle::display_expenses.html.twig' with {
                     'first_category': first_category,
                     'expenses': expenses, 
                     'total_sum': total_sum,
-                    'progressbar': false,
+                    'highchart': true,
                     'details': true,
-                    'highchart': true                
-            }%}
-          
+                    'progressbar': false                  
+            }%}         
         {% else %}
-            <p class="lead big-spacer text-warning">Looks like there are no expenses for the selected categories in this period.</p>
+            <p class="text-warning lead big-spacer">Looks like there are no expenses between</p>
+            <p>{{ from_date }} and {{ to_date }} for the selected categories.</p>
         {% endif %}
             
-            <div class="little-spacer"><a href="{{ path('reports') }}">Go back</a></div>
-            
+        <div class="little-spacer"><a href="{{ path('reports') }}">Go back</a></div>           
     </div>
 
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' with {'report':'Reports'} %}
+
     {%block javascript%}
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script> 
         <script src="{{ asset('bundles/acmebudgettracker/js/reports.js') }}"></script>      

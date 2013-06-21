@@ -52,7 +52,7 @@ class MonthRepository extends EntityRepository
         return $q->getResult();
     }
     
-    //used
+    //used Home
     public function findMonth($month, $year, $user)
     {
         $q = $this

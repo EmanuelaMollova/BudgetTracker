@@ -6,11 +6,11 @@
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Categories'} %}
 
-    <div class="little-spacer text-center">       
+    <div class="text-center little-spacer">       
         <h3>Categories</h3> 
         
         {% if categories %}
-            <table class="big-spacer table table-striped">
+            <table class="table table-striped big-spacer">
                 {% for cat in categories %}
                     <tr>
                         <td>
@@ -21,7 +21,6 @@
                             </script>
 
                             <a href="{{ path('delete_category', { 'id': cat.id }) }}"><i class="icon-remove"></i></a>
-
                         </td>
                     </tr>
                 {% endfor %}
@@ -45,11 +44,12 @@
     </div> 
     
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
+
     {%block javascript%}
         {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>#}
-        <script src="{{ asset('bundles/acmebudgettracker/js/category.js') }}"></script> 
+        {#<script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>#}      
         <script src="{{ asset('bundles/acmebudgettracker/js/jquery.jeditable.js') }}"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>      
+        <script src="{{ asset('bundles/acmebudgettracker/js/category.js') }}"></script>      
     {%endblock%}
 
 {% endblock %}

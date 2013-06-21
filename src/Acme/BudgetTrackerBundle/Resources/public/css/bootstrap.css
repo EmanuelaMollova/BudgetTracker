@@ -6371,7 +6371,7 @@ Not from the original file
 }
 
 .little-bottom-spacer {
-    margin-bottom: 45px;
+    margin-bottom: 25px;
 }
 
 .hr-colored {
@@ -6390,6 +6390,7 @@ Not from the original file
 }
 
 .box {
+        display: none;
         width: 200px;
         /*background: red;*/
         padding: 2em;

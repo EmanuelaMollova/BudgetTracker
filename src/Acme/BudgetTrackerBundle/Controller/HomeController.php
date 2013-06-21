@@ -32,7 +32,7 @@ class HomeController extends Controller
      * template.
      */
     
-    //user, em, dlids, expense_repo, category_repo, month_repo
+    //user, newcommer, em, dlids, expense_repo, category_repo, month_repo
     public function indexAction()
     {
         $this->setUser();               
@@ -67,7 +67,7 @@ class HomeController extends Controller
                 $first_category = $expenses_for_current_month[0]->getCategory()->getName();
 
                 $spent_for_current_month = $expense_repository->
-                    getSumByMonth($today->format('m'), $today->format('Y'), $this->user);
+                    findSumByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id);
 
                 $current_month = $this->setRepository('Month')
                     ->findMonth($today->format('m'), $today->format('Y'), $this->user); 

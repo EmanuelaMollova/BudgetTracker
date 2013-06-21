@@ -6,9 +6,9 @@ class Report
 {
     protected $categories;
     
-    protected $start_date;
+    protected $from_date;
     
-    protected $end_date;
+    protected $to_date;
 
     
     public function getReport()
@@ -29,23 +29,23 @@ class Report
         $this->categories = $categories;
     }
 
-    public function getStartDate()
+    public function getFromDate()
     {
-        return $this->start_date;
+        return $this->from_date;
     }
     
-    public function setStartDate($start_date = null)
+    public function setFromDate($from_date = null)
     {
-        $this->start_date = $start_date;
+        $this->from_date = $from_date;
     }
     
-    public function getEndDate()
+    public function getToDate()
     {
-        return $this->end_date;
+        return $this->to_date;
     }
     
-    public function setEndDate($end_date = null)
+    public function setToDate($to_date = null)
     {
-        $this->end_date = $end_date;
+        $this->to_date = $to_date;
     }
 }

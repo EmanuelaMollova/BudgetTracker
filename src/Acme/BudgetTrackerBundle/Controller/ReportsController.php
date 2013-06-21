@@ -13,11 +13,11 @@ use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
 class ReportsController extends Controller
 {
     /*
-     * Displays the form from which the users query for request.
+     * Displays the form from which the users query for report.
      * Renders another teplate for the actual report.
      */
     
-    //user, expense_repo, category_repo
+    //user, newcommer, expense_repo, category_repo
     public function reportsAction(Request $request)
     {   
         $this->setUser(); 
@@ -27,14 +27,13 @@ class ReportsController extends Controller
         if($number_of_categories == 0){
             $newcommer = true;
         }
-  
-        $repo = $this->setRepository('Expense');
-
+        
+        //Create the form for reports
         $today = new \DateTime();
         $date = $today->format('d-m-Y');
         $report = new Report();
-        $report->setEndDate($date);
-        $report->setStartDate($date);
+        $report->setFromDate($date);
+        $report->setToDate($date);
         $form = $this->createForm(new ReportType($this->user), $report);
         
         //If report is requested take parameters and find the needed expenses
@@ -51,17 +50,17 @@ class ReportsController extends Controller
             }
 
             //Create query for categories
-            $start_date = $request_parameters['month']['start_date'];
-            $end_date = $request_parameters['month']['end_date'];
+            $from_date = $request_parameters['month']['from_date'];
+            $to_date = $request_parameters['month']['to_date'];
             
-            $start_date_obj = \DateTime::createfromformat('d-m-Y', $start_date);
-            $start_date_obj->setTime(0, 0, 0);
+            $from_date_object = \DateTime::createfromformat('d-m-Y', $from_date);
+            $from_date_object->setTime(0, 0, 0);
             
-            $end_date_obj = \DateTime::createfromformat('d-m-Y', $end_date);
-            $end_date_obj->setTime(0, 0, 0);
-            $end_date_obj->modify('+1 day');
+            $to_date_object = \DateTime::createfromformat('d-m-Y', $to_date);
+            $to_date_object->setTime(0, 0, 0);
+            $to_date_object->modify('+1 day');
             
-            if($start_date_obj > $end_date_obj){
+            if($from_date_object > $to_date_object){
                 $this->get('session')->setFlash('notice', 'Please select a start date which is before the end date!');
                 return $this->redirect($this->generateUrl('reports'));
             }
@@ -74,34 +73,34 @@ class ReportsController extends Controller
             foreach ($categories as $c) {
                 $query .= ' OR e.category='.$c;
             }
-            
+
             $query .= ')';
             
             $this->setDebtsLoansIds();
+            $repo = $this->setRepository('Expense');
             
-            $expenses = $repo->findByCategoriesAndDates($start_date_obj, $end_date_obj, $query, $this->user, $this->debts_id); 
-            
+            $expenses = $repo->findByCategoriesAndDates($from_date_object, $to_date_object, $query, $this->user, $this->debts_id); 
             $total_sum = 0;
-            foreach ($expenses as $exp){
-                $total_sum += $exp->getPrice();
-            }
-
+            
             if($expenses){
                 $first_category = $expenses[0]->getCategory()->getName();
+                foreach ($expenses as $exp){
+                    $total_sum += $exp->getPrice();
+                }
             } else{
                 $first_category = null;
             }
-            
+
             return $this->render('AcmeBudgetTrackerBundle:Reports:take_reports.html.twig', array(
-                'start_date' => $start_date_obj->format('d F Y'),
-                'end_date' => $end_date_obj->format('d F Y'),
+                'from_date' => $from_date_object->format('d F Y'),
+                'to_date' => $to_date_object->format('d F Y'),
                 'expenses' => $expenses,
                 'first_category' => $first_category,
                 'total_sum' => $total_sum
             ));
         }
         
-        //Show the form
+        //Else show the form
         return $this->render('AcmeBudgetTrackerBundle:Reports:reports.html.twig', array(
             'newcommer' => $newcommer,
             'form' => $form->createView()

@@ -11,10 +11,11 @@
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Reports'} %}
 
-    <div class="little-spacer text-center"> 
+    <div class="text-center little-spacer "> 
         <h3>Reports</h3>   
 
         {% if newcommer == true %}
+        
             <div class="lead little-spacer">
                 <p>
                     You should first <a href="{{ path('categories') }}">create some categories</a>
@@ -26,12 +27,12 @@
         {% else %}
             
             {% if app.session.hasFlash('notice') %}
-                <div class="flash-notice text-error little-spacer lead">
+                <div class="flash-notice text-error lead little-spacer">
                     {{ app.session.flash('notice') }}
                 </div>
             {% endif %}
         
-            <h4 class="big-spacer">Choose categories:</h4>
+            <p class="lead big-spacer">Choose categories:</p>
 
             {% form_theme form 'AcmeBudgetTrackerBundle:Form:checkbox.html.twig' %}
             <form class="little-spacer" action="{{ path('take_report') }}" method="post" {{ form_enctype(form) }}>
@@ -41,12 +42,12 @@
 
                 <div class="checkboxes text-left offset7">
                     {{ form_row(form.categories) }}
-                    <input id="chbx" type="checkbox"><b> Select / Deselect All</b>
+                    <input id="chbx" type="checkbox"><b>Select/Deselect All</b>
                 </div>
 
                 <div class="big-spacer">
-                    {{ form_row(form.start_date) }}   
-                    {{ form_row(form.end_date) }}
+                    {{ form_row(form.from_date) }}   
+                    {{ form_row(form.to_date) }}
                 </div>
 
                 <button type="submit" class="btn little-spacer">
@@ -54,9 +55,12 @@
                 </button> 
 
             </form>
+            
         {% endif %}
     </div>
-       {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
+    
+    {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
+    
     {%block javascript%}
         {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>#}
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script> 

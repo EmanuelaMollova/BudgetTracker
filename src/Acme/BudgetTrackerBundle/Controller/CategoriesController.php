@@ -25,7 +25,7 @@ class CategoriesController extends Controller
     }
 
     /*
-     * Displays all categories
+     * Displays the form for adding new and all the existing cateogires
      */
     
     // category, user
@@ -46,7 +46,7 @@ class CategoriesController extends Controller
      * Creates new categories
      */
     
-    //category, user
+    //category, user, em
     public function createCategoryAction(Request $request)
     {
         $this->init();
@@ -57,12 +57,9 @@ class CategoriesController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
 
-            
-            
             $same = $this->repository->
-                    countByNameAndUser($category->getName(), $this->user);
+                    countByName($category->getName(), $this->user);
 
-            
             if ($same == 0 && $form->isValid()) {
                 $category->setUser($this->user);
                 $this->em->persist($category);
@@ -83,6 +80,8 @@ class CategoriesController extends Controller
     /*
      * Edits existing categories
      */
+    
+    //user, category, em
     public function editCategoryAction(Request $request, Category $category)
     {   
         $this->init();
@@ -109,20 +108,19 @@ class CategoriesController extends Controller
                             <strong>This value is already used!</strong> Please choose another.
                         </div>
                     ');
-                    $response->send();
-
-                //$this->get('session')->setFlash('notice', 'This value is already used!');
-                //return $this->redirect($this->generateUrl('categories'));         
+                    $response->send();        
             }
         } else {
             echo "Not post";
         }
-
         //return the name value to jeditable so it can display it
         return new Response($name);     
     }
   
-    //Deletes category
+    /*
+     * Deletes categories if there are no expenses for them
+     */
+    // user, em, expense, category
     public function deleteCategoryAction($id)
     {  
         $this->init();
@@ -130,9 +128,9 @@ class CategoriesController extends Controller
         $category = $this->repository->find($id);
         
         $exp_rep = $this->setRepository('Expense');
-        $expenses = $exp_rep->findExpensesCountByCategory($category, $this->user);
+        $expenses = $exp_rep->findByCategory($category, $this->user);
         
-        if ($expenses == 0){           
+        if (coutn($expenses) == 0){           
             $this->em->remove($category);
             $this->em->flush();
         } else {

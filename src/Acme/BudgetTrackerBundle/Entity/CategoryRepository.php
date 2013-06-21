@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class CategoryRepository extends EntityRepository
 {
-    //used
+    //used Home 
     public function countByName($name, $user)
     {
         $q = $this
@@ -21,7 +21,6 @@ class CategoryRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
     
-    //used
     public function countByUser($user)
     {
         $q = $this

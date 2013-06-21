@@ -1,9 +1,9 @@
-<div id="notifications" class="box products alert alert-error text-center">
+<div id="notifications" class="box alert alert-error text-center">
 
   <p><strong>Warning!</strong></p>
   <p>You have {{ notifications_count() }} debt(s) which you haven't returned yet:</p>
   {% for a in get_notifications() %}
-        <p>{{ a.product }} - {{ a.price|number_format(2) }}</p>
+        <strong><p>{{ a.product }} - {{ a.price|number_format(2) }}</p></strong>
   {% endfor %}
         <p>See more details <a href="{{path('debts_loans')}}">here</a>.</p>
 </div>

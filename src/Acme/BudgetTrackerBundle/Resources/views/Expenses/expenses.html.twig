@@ -25,7 +25,7 @@
         
         {% else %}
 
-            <form class="little-spacer" action="{{ path('create_expense') }}" method="post" {{ form_enctype(form) }}>
+            <form class="little-spacer" action="{{ path('expenses') }}" method="post" {{ form_enctype(form) }}>
 
                 {{ form_widget(form) }}
 
@@ -38,8 +38,8 @@
             {% if spent_for_today != 0 %}
                 <div class="big-spacer">
 
-                    <h4 class="little-bottom-spacer">Expenses for today:</h4>
-                    {% for exp in expenses %}        
+                    <p class="lead little-bottom-spacer">Expenses for today:</p>
+                    {% for exp in expenses_for_today %}        
                         <p>
                             {{ exp.product }} - {{ exp.price|number_format(2) }} 
                         </p> 
@@ -56,16 +56,16 @@
     </div>
     
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
+
     {%block javascript%}
         {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>#}
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/editable.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/expense.js') }}"></script>
     {%endblock%}
         
 {% endblock %}
         
 {# -------------------------------------------------------------------------- #}        
         
-{# TODO 1. Color the hr! #}
 {# TODO 2. Add several expenses with one submit #}
 {# TODO 3. AJAX-ify #}

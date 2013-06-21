@@ -9,15 +9,35 @@ PAGES:
     Class to hide : Products
     JS - SHOW/HIDE ALL
 
-* Expenses - AJAX?
-* Reports - Beautify and Diagrams???
-* Categories - Validate Duplicates
+* Expenses
+    * Add several expenses at once with one submit
+    * AJAX for adding, editing, deleting
+
+* Reports
+    * Spline diagrams for the whole period
+
+* Categories
+    * Validation! 
+    * AJAX for everything
+    * Stylish jEditable buttons
+    * when editing remove the X icon
+
+-------------------------------------------------------------------------------- 21.06.2013
+
+* ZAPOR AKO NE SA VYRNATI ZAEMI ?
+* In Months - to be written how much money are for loans
+* Saved - in bank
+* 404 
+* month/4059409
+* js - category validation and banks
+
 * NOTIFICATIONS 
 * Debts, loans - the return what happens to money?
 * REPORTS, MONEY - TO COUNT LOANS AND DEBTS, TOO
 * ZAPOR AKO NE SA VYRNATI ZAEMI ? 
 * BILLS (U)  
 
+* Alerts, not session messages
 
 TOD0:
 -----
