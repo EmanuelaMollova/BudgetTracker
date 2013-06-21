@@ -1,7 +1,13 @@
 PAGES:
 ------
 
-* HomePage - ready
+* HomePage 
+    * when there are too many items - paginations? ...
+    * underline with <u> ?
+    * the sum of percents to be 100
+
+    Class to hide : Products
+
 * Expenses - AJAX?
 * Reports - Beautify and Diagrams???
 * Categories - Validate Duplicates
