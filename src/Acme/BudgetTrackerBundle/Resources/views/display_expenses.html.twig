@@ -1,38 +1,48 @@
+{#
+Needed parameters:
+    first_category (the name of the category to start with)
+    expenses
+    total_sum
+
+Booleans:
+    highchart (whether to generate a string to be given to highcharts script or not)
+    details (show only product and price or detailed information in table)
+    progressbar (whether to display progressbars with percentages; needed for display_expenses_progressbar.hmtl.twig)
+#}
+
 {% if highchart == true %}
     <div id="container" style="min-width: 300px; height: 300px; margin: 0 auto"></div>
 {% endif %}
 
-<button class="toggle_expenses btn little-space">
+<button class="toggle_expenses btn little-spacer">
     <i class="icon-chevron-down"></i>Show/hide all products
 </button>
 
 {# Display categories, sums for them and expenses #}
 {% set current_category = first_category %}
 
-<h4 class="little-spacer text-info"><u>{{ first_category }} </u></h4> 
+{# For the first category #}
+<h4 class="little-spacer text-info"><u>{{ current_category }} </u></h4> 
 
 {# Generate the string to give to highcharts #}
 {% if highchart == true %}
-    {% set chart = '["' ~ first_category ~ '", ' %}
+    {% set chart = '["' ~ current_category ~ '", ' %}
 {% endif %}
 
-<div class=" products {{first_category}}">
+<div class="products {{ current_category }}">
     
     {% if details == true %}
-        <table class="table table-hover">
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Date</th>
-                <th>Description</th>
-            </tr>
-            <tr>
+         {% include 'AcmeBudgetTrackerBundle::display_expenses_table_header.html.twig' %}
     {% endif %}
       
+    {# Stores the current sum spent for the products of this cateogry #}                
     {% set sum = 0 %}
+                    
     {% for e in expenses %}
+        {# If the products are from a diffeerent category, a new one #}
         {% if e.category.name != current_category %}
 
+            {# Finish with showing information about the previous category #}
             {% if details == true %}
             </tr></table>
             {% endif %}
@@ -43,17 +53,12 @@
                 {% set chart = chart ~ sum ~ '], ' %}
             {% endif %}
 
-            {% if progressbar == 'true' %}
-                <div class="little-spacer progress span5 center">
-                    {% set percent = sum*100/total_sum//1 %}
-                    <div class="bar" style="width:{{ percent }}%;">
-                        {{ percent }}%
-                    </div>
-                </div>
-            {% endif %}
+            {% include 'AcmeBudgetTrackerBundle::display_expenses_progressbar.html.twig' %}
 
+            {# Reset values #}
             {% set sum = 0 %}
      
+            {# Give the beginning for the new category #}
             <h4 class="little-spacer text-info"><u>{{ e.category.name }}</u></h4>
                 
             {% set current_category = e.category.name %}
@@ -66,48 +71,32 @@
             <div class="products {{current_category}}">
 
                 {% if details == true %}
-                    <table class="table table-hover text-left">
-                        <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Date</th>
-                            <th>Description</th>
-                        </tr>
-                        <tr>
-
-                            <td>{{ e.product }}</td> 
-                            <td>{{ e.price|number_format(2) }}</td> 
-                            <td>{{ e.date|date("d-m-Y") }}</td> 
-                            <td>{% if e.description %}{{ e.description }}{% else %} - {% endif %}</td> 
-                        </tr> 
-                        <tr>                   
+                    {% include 'AcmeBudgetTrackerBundle::display_expenses_table_header.html.twig' %}
+                    {% include 'AcmeBudgetTrackerBundle::display_expenses_table_rest.html.twig' %}                  
                     {% else %}
                         <p>
                             {{ e.product }} - {{ e.price|number_format(2) }} 
                         </p>                                  
                     {% endif %}
-                        
-        {% else %}                          
-            
+        
+        {# If the products are from the same category, continue displaying the them #}
+        {% else %}
+                  
             {% set sum = sum + e.price %}
 
-                {% if details == true %}
-                        <td>{{ e.product }}</td> 
-                        <td>{{ e.price|number_format(2) }}</td> 
-                        <td>{{ e.date|date("d-m-Y") }}</td> 
-                        <td>{% if e.description %}{{ e.description }}{% else %} - {% endif %}</td> 
-                    </tr> 
-                    <tr>
-                {% else %}
-                    <p>
-                        {{ e.product }} - {{ e.price|number_format(2) }} 
-                    </p>
-                {% endif %}
+            {% if details == true %}
+                {% include 'AcmeBudgetTrackerBundle::display_expenses_table_rest.html.twig' %}
+            {% else %}
+                <p>
+                    {{ e.product }} - {{ e.price|number_format(2) }} 
+                </p>
+            {% endif %}
 
         {% endif %}
                     
     {% endfor %}
 
+    {# Finish for the last category #}
     {% if details == true %}
         </tr></table>
     {% endif %}
@@ -119,44 +108,9 @@
         {% set chart = chart  ~ sum ~ ']' %}
     {% endif %}
 
-    {% if progressbar == 'true' %}
-        <div class="progress span5 center little-spacer">
-            {% set percent = sum*100/total_sum//1 %}
-            <div class="bar" style="width:{{ percent }}%;">
-                {{ percent }}%
-            </div>
-        </div>
-    {% endif %}
+    {% include 'AcmeBudgetTrackerBundle::display_expenses_progressbar.html.twig' %}
     
-  {#  {% if active_loans %}
-    
-        <h4 class="little-spacer text-info"><u>Loans</u></h4>
-        <div class="products Loans">
-        {% for a in active_loans %}
-            <p>
-                To {{a.name}} - {{a.price|number_format(2)}}
-            </p>
-        {% endfor %}
-        </div>
-        <strong>Sum: {{ sum_of_active_loans|number_format(2) }}</strong>
-        
-        {% if highchart == true %}
-            {% set chart = chart  ~ sum ~ ']' %}
-        {% endif %}
-
-        {% if progressbar == 'true' %}
-            <div class="progress span5 center little-spacer">
-                {% set percent = sum_of_active_loans*100/total_sum//1 %}
-                <div class="bar" style="width:{{ percent }}%;">
-                    {{ percent }}%
-                </div>
-            </div>
-        {% endif %}
-        
-    {% endif %} #}
-    
-    
-    
+    {# Display total sum #}
     <p class="lead text-error little-spacer">Total: <strong>{{total_sum|number_format(2)}}</strong></p> 
 
     {% if highchart == true %}
@@ -200,7 +154,7 @@
                         type: 'pie',
                         name: 'Total',
                         data: [
-                        {{ chart|raw }}
+                            {{ chart|raw }}
                         ]
                     }]
                 });

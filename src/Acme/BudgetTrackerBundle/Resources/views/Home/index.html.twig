@@ -43,7 +43,7 @@
             
         {% elseif expenses_for_current_month == null%}
             
-            {# Created only categories, no expenses #}
+            {# Created only categories, but no expenses #}
                 <h1>Hello, {{app.user.username}}!</h1>
                 <p class="lead big-spacer">
                     You don't have expenses for the current month yet.
@@ -57,14 +57,12 @@
                 </p> 
             
         {% else %}
-            
-
-                
+                      
             {# Experienced users #}
             <h3>Expenses for the current month</h3>
             
             {# If budget is set - show remaining money #}
-            {% if budget_for_current_month !=null %}
+            {% if budget_for_current_month != null %}
             
                 {% if remaining > 0 %}
                     <p class="lead text-success little-spacer ">Remaining: 
@@ -73,17 +71,12 @@
                     </p>
                     
                 {% elseif remaining == 0 %}
-                    <p class="lead text-error">Remaining: 
-                        <strong>{{ remaining }}</strong> 
-                        (from {{ budget_for_current_month|number_format(2) }})
-                    </p>
-                    
-                    <p class="lead text-error">
+                    <p class="lead text-error little-spacer">
                         You have spent all your budget of {{ budget_for_current_month|number_format(2) }}!
                     </p>
                     
                 {% else %}
-                    <p class="lead text-error">
+                    <p class="lead text-error little-spacer">
                         You have exceeded your budget of {{ budget_for_current_month|number_format(2) }}!
                     </p>
                     
@@ -99,23 +92,19 @@
                 'first_category': first_category, 
                 'expenses': expenses_for_current_month,                
                 'total_sum': spent_for_current_month,
-                'progressbar': true,
+                'highchart': false,
                 'details': false,
-                'highchart': false} %}
-           {% endif %}         
+                'progressbar': true
+            } %}
+                    
+        {% endif %}         
             
     </div>
 
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
+    
     {%block javascript%}
-        {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>#}
         <script src="{{ asset('bundles/acmebudgettracker/js/home.js') }}"></script>
-
     {%endblock%}
         
 {% endblock %} 
-        
-{#----------------------------------------------------------------------------#}
-        
-{# TODO 1. When many items are shown ??? pagination? pop-ups? #}
-{# TODO 2. Underline with <u> ??? #}  

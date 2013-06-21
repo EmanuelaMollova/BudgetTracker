@@ -3,13 +3,12 @@ $(document).ready(function(){
        $(this).css('cursor', 'pointer'); 
     });
     
-    $('u').on('click', function(ev){
-        ev.preventDefault();
+    $('u').on('click', function(){
         var elem = $(this).text();
         $('.'+elem).fadeToggle();
     });
-    
+
     $('button').on('click', function(){
-       $('.products').fadeToggle();  
+        $('.products').fadeToggle();  
     });
 });

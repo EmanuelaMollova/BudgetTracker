@@ -7,6 +7,7 @@ PAGES:
     * the sum of percents to be 100
 
     Class to hide : Products
+    JS - SHOW/HIDE ALL
 
 * Expenses - AJAX?
 * Reports - Beautify and Diagrams???

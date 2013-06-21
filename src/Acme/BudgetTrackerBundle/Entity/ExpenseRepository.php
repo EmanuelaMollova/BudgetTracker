@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ExpenseRepository extends EntityRepository
 {
-    //used
+    
     public function findExpensesForDate($fromDate, $toDate, $user, $category)
     {
         $q = $this
@@ -29,21 +29,6 @@ class ExpenseRepository extends EntityRepository
         
         return $q->getResult();
     }
-
-//    public function findExpensesForMonthAndCat($user, $month, $category)
-//    {
-//        $q = $this
-//            ->createQueryBuilder('e')
-//            ->where('e.date LIKE :month')
-//            ->andWhere('e.user = :user')
-//            ->andWhere('e.category = :category')
-//            ->setParameter('month', "%$month")
-//            ->setParameter('user', $user)
-//            ->setParameter('category', $category)
-//             ->getQuery();
-//        
-//        return $q->getResult();
-//    } 
     
     //used
     public function findExpensesByMonth($month, $year, $user, $category, $returned = 0)
@@ -57,15 +42,14 @@ class ExpenseRepository extends EntityRepository
             ->where('MONTH(e.date) = :month') 
             ->andWhere('YEAR(e.date) = :year')
             ->andWhere('e.user = :user')
-            ->andWhere('e.returned = :returned')
             ->andWhere('e.category <> :category')
+            ->andWhere('e.returned = :returned')
             ->orderBy('e.category', 'ASC')
             ->setParameter('month', $month)
             ->setParameter('year', $year)
             ->setParameter('user', $user) 
             ->setParameter('category', $category)
-                ->setParameter('returned', $returned)
-           
+            ->setParameter('returned', $returned)           
             ->getQuery();
         
         return $q->getResult();
@@ -83,8 +67,7 @@ class ExpenseRepository extends EntityRepository
             ->where('MONTH(e.date) = :month')
             ->andWhere('YEAR(e.date) = :year')
             ->andWhere('e.user = :user') 
-            ->andWhere('e.returned = :returned')
-   
+            ->andWhere('e.returned = :returned') 
             ->setParameter('month', $month)
             ->setParameter('year', $year)
             ->setParameter('user', $user)
@@ -110,14 +93,6 @@ class ExpenseRepository extends EntityRepository
         
         return $q->getSingleScalarResult();
     }
-    
-//    public function findForCat($user, $q)
-//    {
-//         $em = $this->getEntityManager();
-//        $query = $em->createQuery('SELECT e FROM AcmeBudgetTrackerBundle:Expense e WHERE e.user = ?1'.$q);
-//        $query->setParameter(1, $user);
-//        return $query->getResult();
-//    }
   
     public function findByCategoriesAndDates($start_date, $end_date, $q, $user, $category)
     {
@@ -130,20 +105,6 @@ class ExpenseRepository extends EntityRepository
         
         return $query->getResult();
     }
-    
-//    public function findExpensesCountByCategory($category, $user)
-//    {
-//        $q = $this
-//            ->createQueryBuilder('e')
-//            ->select('COUNT(e.id)') 
-//            ->where('e.category = :category')
-//            ->andWhere('e.user = :user')
-//            ->setParameter('category', $category)
-//            ->setParameter('user', $user)
-//             ->getQuery();
-//        
-//        return $q->getSingleScalarResult();
-//    }
 
     public function countNotReturned($user, $returned)
     {

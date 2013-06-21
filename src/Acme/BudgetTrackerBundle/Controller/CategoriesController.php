@@ -92,9 +92,9 @@ class CategoriesController extends Controller
             $name = $request->get('value');
 
             $same = $this->repository->
-                        countByNameAndUser($name, $this->user);
+                        countByName($name, $this->user);
 
-            if (count($same) == 0) {
+            if ($same == 0) {
                 $name = $request->get('value');
                 $category->setName($name);
 

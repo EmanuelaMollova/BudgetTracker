@@ -11,108 +11,87 @@ use Acme\BudgetTrackerBundle\Entity\Category;
 class HomeController extends Controller
 {
     /*
+     * Creates Debts and Loans categories for the user if they don't already exist
+     */
+    private function createCategory($name, $repository, $user, $em)
+    {       
+        $count = $repository->countByName($name, $user);
+        if($count == 0){
+            $category = new Category();
+            $category->setUser($user);
+            $category->setName($name);
+            $em->persist($category);
+            $em->flush();
+        }
+    }
+    
+    /* 
      * Finds if the user is brand new or experienced. In the second case finds
      * all his expenses for the current month, the sum, spent for them, the
      * budget for the month (if set) and remaining money and gives them to the 
      * template.
      */
     
-    //user, expense_repo, category_repo, month_repo
+    //user, em, dlids, expense_repo, category_repo, month_repo
     public function indexAction()
     {
         $this->setUser();               
         $category_repository = $this->setRepository('Category');
-        
-        //Create Debts and Loans Categories if they don't exist
         $this->em = $this->getEM();
-        $loans_count = $category_repository->countByNameAndUser('Loans', $this->user);
-        if($loans_count == 0){
-            $loans = new Category();
-            $loans->setUser($this->user);
-            $loans->setName('Loans');
-            $this->em->persist($loans);
-            $this->em->flush();
-        }
-        $debts_count = $category_repository->countByNameAndUser('Debts', $this->user);
-        if($debts_count == 0){
-            $debts = new Category();
-            $debts->setUser($this->user);
-            $debts->setName('Debts');
-            $this->em->persist($debts); 
-            $this->em->flush();
-        }
+               
+        $this->createCategory('Loans', $category_repository, $this->user, $this->em);
+        $this->createCategory('Debts', $category_repository, $this->user, $this->em);
         
         $number_of_user_categories = $category_repository->countByUser($this->user);
         
         $template = 'AcmeBudgetTrackerBundle:Home:index.html.twig';
         
-        if($number_of_user_categories == 0){    
-            
+        if($number_of_user_categories == 0){                
             return $this->render($template, array(
                 'newcommer' => true
             ));
-        } else {
-            $today = new \DateTime;
-            
+        } else {                     
             $this->setDebtsLoansIds();
+            $today = new \DateTime;
             
             $expense_repository = $this->setRepository('Expense');
             $expenses_for_current_month = $expense_repository->
                 findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id); 
-//            $dl_repository = $this->setRepository('DebtLoan');
-//            $active_loans = $dl_repository->findByMonth($this->user, 1, $today->format('m'), $today->format('Y'), 0);
-            
-        
+             
             if(!$expenses_for_current_month){
                 return $this->render($template, array(
                     'newcommer' => false,
                     'expenses_for_current_month' => null
                 ));      
-            } else {
-                
-                if($expenses_for_current_month){
-                    $first_category = $expenses_for_current_month[0]->getCategory()->getName();
-            
-                    $spent_for_expenses = $expense_repository->
+            } else {              
+                $first_category = $expenses_for_current_month[0]->getCategory()->getName();
+
+                $spent_for_current_month = $expense_repository->
                     getSumByMonth($today->format('m'), $today->format('Y'), $this->user);
-                
-                    $current_month = $this->setRepository('Month')
+
+                $current_month = $this->setRepository('Month')
                     ->findMonth($today->format('m'), $today->format('Y'), $this->user); 
-                
-                    if($current_month){
+
+                if($current_month){
                     $budget_for_current_month = $current_month[0]->getBudget();
-                    $remaining = number_format($budget_for_current_month - $spent_for_expenses, 2, '.', ''); 
-                    } else {
-                        $budget_for_current_month = null;
-                        $remaining = null;
-                   }
-                }
-//                if($active_loans){
-//                    $sum_of_active_loans = $dl_repository->getSumByCategoryAndMonth($this->user, 1, $today->format('m'), $today->format('Y'), 0);
-//                    if(!$expenses_for_current_month){
-//                        $first_category = null;
-//                        $spent_for_expenses = 0;
-//                    }
-                    
-                }
-                
-                $spent_for_current_month = $spent_for_expenses;
-                
-                   
+                    $remaining = number_format($budget_for_current_month - $spent_for_current_month, 2, '.', ''); 
+                } else {
+                    $budget_for_current_month = null;
+                    $remaining = null;
+               }        
             }
             
             return $this->render($template, array(
                 'newcommer' => false,
-               // 'active_loans' => $active_loans,
-               // 'sum_of_active_loans' => $sum_of_active_loans,
-                'expenses_for_current_month' => $expenses_for_current_month,
                 'first_category' => $first_category,
-                'spent_for_current_month' => $spent_for_current_month,
+                'expenses_for_current_month' => $expenses_for_current_month,
                 'budget_for_current_month' => $budget_for_current_month,
+                'spent_for_current_month' => $spent_for_current_month,              
                 'remaining' => $remaining
             ));
         }
     }
+}
  
 //------------------------------------------------------------------------------
 

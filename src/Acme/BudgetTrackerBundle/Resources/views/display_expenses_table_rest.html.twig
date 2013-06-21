@@ -1,0 +1,6 @@
+    <td>{{ e.product }}</td> 
+    <td>{{ e.price|number_format(2) }}</td> 
+    <td>{{ e.date|date("d-m-Y") }}</td> 
+    <td>{% if e.description %}{{ e.description }}{% else %} - {% endif %}</td> 
+</tr> 
+<tr>

@@ -1,0 +1,8 @@
+{% if progressbar == 'true' %}
+    <div class="little-spacer progress span5 center">
+        {% set percent = sum*100/total_sum//1 %}
+        <div class="bar" style="width:{{ percent }}%;">
+            {{ percent }}%
+        </div>
+    </div>
+{% endif %}
