@@ -30,8 +30,10 @@ class ReportType extends AbstractType
                 { return $repository->createQueryBuilder('cat')
                                     ->select('cat')
                                     ->where('cat.user = :user')
+                                    ->andWhere('cat.name <> :debts')
                                     //->orderBy('cat.name', 'ASC')
-                                    ->setParameter('user', $user);
+                                    ->setParameter('user', $user)
+                                     ->setParameter('debts', 'Debts');
                 } ));    
         
         

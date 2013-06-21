@@ -9,7 +9,13 @@
     <div class="little-spacer text-center">       
         <h3>Bank Interest</h3> 
         
-        <p class="lead text-success little-spacer">You have saved <b>{{ saved_sum }}</b> so far!</p>
+        {% if saved_sum > 0%}
+        <p class="lead text-success little-spacer">
+            You have saved <b>{{ saved_sum }}</b> so far!</p>
+        {% elseif saved_sum == 0 %}
+                    <p class="lead text-warning little-spacer">
+            You have saved nothing so far! :(</p>
+        {% endif %}
         
         <p class="lead big-spacer">Calculate what your profit will be if you deposit in a bank</p>
     

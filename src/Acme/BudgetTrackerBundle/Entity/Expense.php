@@ -50,9 +50,18 @@ class Expense
     protected $price;
     
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $returned;
+    
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $date;
+    
+    public function __construct() {
+        $this->returned = 0;
+    }
 
     public function getId()
     {
@@ -129,5 +138,28 @@ class Expense
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set returned
+     *
+     * @param boolean $returned
+     * @return Expense
+     */
+    public function setReturned($returned)
+    {
+        $this->returned = $returned;
+    
+        return $this;
+    }
+
+    /**
+     * Get returned
+     *
+     * @return boolean 
+     */
+    public function getReturned()
+    {
+        return $this->returned;
     }
 }

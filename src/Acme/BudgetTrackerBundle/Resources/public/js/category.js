@@ -1,13 +1,15 @@
 $(document).ready(function(){
-          $('.alert').alert();
-
-     
+         
      $('.edit').editable(path, {
          cancel    : 'Cancel',
          submit    : 'Save',
          tooltip   : 'Click to edit'
      });
      
+     $('.bla').on('click','.alert', function(){        
+         console.log('working');    
+         $("input[type=text]").val('');
+     });
 
 });
 

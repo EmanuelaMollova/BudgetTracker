@@ -3,13 +3,13 @@
   <p><strong>Warning!</strong></p>
   <p>You have {{ notifications_count() }} debt(s) which you haven't returned yet:</p>
   {% for a in get_notifications() %}
-        <p>{{ a.name }} - {{ a.price|number_format(2) }}</p>
+        <p>{{ a.product }} - {{ a.price|number_format(2) }}</p>
   {% endfor %}
         <p>See more details <a href="{{path('debts_loans')}}">here</a>.</p>
 </div>
 
 {%block javascript%}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        {% if report is not defined %}<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> {% endif %}
         
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/notifications.js') }}"></script>

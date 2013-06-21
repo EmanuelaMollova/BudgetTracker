@@ -7,9 +7,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class DebtLoanType extends AbstractType
 {
+    protected $user;
+    
+    function __construct($user) 
+    {
+        $this->user = $user;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text',array(
+        $builder->add('product', 'text',array(
             'label'  => 'From/To:'
         ));
         
@@ -26,11 +33,28 @@ class DebtLoanType extends AbstractType
             'label' => 'Date:'
         ));
         
-        $builder->add('category', 'choice', array(
-            'choices'   => array(0 => 'Debt', 1 => 'Loan'),
+        $user = $this->user;
+        $builder->add('category', 'entity', array(
+            'class' => 'AcmeBudgetTrackerBundle:Category',
+            'property' => 'name',
             'label' => 'Category: ',
-            'required' => true
-        ));
+            'required' => true,
+            'query_builder' => function ($repository) use ($user)
+                { return $repository->createQueryBuilder('cat')
+                                    ->select('cat')
+                                    ->where('cat.user = :user')
+                                    ->andWhere('cat.name = :debts OR cat.name = :loans')
+                                    //->orderBy('cat.name', 'ASC')
+                                    ->setParameter('user', $user)
+                                    ->setParameter('debts', 'Debts')
+                                    ->setParameter('loans', 'Loans');
+                } ));    
+                
+//                $builder->add('category', 'choice', array(
+//            'choices'   => array(0 => 'Debt', 1 => 'Loan'),
+//            'label' => 'Category: ',
+//            'required' => true
+//        ));
     }
 
     public function getName()

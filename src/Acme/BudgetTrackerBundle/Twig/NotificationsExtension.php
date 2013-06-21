@@ -21,23 +21,28 @@ class NotificationsExtension extends \Twig_Extension
     public function countNotifications()
     {        
         
-        $dl_repository = $this->container->get('doctrine.orm.entity_manager')->getRepository('AcmeBudgetTrackerBundle:DebtLoan');
+        $expense_repository = $this->container->get('doctrine.orm.entity_manager')->getRepository('AcmeBudgetTrackerBundle:Expense');
+        $category_repository = $this->container->get('doctrine.orm.entity_manager')->getRepository('AcmeBudgetTrackerBundle:Category');
         $this->user = $this->container->get('security.context')->getToken()->getUser();
-
-        $notifications = $dl_repository->countNotReturned($this->user, 0);
+        $debt = $category_repository->findByNameUser($this->user, 'Debts');       
+        $this->debts_id = $debt[0]->getId();
+        
+        $notifications = count($expense_repository->findByCategory($this->user, $this->debts_id));
 
         return $notifications;
     }
     
     public function getNotifications()
     {        
-        
-        $dl_repository = $this->container->get('doctrine.orm.entity_manager')->getRepository('AcmeBudgetTrackerBundle:DebtLoan');
+        $expense_repository = $this->container->get('doctrine.orm.entity_manager')->getRepository('AcmeBudgetTrackerBundle:Expense');
+        $category_repository = $this->container->get('doctrine.orm.entity_manager')->getRepository('AcmeBudgetTrackerBundle:Category');
         $this->user = $this->container->get('security.context')->getToken()->getUser();
+        $debt = $category_repository->findByNameUser($this->user, 'Debts');       
+        $this->debts_id = $debt[0]->getId();
 
-        $notifications = $dl_repository->findByCategory($this->user, 0, 0);
+        $active_debts = $expense_repository->findByCategory($this->user, $this->debts_id);
 
-        return $notifications;
+        return $active_debts;
     }
     
     public function getName()

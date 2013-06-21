@@ -47,7 +47,9 @@ class ExpensesController extends Controller
         $to_date->modify('+1 day');
         $to_date->setTime(0, 0, 0);
         
-        $expenses_for_today = $this->repository->findExpensesForDate($from_date, $to_date, $this->user);
+        $this->setDebtsLoansIds();
+        
+        $expenses_for_today = $this->repository->findExpensesForDate($from_date, $to_date, $this->user, $this->debts_id);
         
         $dl_repository = $this->setRepository('DebtLoan');
 

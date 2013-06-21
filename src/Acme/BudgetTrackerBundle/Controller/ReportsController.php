@@ -77,7 +77,9 @@ class ReportsController extends Controller
             
             $query .= ')';
             
-            $expenses = $repo->findByCategoriesAndDates($start_date_obj, $end_date_obj, $query, $this->user); 
+            $this->setDebtsLoansIds();
+            
+            $expenses = $repo->findByCategoriesAndDates($start_date_obj, $end_date_obj, $query, $this->user, $this->debts_id); 
             
             $total_sum = 0;
             foreach ($expenses as $exp){

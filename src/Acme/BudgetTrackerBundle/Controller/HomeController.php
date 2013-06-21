@@ -3,6 +3,7 @@
 namespace Acme\BudgetTrackerBundle\Controller;
 
 use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
+use Acme\BudgetTrackerBundle\Entity\Category;
 
 /*
  * Takes care of the index page
@@ -22,27 +23,47 @@ class HomeController extends Controller
         $this->setUser();               
         $category_repository = $this->setRepository('Category');
         
-        $dl_repository = $this->setRepository('DebtLoan');
-
-        $number_of_categories = $category_repository->countByUser($this->user);
+        //Create Debts and Loans Categories if they don't exist
+        $this->em = $this->getEM();
+        $loans_count = $category_repository->countByNameAndUser('Loans', $this->user);
+        if($loans_count == 0){
+            $loans = new Category();
+            $loans->setUser($this->user);
+            $loans->setName('Loans');
+            $this->em->persist($loans);
+            $this->em->flush();
+        }
+        $debts_count = $category_repository->countByNameAndUser('Debts', $this->user);
+        if($debts_count == 0){
+            $debts = new Category();
+            $debts->setUser($this->user);
+            $debts->setName('Debts');
+            $this->em->persist($debts); 
+            $this->em->flush();
+        }
+        
+        $number_of_user_categories = $category_repository->countByUser($this->user);
         
         $template = 'AcmeBudgetTrackerBundle:Home:index.html.twig';
         
-        if($number_of_categories == 0){
+        if($number_of_user_categories == 0){    
+            
             return $this->render($template, array(
                 'newcommer' => true
             ));
         } else {
             $today = new \DateTime;
             
+            $this->setDebtsLoansIds();
+            
             $expense_repository = $this->setRepository('Expense');
             $expenses_for_current_month = $expense_repository->
-                findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user); 
-            $dl_repository = $this->setRepository('DebtLoan');
-            $active_loans = $dl_repository->findByMonth($this->user, 1, $today->format('m'), $today->format('Y'), 0);
+                findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id); 
+//            $dl_repository = $this->setRepository('DebtLoan');
+//            $active_loans = $dl_repository->findByMonth($this->user, 1, $today->format('m'), $today->format('Y'), 0);
             
         
-            if(!$expenses_for_current_month && !$active_loans){
+            if(!$expenses_for_current_month){
                 return $this->render($template, array(
                     'newcommer' => false,
                     'expenses_for_current_month' => null
@@ -65,28 +86,25 @@ class HomeController extends Controller
                         $budget_for_current_month = null;
                         $remaining = null;
                    }
-                   if(!$active_loans){
-                    $sum_of_active_loans = 0;
-                   }
                 }
-                if($active_loans){
-                    $sum_of_active_loans = $dl_repository->getSumByCategoryAndMonth($this->user, 1, $today->format('m'), $today->format('Y'), 0);
-                    if(!$expenses_for_current_month){
-                        $first_category = null;
-                        $spent_for_expenses = 0;
-                    }
+//                if($active_loans){
+//                    $sum_of_active_loans = $dl_repository->getSumByCategoryAndMonth($this->user, 1, $today->format('m'), $today->format('Y'), 0);
+//                    if(!$expenses_for_current_month){
+//                        $first_category = null;
+//                        $spent_for_expenses = 0;
+//                    }
                     
                 }
                 
-                $spent_for_current_month = $spent_for_expenses + $sum_of_active_loans;
+                $spent_for_current_month = $spent_for_expenses;
                 
                    
             }
             
             return $this->render($template, array(
                 'newcommer' => false,
-                'active_loans' => $active_loans,
-                'sum_of_active_loans' => $sum_of_active_loans,
+               // 'active_loans' => $active_loans,
+               // 'sum_of_active_loans' => $sum_of_active_loans,
                 'expenses_for_current_month' => $expenses_for_current_month,
                 'first_category' => $first_category,
                 'spent_for_current_month' => $spent_for_current_month,
@@ -95,7 +113,6 @@ class HomeController extends Controller
             ));
         }
     }
-}
  
 //------------------------------------------------------------------------------
 

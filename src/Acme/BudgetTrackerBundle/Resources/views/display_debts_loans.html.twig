@@ -10,7 +10,7 @@
         </tr>
         {% for i in items %}              
             <tr>
-                <td>{{i.name}}</td>
+                <td>{{i.product}}</td>
                 <td>{{i.price|number_format(2)}}</td>
                 <td>{{i.date|date('d-m-Y')}}</td>
                 <td>{% if i.description %} {{ i.description }} {% else %} - {% endif %}<td>
@@ -21,7 +21,7 @@
             {% for p in passive %}
             
             <tr class="linethr {%if debt %} debts {%else%} loans{%endif%}">
-                <td>{{p.name}}</td>
+                <td>{{p.product}}</td>
                 <td>{{p.price|number_format(2)}}</td>
                 <td>{{p.date|date('d-m-Y')}}</td>
                 <td>{% if p.description %} {{ p.description }} {% else %} - {% endif %}<td>
@@ -54,7 +54,7 @@
         {% for p in passive %}
             
             <tr class="linethr ">
-                <td>{{p.name}}</td>
+                <td>{{p.product}}</td>
                 <td>{{p.price|number_format(2)}}</td>
                 <td>{{p.date|date('d-m-Y')}}</td>
                 <td>{% if p.description %} {{ p.description }} {% else %} - {% endif %}<td>

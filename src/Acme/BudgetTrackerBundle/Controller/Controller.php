@@ -8,14 +8,29 @@ class Controller extends BaseController
 {
     protected $user;
     protected $notifications;
+    protected $debts_id;
+    protected $loans_id;
     
     protected function setUser()
     {
         $this->user = $this->container->get('security.context')->getToken()->getUser();
     }
     
+    protected function setDebtsLoansIds()
+    {
+        $category_repository = $this->setRepository('Category');
+        
+        $debt = $category_repository->findByNameUser($this->user, 'Debts');
+        $loan = $category_repository->findByNameUser($this->user, 'Loans');
+        
+        $this->debts_id = $debt[0]->getId();
+        $this->loans_id = $loan[0]->getId();
+    }
 
-    
+
+
+
+
     /*
      * Gets EntityManager
      */

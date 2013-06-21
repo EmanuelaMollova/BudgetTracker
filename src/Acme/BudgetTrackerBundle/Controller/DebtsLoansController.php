@@ -3,7 +3,7 @@
 namespace Acme\BudgetTrackerBundle\Controller;
 
 use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
-use Acme\BudgetTrackerBundle\Entity\DebtLoan;
+use Acme\BudgetTrackerBundle\Entity\Expense;
 use Acme\BudgetTrackerBundle\Form\Type\DebtLoanType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,9 +25,9 @@ class DebtsLoansController extends Controller
         $today = new \DateTime('now');
         $today = $today->format('d-m-Y');
         
-        $debtloan = new DebtLoan();
+        $debtloan = new Expense();
         $debtloan->setDate($today);
-        $form = $this->createForm(new DebtLoanType(), $debtloan);
+        $form = $this->createForm(new DebtLoanType($this->user), $debtloan);
         
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -45,14 +45,21 @@ class DebtsLoansController extends Controller
 
                 return $this->redirect($this->generateUrl('debts_loans'));
             }  
-        }
+        }        
+//        $id_debts_cat = $category_repository->findByNameUser($this->user, 'Debts');
+//        $id_debts_cat = $id_debts_cat[0]->getId();
+//        
+//        $id_loans_cat = $category_repository->findByNameUser($this->user, 'Loans');
+//        $id_loans_cat = $id_loans_cat[0]->getId();
+        $this->setDebtsLoansIds();
         
-        $dl_repository = $this->setRepository('DebtLoan');
+        $active_debts = $this->repository->findByCategory($this->user, $this->debts_id);
         
-        $active_debts = $dl_repository->findByCategory($this->user, 0);
-        $active_loans = $dl_repository->findByCategory($this->user, 1);
-        $passive_debts = $dl_repository->findByCategory($this->user, 0, 1);
-        $passive_loans = $dl_repository->findByCategory($this->user, 1, 1);
+        //var_dump($active_debts);
+        
+        $active_loans = $this->repository->findByCategory($this->user, $this->loans_id);
+        $passive_debts = $this->repository->findByCategory($this->user, $this->debts_id, 1);
+        $passive_loans = $this->repository->findByCategory($this->user, $this->loans_id, 1);
         
                 
         return $this->render('AcmeBudgetTrackerBundle:DebtsLoans:debtsloans.html.twig', array(
@@ -74,7 +81,7 @@ class DebtsLoansController extends Controller
 
         public function returnAction($id)
     {   
-          $dl_repository = $this->setRepository('DebtLoan');
+          $dl_repository = $this->setRepository('Expense');
           $dl = $dl_repository->findById($id);
           $dl = $dl[0];
           $dl->setReturned(1 - $dl->getReturned());

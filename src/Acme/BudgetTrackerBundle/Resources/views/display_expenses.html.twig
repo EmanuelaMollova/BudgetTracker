@@ -128,7 +128,7 @@
         </div>
     {% endif %}
     
-    {% if active_loans %}
+  {#  {% if active_loans %}
     
         <h4 class="little-spacer text-info"><u>Loans</u></h4>
         <div class="products Loans">
@@ -153,7 +153,7 @@
             </div>
         {% endif %}
         
-    {% endif %}
+    {% endif %} #}
     
     
     
@@ -162,7 +162,7 @@
     {% if highchart == true %}
 
         {%block javascript%}
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
             <script src="http://code.highcharts.com/highcharts.js"></script>
         {%endblock%}
 

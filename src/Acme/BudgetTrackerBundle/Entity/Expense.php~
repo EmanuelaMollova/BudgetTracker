@@ -50,9 +50,18 @@ class Expense
     protected $price;
     
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $returned;
+    
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $date;
+    
+    public function __construct() {
+        $this->returned = 0;
+    }
 
     public function getId()
     {

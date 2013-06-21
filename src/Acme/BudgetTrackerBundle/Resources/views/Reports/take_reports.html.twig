@@ -35,7 +35,7 @@
             
     </div>
 
-    {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
+    {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' with {'report':'Reports'} %}
     {%block javascript%}
         <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script> 
         <script src="{{ asset('bundles/acmebudgettracker/js/reports.js') }}"></script>      

@@ -57,10 +57,13 @@ class CategoriesController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
 
+            
+            
             $same = $this->repository->
                     countByNameAndUser($category->getName(), $this->user);
 
-            if (count($same) == 0 && $form->isValid()) {
+            
+            if ($same == 0 && $form->isValid()) {
                 $category->setUser($this->user);
                 $this->em->persist($category);
                 $this->em->flush();
@@ -101,7 +104,7 @@ class CategoriesController extends Controller
             } else { 
                     $response = new Response();
                     $response->setContent('
-                        <div class="alert alert-error">
+                        <div class="duplicate alert alert-error">
                             <button type="button" class="close" data-dismiss="alert">OK</button>
                             <strong>This value is already used!</strong> Please choose another.
                         </div>
