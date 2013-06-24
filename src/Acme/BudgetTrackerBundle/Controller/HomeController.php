@@ -3,7 +3,6 @@
 namespace Acme\BudgetTrackerBundle\Controller;
 
 use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
-use Acme\BudgetTrackerBundle\Entity\Category;
 
 /*
  * Takes care of the index page
@@ -15,7 +14,7 @@ class HomeController extends Controller
      */
     private function createCategory($name, $repository, $user, $em)
     {       
-        $count = $repository->countByName($name, $user);
+        $count = $repository->countCategoriesByName($name, $user);
         if($count == 0){
             $category = new Category();
             $category->setUser($user);
@@ -31,33 +30,25 @@ class HomeController extends Controller
      * budget for the month (if set) and remaining money and gives them to the 
      * template.
      */
-    
-    //user, newcommer, em, dlids, expense_repo, category_repo, month_repo
     public function indexAction()
     {
-        $this->setUser();               
-        $category_repository = $this->setRepository('Category');
-        $this->em = $this->getEM();
+        $this->setVariables();
                
-        $this->createCategory('Loans', $category_repository, $this->user, $this->em);
-        $this->createCategory('Debts', $category_repository, $this->user, $this->em);
-        
-        $number_of_user_categories = $category_repository->countByUser($this->user);
+        $this->createCategory('Loans', $this->category_repository, $this->user, $this->em);
+        $this->createCategory('Debts', $this->category_repository, $this->user, $this->em);
         
         $template = 'AcmeBudgetTrackerBundle:Home:index.html.twig';
         
-        if($number_of_user_categories == 0){                
+        if($this->number_of_user_categories == 0){                
             return $this->render($template, array(
                 'newcommer' => true
-            ));
-        } else {                     
-            $this->setDebtsLoansIds();
-            $today = new \DateTime;
+            )); 
+        } else {
+            $today = new \DateTime();
             
-            $expense_repository = $this->setRepository('Expense');
-            $expenses_for_current_month = $expense_repository->
-                findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id); 
-             
+            $expenses_for_current_month = $this->expense_repository->
+               findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id); 
+
             if(!$expenses_for_current_month){
                 return $this->render($template, array(
                     'newcommer' => false,
@@ -66,11 +57,11 @@ class HomeController extends Controller
             } else {              
                 $first_category = $expenses_for_current_month[0]->getCategory()->getName();
 
-                $spent_for_current_month = $expense_repository->
-                    findSumByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id);
+                $spent_for_current_month = $this->expense_repository->
+                    findSumOfExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id);
 
-                $current_month = $this->setRepository('Month')
-                    ->findMonth($today->format('m'), $today->format('Y'), $this->user); 
+                $current_month = $this->month_repository
+                    ->findMonthByUser($today->format('m'), $today->format('Y'), $this->user); 
 
                 if($current_month){
                     $budget_for_current_month = $current_month[0]->getBudget();
@@ -92,31 +83,3 @@ class HomeController extends Controller
         }
     }
 }
- 
-//------------------------------------------------------------------------------
-
-//$all_categories = $cat_repo->findByUser($this->user);
-
-// Another decision with Array of Arrays
-// 
-//        $all = array();
-//        
-//        foreach ($all_categories as $cat)
-//        {
-//            //For each category creates array with name $category with expenses 
-//            //for this category for the given month and pushes all this arrays into $all
-//            
-//            $var = strtolower($cat->getName());
-//            array_push($all, $$var = $this->repository->
-//                    findExpensesForMonthAndCat($this->user, $date, $cat->getId()));
-//        }  
-//            
-//        $total_sum = 0;
-//        
-//        foreach ($all as $al) {
-//            foreach($al as $a) {
-//                $total_sum += $a->getPrice();
-//            }
-//        }
-//        
-//        echo $total_sum;

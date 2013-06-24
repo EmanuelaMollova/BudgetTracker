@@ -14,7 +14,7 @@
                 {% for cat in categories %}
                     <tr>
                         <td>
-                            <span class="right-spacer"><strong id="{{cat.id}}"class="edit bla">{{ cat.name }}</strong>
+                            <span class="right-spacer"><strong id="{{cat.id}}"class="edit validation">{{ cat.name }}</strong>
 
                             <script>
                                 var path = "{{ path('edit_category', { 'id': cat.id}) }}";

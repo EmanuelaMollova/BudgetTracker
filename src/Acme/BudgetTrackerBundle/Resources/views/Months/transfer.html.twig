@@ -2,8 +2,6 @@
 
 {% block title %} Months {% endblock %}
 
-
-
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
@@ -12,10 +10,7 @@
 {% endblock %}
 
 {% block body %}
-    
-    {{start_date}}
-    
-    
+
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Months'} %}
 
     <div class="little-spacer text-center"> 
@@ -30,6 +25,12 @@
             </button>
              
         </form>
+        
+        {% if app.session.hasFlash('notice') %}
+            <div class="flash-notice text-error little-spacer lead">
+                {{ app.session.flash('notice') }}
+            </div>
+        {% endif %}
         
      </div>   
 

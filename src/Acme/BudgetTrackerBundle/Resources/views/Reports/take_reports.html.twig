@@ -25,7 +25,7 @@
             }%}         
         {% else %}
             <p class="text-warning lead big-spacer">Looks like there are no expenses between</p>
-            <p>{{ from_date }} and {{ to_date }} for the selected categories.</p>
+            <p class="text-warning lead">{{ from_date }} and {{ to_date }} for the selected categories.</p>
         {% endif %}
             
         <div class="little-spacer"><a href="{{ path('reports') }}">Go back</a></div>           

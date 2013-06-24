@@ -31,6 +31,7 @@
         </form>
         
         {% if all_months %}
+        
             <div class="big-spacer" id="container" style="width:100%; height:400px;"></div>
 
             <table class="table table-hover big-spacer">
@@ -51,7 +52,13 @@
                         <tr>
                             <td>{{ all_months[i].name }}</td>
                             <td>{{ budget[i]|number_format(2) }}</td>
-                            <td class="text-error">{{ spent[i]|number_format(2) }}</td>
+                            <td class="text-error">
+                                {{ spent[i]|number_format(2) }}
+                                {% if active_loans[i] > 0 %}
+                                    (loans: {{active_loans[i]|number_format(2)}})
+                                {% endif %}
+                            
+                            </td>
                             {% if saved[i] >= 0 %}
                                 <td class="text-success">{{ saved[i]|number_format(2) }}
                             {% else %}

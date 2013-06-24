@@ -1,5 +1,3 @@
-{# TODO NOTIFICATIONS REPORTS MONEY - TO COUNT LOANS AND DEBTS TOO AND SO ON   ZAPOR AKO NE SA VYRNATI ZAEMI ? BILLS (U)  #}
-
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
@@ -11,7 +9,7 @@
 
 {% block body %}
     
-    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Debts & Loans', 'debts': notifications} %}
+    {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Debts & Loans'} %}
 
     <div class="text-center little-spacer">
         <h3>Debts and Loans</h3>   
@@ -24,7 +22,7 @@
                     Submit
                 </button>
 
-            </form>
+        </form>
         
     {% include 'AcmeBudgetTrackerBundle::display_debts_loans.html.twig' with {
         'title':'Debts you should return', 

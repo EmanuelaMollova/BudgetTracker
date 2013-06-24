@@ -4,49 +4,42 @@ namespace Acme\BudgetTrackerBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
 use Acme\BudgetTrackerBundle\Entity\Category;
 use Acme\BudgetTrackerBundle\Form\Type\CategoryType;
-use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
 
+/*
+ * Takes care of adding, editing, deleting and displaying categories
+ */
 class CategoriesController extends Controller
 {
-    //Most frequently used variables
-    private $em;
-    private $repository;
-    private $categories;
     
     //Sets value to most friquently used variables
     private function init()
     {
-        $this->em = $this->getEM();
-        $this->setUser();
-        $this->repository = $this->setRepository('Category');
-        $this->categories = $this->repository->findByUser($this->user);
+        $this->setVariables($newcommer = false, $month = false, $em = true, $expense = false, $category = true, $ids = false);
+        $this->categories_for_user = $this->category_repository->findCategoriesByUser($this->user);
     }
 
     /*
      * Displays the form for adding new and all the existing cateogires
      */
-    
-    // category, user
     public function categoriesAction()
     {
         $this->init();
-        
+
         $category = new Category();
         $form = $this->createForm(new CategoryType(), $category);
 
         return $this->render(
             'AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
-                'categories' => $this->categories, 
+                'categories' => $this->categories_for_user, 
                 'form' => $form->createView()));
     }
    
     /*
      * Creates new categories
      */
-    
-    //category, user, em
     public function createCategoryAction(Request $request)
     {
         $this->init();
@@ -57,8 +50,10 @@ class CategoriesController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
 
-            $same = $this->repository->
-                    countByName($category->getName(), $this->user);
+            $same = $this->category_repository->
+                countCategoriesByName($category->getName(), $this->user);
+            
+            
 
             if ($same == 0 && $form->isValid()) {
                 $category->setUser($this->user);
@@ -67,7 +62,7 @@ class CategoriesController extends Controller
 
                 return $this->redirect($this->generateUrl('categories'));
             } else {
-                $this->get('session')->setFlash('notice', 'This value is already used!');
+                $this->setFlash('This value is already used!');
             }
         }
                 
@@ -80,93 +75,61 @@ class CategoriesController extends Controller
     /*
      * Edits existing categories
      */
-    
-    //user, category, em
     public function editCategoryAction(Request $request, Category $category)
     {   
         $this->init();
 
         if ($request->isMethod('POST')) {
-            //get the text sent from jeditable
+            $old_name = $category->getName();
+            
             $name = $request->get('value');
 
-            $same = $this->repository->
-                        countByName($name, $this->user);
-
+            $same = $this->category_repository->
+                countCategoriesByName($name, $this->user);
+            
             if ($same == 0) {
                 $name = $request->get('value');
                 $category->setName($name);
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($category);
-                $em->flush();
+                $this->em->persist($category);
+                $this->em->flush();
             } else { 
-                    $response = new Response();
-                    $response->setContent('
-                        <div class="duplicate alert alert-error">
-                            <button type="button" class="close" data-dismiss="alert">OK</button>
-                            <strong>This value is already used!</strong> Please choose another.
-                        </div>
-                    ');
-                    $response->send();        
+                $old_response = new Response($old_name);
+                return $old_response;
             }
         } else {
             echo "Not post";
         }
-        //return the name value to jeditable so it can display it
-        return new Response($name);     
+        
+        $new_response = new Response($name);
+        return $new_response;     
     }
   
     /*
      * Deletes categories if there are no expenses for them
      */
-    // user, em, expense, category
     public function deleteCategoryAction($id)
     {  
         $this->init();
         
-        $category = $this->repository->find($id);
+        $category = $this->category_repository->find($id);
+        if(!$category){
+            return $this->render(
+                'AcmeBudgetTrackerBundle:Error:error.html.twig', array(
+                'item' => 'category'
+            ));
+        }
         
-        $exp_rep = $this->setRepository('Expense');
-        $expenses = $exp_rep->findByCategory($category, $this->user);
+        $this->expense_repository = $this->setRepository('Expense');
+        $expenses = $this->expense_repository->findExpensesByCategory($category, $this->user);
         
-        if (coutn($expenses) == 0){           
+        if (count($expenses) == 0){           
             $this->em->remove($category);
             $this->em->flush();
         } else {
-            $this->get('session')->setFlash('notice', 'You cannot delete this category because there are some expenses for it.');
+            $this->setFlash('You cannot delete this category because there are some expenses for it.');
         }
         
         return $this->redirect($this->generateUrl('categories'));
     }
 }
-
-//------------------------------------------------------------------------------
-
-//Edits existing category
-//    public function editCategoryAction(Request $request, $id)
-//    {
-//        $this->init();
-//        
-//        $category = $this->repository->find($id);      
-//        $form = $this->createForm(new CategoryType(), $category);
-//        
-//        if ($request->isMethod('POST')) {
-//            $form->bind($request);
-//
-//            if ($form->isValid()) {
-//                //echo 'VALIDDD';
-//                //die();
-//                $this->em->persist($category);
-//                $this->em->flush();
-//                
-//                //return $this->redirect($this->generateUrl('categories'));
-//            }
-//        }
-//        
-//        return $this->render(
-//            'AcmeBudgetTrackerBundle:Categories:categories.html.twig', array(
-//                'categories' => $this->categories, 
-//                'id' => $id, 
-//                'form' => $form->createView()));      
-//    }

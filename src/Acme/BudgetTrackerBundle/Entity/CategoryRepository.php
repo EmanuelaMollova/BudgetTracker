@@ -6,8 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class CategoryRepository extends EntityRepository
 {
-    //used Home 
-    public function countByName($name, $user)
+    public function countCategoriesByName($name, $user)
     {
         $q = $this
             ->createQueryBuilder('c')
@@ -21,7 +20,7 @@ class CategoryRepository extends EntityRepository
         return $q->getSingleScalarResult();
     }
     
-    public function countByUser($user)
+    public function countCategoriesByUser($user)
     {
         $q = $this
             ->createQueryBuilder('c')
@@ -36,10 +35,8 @@ class CategoryRepository extends EntityRepository
        
         return $q->getSingleScalarResult();
     }
-    
 
-    
-    public function findByUser($user)
+    public function findCategoriesByUser($user)
     {
         $q = $this
             ->createQueryBuilder('c')
@@ -53,8 +50,8 @@ class CategoryRepository extends EntityRepository
        
         return $q->getResult();
     }
-    
-    public function findByNameUser($user, $name)
+
+    public function findCategoriesByNameAndUser($user, $name)
     {
         $q = $this
             ->createQueryBuilder('c')

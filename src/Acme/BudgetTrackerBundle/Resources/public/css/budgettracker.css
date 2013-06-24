@@ -1,0 +1,72 @@
+.big-spacer {
+    margin-top: 50px;
+}
+
+.little-spacer {
+    margin-top: 27px;
+}
+
+.right-spacer {
+    margin-right: 12px;
+}
+
+.table td {
+   text-align: center;   
+}
+
+.table th {
+   text-align: center;   
+}
+
+.products {
+    display: none;
+}
+
+.loans {
+    display:none;
+}
+
+.debts {
+    display:none;
+}
+
+.prbar{
+    widht: 50%
+}
+
+.center{ 
+    float: none; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+.little-bottom-spacer {
+    margin-bottom: 25px;
+}
+
+.hr-colored {
+  border-top: 1px solid #7C2B57;
+}
+
+.linethr {
+    color: green;
+    text-decoration:line-through
+}
+
+.popover {
+    top: 71px !important;
+    left: 379px !important;
+    background-color: red;
+}
+
+.box {
+        display: none;
+        width: 200px;
+        /*background: red;*/
+        padding: 2em;
+        position: absolute;
+        top: 45px !important;
+        left: 0px !important;
+}
+
+

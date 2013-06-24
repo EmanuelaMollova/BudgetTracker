@@ -77,7 +77,7 @@ take_report:
     
 bank_interest:
     pattern: /bank_interest
-    defaults: { _controller: AcmeBudgetTrackerBundle:Banks:banks }
+    defaults: { _controller: AcmeBudgetTrackerBundle:Months:months }
     
 transfer:
     pattern: /transfer/{id}
