@@ -104,12 +104,6 @@ class Month
         return $this->user;
     }
 
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     * @return Month
-     */
     public function setDate($date)
     {
         $this->date = $date;
@@ -117,11 +111,6 @@ class Month
         return $this;
     }
 
-    /**
-     * Get date
-     *
-     * @return \DateTime 
-     */
     public function getDate()
     {
         return $this->date;

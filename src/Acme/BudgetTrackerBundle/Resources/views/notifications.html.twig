@@ -9,8 +9,10 @@
 </div>
 
 {%block javascript%}
-        {% if report is not defined %}<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> {% endif %}
-        
-        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/notifications.js') }}"></script>
+    {% if report is not defined %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
+    {% endif %}
+
+    {#<script src="{{ asset('bundles/acmebudgettracker/js/vendor/bootstrap.min.js') }}"></script>#}
+    <script src="{{ asset('bundles/acmebudgettracker/js/notifications.js') }}"></script>
 {%endblock%}

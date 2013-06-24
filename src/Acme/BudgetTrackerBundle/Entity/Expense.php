@@ -140,24 +140,13 @@ class Expense
         return $this->user;
     }
 
-    /**
-     * Set returned
-     *
-     * @param boolean $returned
-     * @return Expense
-     */
     public function setReturned($returned)
     {
         $this->returned = $returned;
     
         return $this;
     }
-
-    /**
-     * Get returned
-     *
-     * @return boolean 
-     */
+    
     public function getReturned()
     {
         return $this->returned;
