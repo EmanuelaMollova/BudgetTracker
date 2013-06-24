@@ -52,8 +52,6 @@ class CategoriesController extends Controller
 
             $same = $this->category_repository->
                 countCategoriesByName($category->getName(), $this->user);
-            
-            
 
             if ($same == 0 && $form->isValid()) {
                 $category->setUser($this->user);
@@ -80,8 +78,7 @@ class CategoriesController extends Controller
         $this->init();
 
         if ($request->isMethod('POST')) {
-            $old_name = $category->getName();
-            
+            $old_name = $category->getName();           
             $name = $request->get('value');
 
             $same = $this->category_repository->
@@ -116,8 +113,7 @@ class CategoriesController extends Controller
         if(!$category){
             return $this->render(
                 'AcmeBudgetTrackerBundle:Error:error.html.twig', array(
-                'item' => 'category'
-            ));
+                'item' => 'category'));
         }
         
         $this->expense_repository = $this->setRepository('Expense');

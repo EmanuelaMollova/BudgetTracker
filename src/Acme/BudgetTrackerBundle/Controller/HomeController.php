@@ -41,8 +41,7 @@ class HomeController extends Controller
         
         if($this->number_of_user_categories == 0){                
             return $this->render($template, array(
-                'newcommer' => true
-            )); 
+                'newcommer' => true)); 
         } else {
             $today = new \DateTime();
             
@@ -52,8 +51,7 @@ class HomeController extends Controller
             if(!$expenses_for_current_month){
                 return $this->render($template, array(
                     'newcommer' => false,
-                    'expenses_for_current_month' => null
-                ));      
+                    'expenses_for_current_month' => null));      
             } else {              
                 $first_category = $expenses_for_current_month[0]->getCategory()->getName();
 

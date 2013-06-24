@@ -1,6 +1,6 @@
-(function(){  
+$(document).ready(function(){
 
-$('#show_returned_loans').on('mouseover', function(){
+    $('#show_returned_loans').on('mouseover', function(){
        $(this).css('cursor', 'pointer'); 
     });
     
@@ -12,4 +12,4 @@ $('#show_returned_loans').on('mouseover', function(){
        $('.loans').fadeToggle();  
     });
   
-}) ();
+});

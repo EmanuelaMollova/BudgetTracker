@@ -13,7 +13,7 @@ use Acme\BudgetTrackerBundle\Form\Type\ExpenseType;
 class ExpensesController extends Controller
 {
     /*
-     * If the user has some categories displays the form for adding new expenses.
+     * If the user has some categories, displays the form for adding new expenses.
      * Finds all the expenses for the day and their sum. If the method is post -
      * creates a new expense and adds it to the database.
      */

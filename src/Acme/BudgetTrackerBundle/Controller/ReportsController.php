@@ -13,7 +13,7 @@ use Acme\BudgetTrackerBundle\Form\Type\ReportType;
 class ReportsController extends Controller
 {
     /*
-     * Displays the form from which the users query for report.
+     * Displays the form from which the users query for reports.
      * Renders another teplate for the actual report.
      */
     public function reportsAction(Request $request)

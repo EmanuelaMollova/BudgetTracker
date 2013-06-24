@@ -14,13 +14,11 @@ class NotificationsExtension extends \Twig_Extension
     {
         return array(
             'notifications_count' => new \Twig_Function_Method($this, 'countNotifications'),
-            'get_notifications' => new \Twig_Function_Method($this, 'getNotifications')
-        );
+            'get_notifications' => new \Twig_Function_Method($this, 'getNotifications'));
     }
 
     public function countNotifications()
     {        
-        
         $expense_repository = $this->container->get('doctrine.orm.entity_manager')->getRepository('AcmeBudgetTrackerBundle:Expense');
         $category_repository = $this->container->get('doctrine.orm.entity_manager')->getRepository('AcmeBudgetTrackerBundle:Category');
         $this->user = $this->container->get('security.context')->getToken()->getUser();

@@ -2,10 +2,10 @@
 
 namespace Acme\BudgetTrackerBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
 use Acme\BudgetTrackerBundle\Entity\Expense;
 use Acme\BudgetTrackerBundle\Form\Type\DebtLoanType;
-use Symfony\Component\HttpFoundation\Request;
 
 /*
  * Adds new Debts/Loans and displays existing ones with an option to mark them as
@@ -53,8 +53,7 @@ class DebtsLoansController extends Controller
             'active_loans' => $active_loans,
             'passive_debts' => $passive_debts,
             'passive_loans' => $passive_loans,
-            'form' => $form->createView()
-        ));
+            'form' => $form->createView()));
     }
 
     /*
@@ -69,8 +68,7 @@ class DebtsLoansController extends Controller
         if(!$dl){
             return $this->render(
                 'AcmeBudgetTrackerBundle:Error:error.html.twig', array(
-                'item' => 'month'
-            ));
+                'item' => 'month'));
         }
         
         $dl = $dl[0];

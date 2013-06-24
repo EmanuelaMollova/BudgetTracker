@@ -61,6 +61,7 @@ class Controller extends BaseController
         
         if($newcommer){
             $this->number_of_user_categories = $this->category_repository->countCategoriesByUser($this->user);
+            
             if($this->number_of_user_categories == 0){
                 $this->newcommer = true;
             } else {

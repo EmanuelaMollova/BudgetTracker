@@ -2,12 +2,12 @@
 
 namespace Acme\BudgetTrackerBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
 use Acme\BudgetTrackerBundle\Entity\Month;
 use Acme\BudgetTrackerBundle\Form\Type\MonthType;
 use Acme\BudgetTrackerBundle\Entity\Transfer;
 use Acme\BudgetTrackerBundle\Form\Type\TransferType;
-use Symfony\Component\HttpFoundation\Request;
 
 /*
  * Takes care of adding budget for months and transfers
@@ -89,8 +89,7 @@ class MonthsController extends Controller
             'budget' => $budget,
             'saved' => $saved,
             'active_loans' => $loans,
-            'form' => $form->createView()
-        ));
+            'form' => $form->createView()));
         } else {
             $saved_sum = 0;
             foreach ($saved as $s) {
@@ -99,8 +98,7 @@ class MonthsController extends Controller
             
             return $this->render(
             'AcmeBudgetTrackerBundle:Banks:banks.html.twig', array(
-                'saved_sum' => $saved_sum
-            ));
+                'saved_sum' => $saved_sum));
         }     
     }
     
@@ -136,6 +134,7 @@ class MonthsController extends Controller
                 return $this->redirect($this->generateUrl('months'));
             } else {
                 $this->setFlash('The budget for this month is already set!');
+                
                 return $this->redirect($this->generateUrl('months'));
             }
         }
@@ -154,13 +153,10 @@ class MonthsController extends Controller
         $this->setVariables($newcommer = false);
   
         $month = $this->month_repository->findById($id);
-
-        
         if(!$month){
             return $this->render(
                 'AcmeBudgetTrackerBundle:Error:error.html.twig', array(
-                'item' => 'month'
-            ));
+                'item' => 'month'));
         }
         
         $sum = $this->expense_repository->
@@ -183,8 +179,7 @@ class MonthsController extends Controller
             $destination = $this->month_repository->findByName($name);
             if($destination){
                 $destination[0]->setBudget($destination[0]->getBudget() + $transfer->getMoney());
-                $this->em->persist($destination[0]);
-                
+                $this->em->persist($destination[0]);               
             } else {
                 $new_month = new Month();
                 $new_month->setUser($this->user);
@@ -201,6 +196,7 @@ class MonthsController extends Controller
  
         } else {
              $this->setFlash('You do not have so much money remaining!');
+             
              return $this->redirect($this->generateUrl('transfer', array('id' => $id)));
         }
     }
@@ -213,7 +209,6 @@ class MonthsController extends Controller
             'start_date' => $start_date,
             'id' => $id,
             'max' => $transfer->getMoney(),
-            'form' => $form->createView()
-        ));
+            'form' => $form->createView()));
     }
 }

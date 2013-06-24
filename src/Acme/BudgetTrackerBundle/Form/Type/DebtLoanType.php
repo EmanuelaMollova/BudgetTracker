@@ -49,12 +49,6 @@ class DebtLoanType extends AbstractType
                                     ->setParameter('debts', 'Debts')
                                     ->setParameter('loans', 'Loans');
                 } ));    
-                
-//                $builder->add('category', 'choice', array(
-//            'choices'   => array(0 => 'Debt', 1 => 'Loan'),
-//            'label' => 'Category: ',
-//            'required' => true
-//        ));
     }
 
     public function getName()

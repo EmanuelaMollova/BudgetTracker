@@ -10,47 +10,58 @@
         <h3>Bank Interest</h3> 
         
         {% if saved_sum > 0%}
-        <p class="lead text-success little-spacer">
-            You have saved <b>{{ saved_sum|number_format(2) }}</b> so far!</p>
+            <p class="lead text-success little-spacer">
+                You have saved <b>{{ saved_sum|number_format(2) }}</b> so far!
+            </p>
+            
         {% elseif saved_sum == 0 %}
-                    <p class="lead text-warning little-spacer">
-            You have saved nothing so far! :(</p>
+            <p class="lead text-warning little-spacer">
+                You have saved nothing so far! :(
+            </p>
+            
         {% else %}
-                                <p class="lead text-error little-spacer">
-            You have exceeded your budget! </p>
-            <p class="lead text-error"> You have spent {{saved_sum|abs}} more than you should! :( </p>
+            <p class="lead text-error little-spacer">
+                You have exceeded your budget! 
+            </p>
+            
+            <p class="lead text-error"> 
+                You have spent {{saved_sum|abs}} more than you should! :( 
+            </p>
         {% endif %}
         
         <p class="lead big-spacer">Calculate what your profit will be if you deposit in a bank</p>
     
         <div class="little-spacer">
-        <label for="sum">Sum to deposit </label><input id="sum" type="text" value="{% if saved_sum > 0 %}{{ saved_sum }}{% endif %}" required> 
-        <label for="interest">Year interest  </label> <input id="interest" type="text" required>
-        <label for="period">Period (months)</label> <input id="period" type="text" required>
         
-        <div class="little-spacer"><button class="btn">Calculate</button></div>
+            <label for="sum">Sum to deposit </label><input id="sum" type="text" value="{% if saved_sum > 0 %}{{ saved_sum }}{% endif %}" required> 
+            <label for="interest">Year interest  </label> <input id="interest" type="text" required>
+            <label for="period">Period (months)</label> <input id="period" type="text" required>
+
+            <div class="little-spacer"><button class="btn">Calculate</button></div>
         </div>
                 
         <div class="products big-spacer">
             <p class="lead">Your profit is <span id="profit"></span>.</p>
-            <p class="lead">But there is a 10% tax on it, which makes it <b><span id="profit_tax"></span></b>.</p> 
-            <p class="lead">So after <span id="months"></span> month(s) your sum will become <b><span id="new_sum" class="text-success"></span></b>.</p>
+            
+            <p class="lead">
+                But there is a 10% tax on it, which makes it <b><span id="profit_tax"></span></b>.
+            </p> 
+            
+            <p class="lead">
+                So after <span id="months"></span> month(s) your sum will become 
+                <b><span id="new_sum" class="text-success"></span></b>.
+            </p>
         </div>
         
         <div class="products" id="error">
             <p class="lead text-error big-spacer">Please fill in all the fileds!</p>
-        </div>
+        </div> 
+    </div> 
 
-        
-        
-     </div> 
-{% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
+    {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
 
     {%block javascript%}
-       {# <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> #}
-        <script src="{{ asset('bundles/acmebudgettracker/js/banks.js') }}"></script> 
-        <script src="{{ asset('bundles/acmebudgettracker/js/jquery.jeditable.js') }}"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>      
+        <script src="{{ asset('bundles/acmebudgettracker/js/banks.js') }}"></script>      
     {%endblock%}
 
 {% endblock %}

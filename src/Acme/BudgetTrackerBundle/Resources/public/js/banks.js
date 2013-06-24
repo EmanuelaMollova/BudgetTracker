@@ -1,8 +1,6 @@
 $(document).ready(function(){
     
     $('button').on('click', function(){
-//       var new_sum = Math.round($('#sum').val() * Math.pow((1 + $('#sum').val()/100), $('#period').val())).toFixed(2);
-//       var profit = Math.round(new_sum - $('#sum').val()).toFixed(2);
         
         if(!$('#sum').val() || !$('#interest').val() || !$('#period').val()){
             $('.products').hide();
