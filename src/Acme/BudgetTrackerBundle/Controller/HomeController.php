@@ -3,6 +3,7 @@
 namespace Acme\BudgetTrackerBundle\Controller;
 
 use Acme\BudgetTrackerBundle\Controller\Controller as Controller;
+use Acme\BudgetTrackerBundle\Entity\Category;
 
 /*
  * Takes care of the index page
@@ -19,6 +20,7 @@ class HomeController extends Controller
             $category = new Category();
             $category->setUser($user);
             $category->setName($name);
+            
             $em->persist($category);
             $em->flush();
         }
@@ -32,11 +34,11 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        $this->setVariables();
+        $this->setVariables($newcommer = true, $month = true, $em = true, $ids = false);
                
         $this->createCategory('Loans', $this->category_repository, $this->user, $this->em);
         $this->createCategory('Debts', $this->category_repository, $this->user, $this->em);
-        
+
         $template = 'AcmeBudgetTrackerBundle:Home:index.html.twig';
         
         if($this->number_of_user_categories == 0){                
@@ -44,6 +46,8 @@ class HomeController extends Controller
                 'newcommer' => true)); 
         } else {
             $today = new \DateTime();
+            
+            $this->setDLIDs();
             
             $expenses_for_current_month = $this->expense_repository->
                findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id); 
@@ -66,7 +70,7 @@ class HomeController extends Controller
                     $remaining = number_format($budget_for_current_month - $spent_for_current_month, 2, '.', ''); 
                 } else {
                     $budget_for_current_month = null;
-                    $remaining = null;
+                    $remaining = 0;
                }        
             }
             

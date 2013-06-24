@@ -13,35 +13,35 @@
             <h3>... and welcome to BudgetTracker!</h3>
             
             <div class="lead">
-            <p class=" big-spacer">
-                We suggest you start by 
-                <a href="{{ path('categories') }}">creating some categories</a> 
-                to help you keep your expenses organised.
-            </p>
+                <p class=" big-spacer">
+                    We suggest you start by 
+                    <a href="{{ path('categories') }}">creating some categories</a> 
+                    to help you keep your expenses organised.
+                </p>
 
-            <p class="little-spacer">
-                Next, you can <a href="{{ path('months') }}">add your budget for the current month.</a>
-            </p>
+                <p class="little-spacer">
+                    Next, you can <a href="{{ path('months') }}">add your budget for the current month.</a>
+                </p>
 
-            <p class="little-spacer">
-                And then of course - start listing your <a href="{{ path('expenses') }}">expenses</a>.
-            </p>
+                <p class="little-spacer">
+                    And then of course - start listing your <a href="{{ path('expenses') }}">expenses</a>.
+                </p>
 
-            <p class="little-spacer">
-                Whenever you want to see how much you have spent lately and for what -
-                you can visit <a href="{{ path('reports') }}">reports section</a>.               
-            </p>
-            
-            <p>There you will see a list for just the expenses you are interested in.</p>
-            
-            <p class="little-spacer">
-                If you want just a quick overview for the current month, the home
-                page will give you the needed information.
-            </p>
+                <p class="little-spacer">
+                    Whenever you want to see how much you have spent lately and for what -
+                    you can visit <a href="{{ path('reports') }}">reports section</a>.               
+                </p>
 
-            <p class="big-spacer">
-               We have more nice features, too... comming soon. 
-            </p>
+                <p>There you will see a list for just the expenses you are interested in.</p>
+
+                <p class="little-spacer">
+                    If you want just a quick overview for the current month, the home
+                    page will give you the needed information.
+                </p>
+
+                <p class="big-spacer">
+                We have more nice features, too... comming soon. 
+                </p>
             </div>
             
         {% elseif expenses_for_current_month == null%}
@@ -112,10 +112,15 @@
         <script src="http://code.highcharts.com/highcharts.js"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/home.js') }}"></script>
     {%endblock%}
-    
+       
     <script>
-        var remaining = {{ remaining }};
-        var spent = {{ spent_for_current_month }};
+        {% if budget_for_current_month != null %}
+            var chart = true;
+            var remaining = {{ remaining }};
+            var spent = {{ spent_for_current_month }};
+        {% else %}
+            var chart = false;
+        {% endif %}
     </script>
-        
+     
 {% endblock %} 

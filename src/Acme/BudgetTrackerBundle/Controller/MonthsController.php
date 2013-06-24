@@ -19,7 +19,7 @@ class MonthsController extends Controller
      * saved and gives this information to the chart and table in the template.
      */
     public function monthsAction(Request $request)
-    {
+    {   
         $this->setVariables($newcommer = false, $month = true, $em = false);
         
         $month = new Month();

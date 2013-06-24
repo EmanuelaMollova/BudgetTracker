@@ -28,10 +28,19 @@ class Controller extends BaseController
         return $this->getDoctrine()->getRepository('AcmeBudgetTrackerBundle:'.$class);
     }
     
+    protected function setDLIDs()
+    {
+            $debt = $this->category_repository->findCategoriesByNameAndUser($this->user, 'Debts');
+            $loan = $this->category_repository->findCategoriesByNameAndUser($this->user, 'Loans');
+
+            $this->debts_id = $debt[0]->getId();
+            $this->loans_id = $loan[0]->getId();
+    }
+    
     /*
      * Gives value to all or some of the frequently used variables
      */
-    protected function setVariables($newcommer = true, $month = true, $em = true, $expense = true, $category = true, $ids = true)
+    protected function setVariables($newcommer = true, $month = true, $em = true, $ids = true, $expense = true, $category = true)
     {
         $this->user = $this->container->get('security.context')->getToken()->getUser();
         

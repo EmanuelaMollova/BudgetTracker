@@ -17,7 +17,7 @@ class CategoriesController extends Controller
     //Sets value to most friquently used variables
     private function init()
     {
-        $this->setVariables($newcommer = false, $month = false, $em = true, $expense = false, $category = true, $ids = false);
+        $this->setVariables($newcommer = false, $month = false, $em = true, $ids = false, $expense = false);
         $this->categories_for_user = $this->category_repository->findCategoriesByUser($this->user);
     }
 
