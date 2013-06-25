@@ -23,28 +23,22 @@ PAGES:
     * Stylish jEditable buttons
     * when editing remove the X icon
 
--------------------------------------------------------------------------------- 21.06.2013
-
-* ZAPOR AKO NE SA VYRNATI ZAEMI ?
+* Not returned debts ?
 * 404 
 * js - category validation and banks
-* BILLS (U)  
+* BILLS   
 
 * Alerts, not session messages
+* Clean twig and .js files
 
 TOD0:
 -----
 
-* form validation
-* jQuery ???
 * translations
-* beautify
 * refactor
-  * CRUD ???
-* remove redundant stuff
+  * CRUD 
 * invalid / not existing URLs
 * Charts/diagrams
-* Clean .js files
 
 FEATURES:
 ---------
