@@ -56,8 +56,7 @@
                                 {{ spent[i]|number_format(2) }}
                                 {% if active_loans[i] > 0 %}
                                     (loans: {{active_loans[i]|number_format(2)}})
-                                {% endif %}
-                            
+                                {% endif %}                           
                             </td>
                             {% if saved[i] >= 0 %}
                                 <td class="text-success">{{ saved[i]|number_format(2) }}
@@ -65,8 +64,20 @@
                                 <td class="text-error"><b>Overspent: {{ -saved[i]|number_format(2) }}
                             {% endif %}
                             </b></td>
-                            <td>{% if  all_months[i].transfered > 0 %}{{ all_months[i].transfered|number_format(2) }} {% else %} - {% endif %}</td>
-                            <td>{% if saved[i] > 0 %}<a href="{{path('transfer', { 'id': all_months[i].id}) }}">Transfer to another month</a>{% endif %}</td>
+                            <td>
+                                {% if  all_months[i].transfered > 0 %}
+                                    {{ all_months[i].transfered|number_format(2) }} 
+                                {% else %} 
+                                    -     
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if saved[i] > 0 %}
+                                    <a href="{{path('transfer', { 'id': all_months[i].id}) }}">
+                                        Transfer to another month
+                                    </a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                {% endif %}
@@ -77,10 +88,8 @@
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
 
     {%block javascript%}
-       	{#<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>#}
 	<script src="http://code.highcharts.com/highcharts.js"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/vendor/bootstrap-datepicker.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/month.js') }}"></script>
     {%endblock%}
         
@@ -94,7 +103,7 @@
                     text: 'Budget for months'
                 },
                 xAxis: {
-                    categories: [{{ month_names_for_chart|raw }}]
+                    categories: [ {{ month_names_for_chart|raw }} ]
                 },
                 yAxis: {
                     title: {
@@ -103,14 +112,14 @@
                 },
                 series: [{
                     name: 'Spent',
-                    data: [{{ spent_joined }}],
+                    data: [ {{spent_joined}} ],
                     color: '#AA3333'
                 }, {
                     name: 'Budget',
-                    data: [{{ budget_joined }}],
+                    data: [ {{budget_joined}} ],
                     color: '#759E1A'
                 }]
-            });         
+            });      
         </script>
     {% endif %}
 {% endblock %}

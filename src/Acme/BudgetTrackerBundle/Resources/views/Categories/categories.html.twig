@@ -37,8 +37,8 @@
             
         {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}                       
         <form action="{{ path('create_category') }}" method="post" {{ form_enctype(form) }}>
-                {{ form_errors(form) }}
-                {{ form_widget(form) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
             <input class="little-spacer btn" type="submit" value="Submit"/>
         </form>
     </div> 
@@ -46,7 +46,7 @@
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
 
     {%block javascript%}     
-        <script src="{{ asset('bundles/acmebudgettracker/js/jquery.jeditable.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/vendor/jquery.jeditable.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/category.js') }}"></script>      
     {%endblock%}
 

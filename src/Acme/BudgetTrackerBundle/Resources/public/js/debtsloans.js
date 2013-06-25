@@ -1,9 +1,11 @@
 $(document).ready(function(){
-
-    $('#show_returned_loans').on('mouseover', function(){
-       $(this).css('cursor', 'pointer'); 
-    });
     
+    $('#debtloan_date').datepicker({
+        format: 'dd-mm-yyyy',
+        weekStart: 1,
+        autoclose: true
+    }); 
+
     $('#show_returned_debts').on('click', function(){
        $('.debts').fadeToggle();  
     });

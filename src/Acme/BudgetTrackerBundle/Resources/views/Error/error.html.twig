@@ -11,13 +11,9 @@
                
         <p class="lead text-error big-spacer">A problem has occured.</p>
         <p class="lead text-error"> It seems that there is no {{ item }} for the requested id.</p>
-        
-        
-     </div> 
-{% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
-
-    {%block javascript%}
-       {# <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> #}   
-    {%endblock%}
+                
+    </div> 
+    
+    {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
 
 {% endblock %}

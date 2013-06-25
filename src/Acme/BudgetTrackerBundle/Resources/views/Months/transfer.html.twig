@@ -5,8 +5,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('bundles/acmebudgettracker/css/jquery-ui-1.10.3.custom.min_1.css') }}" rel="stylesheet" type="text/css" />
-    
+    <link href="{{ asset('bundles/acmebudgettracker/css/jquery-ui-1.10.3.custom.min_1.css') }}" rel="stylesheet" type="text/css" />   
 {% endblock %}
 
 {% block body %}
@@ -16,7 +15,7 @@
     <div class="little-spacer text-center"> 
         <h3>Transfers</h3>
         
-         <form class="little-spacer" action="{{ path('transfer', { 'id': id}) }}" method="post" {{ form_enctype(form) }}>
+        <form class="little-spacer" action="{{ path('transfer', { 'id': id}) }}" method="post" {{ form_enctype(form) }}>
             
             {{ form_widget(form) }}
 
@@ -36,25 +35,22 @@
 
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
     {%block javascript%}
-       	{#<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>#}
 	<script src="http://code.highcharts.com/highcharts.js"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/jquery-ui-1.10.3.custom.min_1.js') }}"></script>       
-        <script src="{{ asset('bundles/acmebudgettracker/js/bootstrap-datepicker.js') }}"></script>
-        <script src="{{ asset('bundles/acmebudgettracker/js/transfer.js') }}"></script>
+        <script src="{{ asset('bundles/acmebudgettracker/js/vendor/jquery-ui-1.10.3.custom.min_1.js') }}"></script>   
+        <script src="{{ asset('bundles/acmebudgettracker/js/vendor/bootstrap-datepicker.js') }}"></script>
     {%endblock%}
         
     <script>
-        (function(){   
-    $('#transfer_destination').datepicker({
-            format: 'mm-yyyy',
-            startView: 1,
-            minViewMode: 1,
-            autoclose: true,
-            startDate: '{{ start_date }}'
-    });
+       (function(){   
+            $('#transfer_destination').datepicker({
+                    format: 'mm-yyyy',
+                    startView: 1,
+                    minViewMode: 1,
+                    autoclose: true,
+                    startDate: '{{ start_date }}'
+            });
     
-    $('#transfer_money').spinner({ max: {{ max }} });
-})();
+            $('#transfer_money').spinner({ max: {{ max }} });
+        })(); 
     </script>
 {% endblock %}

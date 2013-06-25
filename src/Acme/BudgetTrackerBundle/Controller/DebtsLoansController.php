@@ -61,7 +61,7 @@ class DebtsLoansController extends Controller
      */
     public function returnAction($id)
     {   
-        $this->setVariables($newcommer = false, $month = false, $em = true, $expense = true, $category = false, $ids = false);
+        $this->setVariables($newcommer = false, $month = false, $em = true, $ids = false, $expense = true, $category = false);
 
         $dl = $this->expense_repository->findById($id);
         

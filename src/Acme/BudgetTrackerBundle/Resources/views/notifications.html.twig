@@ -1,11 +1,14 @@
 <div id="notifications" class="box alert alert-error text-center">
-
-  <p><strong>Warning!</strong></p>
-  <p>You have {{ notifications_count() }} debt(s) which you haven't returned yet:</p>
-  {% for a in get_notifications() %}
-        <strong><p>{{ a.product }} - {{ a.price|number_format(2) }}</p></strong>
-  {% endfor %}
-        <p>See more details <a href="{{path('debts_loans')}}">here</a>.</p>
+    
+    <p><strong>Warning!</strong></p>
+    <p>You have {{ notifications_count() }} debt(s) which you haven't returned yet:</p>
+  
+    {% for a in get_notifications() %}
+            <strong><p>{{ a.product }} - {{ a.price|number_format(2) }}</p></strong>
+    {% endfor %}
+            
+    <p>See more details <a href="{{path('debts_loans')}}">here</a>.</p>
+    
 </div>
 
 {%block javascript%}
@@ -13,6 +16,5 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
     {% endif %}
 
-    {#<script src="{{ asset('bundles/acmebudgettracker/js/vendor/bootstrap.min.js') }}"></script>#}
     <script src="{{ asset('bundles/acmebudgettracker/js/notifications.js') }}"></script>
 {%endblock%}

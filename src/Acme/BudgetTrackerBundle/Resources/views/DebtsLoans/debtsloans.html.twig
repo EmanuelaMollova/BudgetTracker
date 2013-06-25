@@ -24,26 +24,26 @@
 
         </form>
         
-    {% include 'AcmeBudgetTrackerBundle::display_debts_loans.html.twig' with {
-        'title':'Debts you should return', 
-        'debt': true, 
-        'items': active_debts,
-        'passive': passive_debts} %}
+        {% include 'AcmeBudgetTrackerBundle::display_debts_loans.html.twig' with {
+            'title':'Debts you should return', 
+            'debt': true, 
+            'items': active_debts,
+            'passive': passive_debts} %}
         
         <div class="big-spacer"></div>
         
-    {% include 'AcmeBudgetTrackerBundle::display_debts_loans.html.twig' with {
-        'title':'Loans you should receive', 
-        'debt': false, 
-        'items': active_loans,
-        'passive': passive_loans} %}
+        {% include 'AcmeBudgetTrackerBundle::display_debts_loans.html.twig' with {
+            'title':'Loans you should receive', 
+            'debt': false, 
+            'items': active_loans,
+            'passive': passive_loans} %}
 
     </div>
 
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
 
     {%block javascript%}
-        {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>#}
+        <script src="{{ asset('bundles/acmebudgettracker/js/vendor/bootstrap-datepicker.js') }}"></script>
         <script src="{{ asset('bundles/acmebudgettracker/js/debtsloans.js') }}"></script>      
     {%endblock%}
         

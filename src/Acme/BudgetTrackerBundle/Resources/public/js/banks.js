@@ -10,17 +10,18 @@ $(document).ready(function(){
             var interest = parseFloat($('#interest').val());
             var period = parseFloat($('#period').val());
 
-           var profit = parseFloat(((sum*interest/100/12)*period).toFixed(2));
-           var profit_tax = parseFloat((profit - profit*10/100).toFixed(2));  
-           var new_sum = parseFloat((sum + profit_tax).toFixed(2));       
+            var profit = parseFloat(((sum*interest/100/12)*period).toFixed(2));
+            var profit_tax = parseFloat((profit - profit*10/100).toFixed(2));  
+            var new_sum = parseFloat((sum + profit_tax).toFixed(2));       
 
-           $('#profit').html(profit);
-           $('#profit_tax').html(profit_tax);
-           $('#months').html(period);
-           $('#new_sum').html(new_sum);
+            $('#profit').html(profit);
+            $('#profit_tax').html(profit_tax);
+            $('#months').html(period);
+            $('#new_sum').html(new_sum);
 
-           $('.products').show();
-           $('#error').hide();
+            $('.products').show();
+            $('#error').hide();
         }
-    });   
+    });
+    
 });
