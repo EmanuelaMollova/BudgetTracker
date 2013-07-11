@@ -3,10 +3,6 @@ BudgetTracker
 
 Application which helps you track your expenses.
 
-###Future ideas to implement:
-
-* Bills system
-
 ###Helpers
 
 

@@ -35,23 +35,37 @@
 
             </form>
         
-            {% if spent_for_today != 0 %}
+            {% if spent_for_today != 0 or spent_for_payments_today %}
                 <div class="big-spacer">
-
                     <p class="lead little-bottom-spacer">Expenses for today:</p>
+                    
+                    {% if expenses_for_today %}
+                    
                     {% for exp in expenses_for_today %}        
                         <p>
                             {{ exp.product }} - {{ exp.price|number_format(2) }} 
                         </p> 
                     {% endfor %}
+                    {% endif %}
+                    
+                            {% if spent_for_payments_today != 0 %}
+                        {% for p in payments_for_today %}        
+                        <p>
+                            {{ p.bill.name }} - {{ p.price|number_format(2) }} 
+                        </p> 
+                    {% endfor %}
+                    {%endif%}
+        
+        {% endif %}
+                    
                     
                     <hr class="hr-colored span4 center">    
-                    <div><b>Sum: {{ spent_for_today|number_format(2) }}</b></div>
+                    <div><b>Sum: {{ (spent_for_today+spent_for_payments_today)|number_format(2) }}</b></div>
                     
                 </div>
             {% endif %}
         
-        {% endif %}
+
              
     </div>
     
