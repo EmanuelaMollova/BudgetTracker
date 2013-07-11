@@ -1,7 +1,7 @@
 BudgetTracker
 =============
 
-An application which helps you track your expenses.
+Application which helps you track your expenses.
 
 ###Future ideas to implement:
 
