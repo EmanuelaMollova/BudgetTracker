@@ -1,12 +1,11 @@
-PAGES:
-------
+TOD0:
+-----
 
 * HomePage 
-    * When there are too many items - paginations? ...
+    * When there are too many items - pagination? ...
     * Underline with <u> ?
     * The sum of percents to be 100
 
-    Class to hide : Products
     JS - SHOW/HIDE ALL
 
 * Expenses
@@ -23,16 +22,11 @@ PAGES:
     * Stylish jEditable buttons
     * when editing remove the X icon
 
-* Not returned debts ?
+* Not returned debts - warning not to spend all your money?
 * 404 
-* js - category validation and banks
-* BILLS   
-
+* js - category validation and banks  
 * Alerts, not session messages
-* Clean twig and .js files
-
-TOD0:
------
+* Clean twig and .js files - send from controller to .js
 
 * translations
 * refactor
@@ -45,4 +39,3 @@ FEATURES:
 
 * diagrams
 * bills
-* limits
