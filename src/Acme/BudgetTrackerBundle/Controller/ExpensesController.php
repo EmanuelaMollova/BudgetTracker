@@ -19,7 +19,7 @@ class ExpensesController extends Controller
      */
     public function expensesAction(Request $request)
     {
-        $this->setVariables($newcommer = true, $month = false);
+        $this->setVariables($newcomer = true, $month = false);
 
         //Set the current date for searching all expenses for today     
         $from_date = new \DateTime();
@@ -61,13 +61,13 @@ class ExpensesController extends Controller
       
             return $this->render(
                 'AcmeBudgetTrackerBundle:Expenses:expenses.html.twig', array(
-                    'newcommer' => $this->newcommer,  
+                    'newcomer' => $this->newcomer,  
                     'form' => $form->createView()));   
         } else {
 
         return $this->render(
                 'AcmeBudgetTrackerBundle:Expenses:expenses.html.twig', array(
-                    'newcommer' => $this->newcommer,
+                    'newcomer' => $this->newcomer,
                     'expenses_for_today' => $expenses_for_today,
                     'spent_for_today' => $spent_for_today,
                     'form' => $form->createView()));

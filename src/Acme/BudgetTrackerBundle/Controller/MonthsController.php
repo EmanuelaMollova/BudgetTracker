@@ -20,7 +20,7 @@ class MonthsController extends Controller
      */
     public function monthsAction(Request $request)
     {   
-        $this->setVariables($newcommer = false, $month = true, $em = false);
+        $this->setVariables($newcomer = false, $month = true, $em = false);
         
         $month = new Month();
         $form = $this->createForm(new MonthType(), $month);
@@ -107,7 +107,7 @@ class MonthsController extends Controller
      */
     public function createMonthAction(Request $request)
     {   
-        $this->setVariables($newcommer = false, $month = true, $em = true, $expense = false, $category = false, $ids = false);
+        $this->setVariables($newcomer = false, $month = true, $em = true, $expense = false, $category = false, $ids = false);
                        
         $all_months = $this->month_repository->findMonthsByUser($this->user);
 
@@ -150,7 +150,7 @@ class MonthsController extends Controller
      */
     public function transferAction($id, Request $request)
     {           
-        $this->setVariables($newcommer = false);
+        $this->setVariables($newcomer = false);
   
         $month = $this->month_repository->findById($id);
         if(!$month){

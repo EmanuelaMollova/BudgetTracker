@@ -18,7 +18,7 @@ class ReportsController extends Controller
      */
     public function reportsAction(Request $request)
     {   
-        $this->setVariables($newcommer = true, $month = false, $em = false);
+        $this->setVariables($newcomer = true, $month = false, $em = false);
         
         //Create the form for reports
         $today = new \DateTime();
@@ -92,7 +92,7 @@ class ReportsController extends Controller
         
         //Else show the form
         return $this->render('AcmeBudgetTrackerBundle:Reports:reports.html.twig', array(
-            'newcommer' => $this->newcommer,
+            'newcomer' => $this->newcomer,
             'form' => $form->createView()));
     }
 }

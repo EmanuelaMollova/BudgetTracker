@@ -18,7 +18,7 @@ class DebtsLoansController extends Controller
      */
     public function debtsLoansAction(Request $request)
     {      
-        $this->setVariables($newcommer = false, $month = false);
+        $this->setVariables($newcomer = false, $month = false);
         
         $today = new \DateTime('now');
         $today = $today->format('d-m-Y');
@@ -61,7 +61,7 @@ class DebtsLoansController extends Controller
      */
     public function returnAction($id)
     {   
-        $this->setVariables($newcommer = false, $month = false, $em = true, $ids = false, $expense = true, $category = false);
+        $this->setVariables($newcomer = false, $month = false, $em = true, $ids = false, $expense = true, $category = false);
 
         $dl = $this->expense_repository->findById($id);
         

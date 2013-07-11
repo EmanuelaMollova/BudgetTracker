@@ -34,7 +34,7 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        $this->setVariables($newcommer = true, $month = true, $em = true, $ids = false);
+        $this->setVariables($newcomer = true, $month = true, $em = true, $ids = false);
                
         $this->createCategory('Loans', $this->category_repository, $this->user, $this->em);
         $this->createCategory('Debts', $this->category_repository, $this->user, $this->em);
@@ -43,7 +43,7 @@ class HomeController extends Controller
         
         if($this->number_of_user_categories == 0){                
             return $this->render($template, array(
-                'newcommer' => true)); 
+                'newcomer' => true)); 
         } else {
             $today = new \DateTime();
             
@@ -54,7 +54,7 @@ class HomeController extends Controller
 
             if(!$expenses_for_current_month){
                 return $this->render($template, array(
-                    'newcommer' => false,
+                    'newcomer' => false,
                     'expenses_for_current_month' => null));      
             } else {              
                 $first_category = $expenses_for_current_month[0]->getCategory()->getName();
@@ -75,7 +75,7 @@ class HomeController extends Controller
             }
             
             return $this->render($template, array(
-                'newcommer' => false,
+                'newcomer' => false,
                 'first_category' => $first_category,
                 'expenses_for_current_month' => $expenses_for_current_month,
                 'budget_for_current_month' => $budget_for_current_month,

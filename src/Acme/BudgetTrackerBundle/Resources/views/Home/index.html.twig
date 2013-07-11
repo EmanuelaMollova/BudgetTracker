@@ -6,8 +6,8 @@
 
     <div class="text-center little-spacer ">
  
-        {# Greeting and introduction to newcommers #}
-        {% if newcommer == true %}
+        {# Greeting and introduction to newcomers #}
+        {% if newcomer == true %}
         
             <h1>Hello, {{app.user.username}}!</h1>
             <h3>... and welcome to BudgetTracker!</h3>
@@ -109,7 +109,7 @@
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
     
     <script>
-        {% if newcommer == false and budget_for_current_month != null %}
+        {% if newcomer == false and budget_for_current_month != null %}
             var chart = true;
             var remaining = {{ remaining }};
             var spent = {{ spent_for_current_month }};

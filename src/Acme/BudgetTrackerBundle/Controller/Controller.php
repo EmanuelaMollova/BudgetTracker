@@ -17,7 +17,7 @@ class Controller extends BaseController
     protected $month_repository;
     protected $debts_id;
     protected $loans_id;
-    protected $newcommer;
+    protected $newcomer;
     protected $number_of_user_categories;
 
     /*
@@ -40,7 +40,7 @@ class Controller extends BaseController
     /*
      * Gives value to all or some of the frequently used variables
      */
-    protected function setVariables($newcommer = true, $month = true, $em = true, $ids = true, $expense = true, $category = true)
+    protected function setVariables($newcomer = true, $month = true, $em = true, $ids = true, $expense = true, $category = true)
     {
         $this->user = $this->container->get('security.context')->getToken()->getUser();
         
@@ -68,13 +68,13 @@ class Controller extends BaseController
             $this->loans_id = $loan[0]->getId();
         }
         
-        if($newcommer){
+        if($newcomer){
             $this->number_of_user_categories = $this->category_repository->countCategoriesByUser($this->user);
             
             if($this->number_of_user_categories == 0){
-                $this->newcommer = true;
+                $this->newcomer = true;
             } else {
-                $this->newcommer = false;
+                $this->newcomer = false;
             }
         }     
     }
