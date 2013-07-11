@@ -2,17 +2,10 @@ BudgetTracker
 =============
 
 An application which helps you track your expenses.
-------------------------------------------------------
-
-Register and create your own categories. Then start tracking how many you spend and for what.
-Take report about whatever you are interested in.
 
 ###Future ideas to implement:
 
 * Bills system
-
-* Limits (month, day)
-* Bank interest
 
 ###Helpers
 
