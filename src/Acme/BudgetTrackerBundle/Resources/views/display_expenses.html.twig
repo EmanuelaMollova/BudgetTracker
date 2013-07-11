@@ -110,6 +110,39 @@ Booleans:
 
     {% include 'AcmeBudgetTrackerBundle::display_expenses_progressbar.html.twig' %}
     
+    {# Bill Payments #}
+    {% if bill_payments %}
+        <h4 class="little-spacer text-info"><u>Bills</u></h4>
+        
+        
+        <div class="products Bills">
+
+                {% if details == true %}
+                    {% include 'AcmeBudgetTrackerBundle::display_expenses_table_header.html.twig' %}
+                    {% for p in bill_payments %}
+                    {% include 'AcmeBudgetTrackerBundle::display_expenses_payment_table_rest.html.twig' %}                 
+                    {% endfor %}
+                    </tr></table>
+                    {% else %}
+                        {% for b in bill_payments %}
+                            <p>
+                                {{ b.bill.name }} - {{ b.price|number_format(2) }} 
+                            </p>
+                        {% endfor %}
+        
+                {% endif %}
+                            
+                                
+        </div>
+        
+        <strong>Sum: {{ sum_for_payments|number_format(2) }}</strong>
+        {% set sum = sum_for_payments %}
+        {% include 'AcmeBudgetTrackerBundle::display_expenses_progressbar.html.twig' %}
+        {% if highchart == true %}
+         {% set chart = chart ~ ' ,[ "Bills", ' ~ sum ~ ']' %}
+        {% endif %}
+    {% endif %}
+    
     {# Display total sum #}
     <p class="lead text-error little-spacer">Total: <strong>{{total_sum|number_format(2)}}</strong></p> 
 

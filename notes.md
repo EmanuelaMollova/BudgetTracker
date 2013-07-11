@@ -23,6 +23,7 @@ PAGES:
     * Stylish jEditable buttons
     * when editing remove the X icon
 
+* Check all templates for NUMBER FORMAT !!!
 * Not returned debts ?
 * 404 
 * js - category validation and banks

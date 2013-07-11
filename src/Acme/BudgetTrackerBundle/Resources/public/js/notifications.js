@@ -7,6 +7,7 @@ $(document).ready(function(){
     };
     
     $('.badge').on('click', function(e){
+        console.log('work');
         e.preventDefault();
         $('#notifications').fadeSlideToggle(); 
     })   

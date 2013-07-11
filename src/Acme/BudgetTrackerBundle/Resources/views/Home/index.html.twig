@@ -95,7 +95,9 @@
             {# Display all categories and expenses #}
             {% include 'AcmeBudgetTrackerBundle::display_expenses.html.twig' with {
                 'first_category': first_category, 
-                'expenses': expenses_for_current_month,                
+                'expenses': expenses_for_current_month,
+                'bill_payments': bill_payments_for_current_month,
+                'sum_for_payments': spent_for_payments_for_current_month,
                 'total_sum': spent_for_current_month,
                 'highchart': false,
                 'details': false,

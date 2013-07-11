@@ -1,0 +1,6 @@
+    <td>{{ p.bill.name }}</td> 
+    <td>{{ p.price|number_format(2) }}</td> 
+    <td>{{ p.dateWhenPaid|date("d-m-Y") }}</td> 
+    <td>{% if p.description %}{{ p.description }}{% else %} - {% endif %}</td> 
+</tr> 
+<tr>

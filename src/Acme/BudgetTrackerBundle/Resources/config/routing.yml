@@ -91,3 +91,11 @@ return:
     pattern: /return/{id}
     defaults: { _controller: AcmeBudgetTrackerBundle:DebtsLoans:return }
     
+bills:
+    pattern: /bills
+    defaults: { _controller: AcmeBudgetTrackerBundle:Bills:bills }
+    
+payments:
+    pattern: /payments/{id}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Bills:payments }
+    

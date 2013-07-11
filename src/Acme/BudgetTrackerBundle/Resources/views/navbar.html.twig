@@ -32,9 +32,9 @@
                 <a href="{{ path('debts_loans') }}">Debts & Loans</a>
             </li>
             
-            {#<li{% if var == "Bills" %} class="active"{% endif %}>
-                <a href="{{ path('months') }}">Bills</a>
-            </li>#}
+            <li{% if var == "Bills" %} class="active"{% endif %}>
+                <a href="{{ path('bills') }}">Bills</a>
+            </li>
             
             <li{% if var == "Bank interest" %} class="active"{% endif %}>
                 <a href="{{ path('bank_interest') }}">Bank Interest</a>

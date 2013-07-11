@@ -50,17 +50,26 @@ class HomeController extends Controller
             $this->setDLIDs();
             
             $expenses_for_current_month = $this->expense_repository->
-               findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id); 
+               findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id);
+            
+            $bill_payments_for_current_month = $this->setRepository('BillPayment')->
+                findPaymentsByMonth($today->format('m'), $today->format('Y'), $this->user);
 
-            if(!$expenses_for_current_month){
+            if(!$expenses_for_current_month && !$bill_payments_for_current_month){
                 return $this->render($template, array(
                     'newcomer' => false,
-                    'expenses_for_current_month' => null));      
+                    'expenses_for_current_month' => null,
+                    'bill_payments_for_current_month' => null,
+                    'budget_for_current_month' => null));      
             } else {              
                 $first_category = $expenses_for_current_month[0]->getCategory()->getName();
 
+                $spent_for_payments_for_current_month = $this->setRepository('BillPayment')
+                        ->findSumOfPaymentsByMonth($today->format('m'), $today->format('Y'), $this->user);
+                
                 $spent_for_current_month = $this->expense_repository->
-                    findSumOfExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id);
+                    findSumOfExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id) +
+                    $spent_for_payments_for_current_month;
 
                 $current_month = $this->month_repository
                     ->findMonthByUser($today->format('m'), $today->format('Y'), $this->user); 
@@ -78,8 +87,10 @@ class HomeController extends Controller
                 'newcomer' => false,
                 'first_category' => $first_category,
                 'expenses_for_current_month' => $expenses_for_current_month,
+                'bill_payments_for_current_month' => $bill_payments_for_current_month,
                 'budget_for_current_month' => $budget_for_current_month,
-                'spent_for_current_month' => $spent_for_current_month,              
+                'spent_for_current_month' => $spent_for_current_month,
+                'spent_for_payments_for_current_month' => $spent_for_payments_for_current_month,
                 'remaining' => $remaining
             ));
         }

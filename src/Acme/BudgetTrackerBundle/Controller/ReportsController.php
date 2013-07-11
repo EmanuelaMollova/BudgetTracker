@@ -71,6 +71,14 @@ class ReportsController extends Controller
             $expenses = $this->expense_repository->
                 findExpensesByCategoriesAndDates($from_date_object, $to_date_object, $query, $this->user, $this->debts_id); 
             
+            $bill_payments = $this->setRepository('BillPayment')->
+                    findPaymentsBetweenDates($this->user, $from_date_object, $to_date_object);
+            
+            if($bill_payments){
+                $sum_of_payments = $this->setRepository('BillPayment')->
+                        findSumOfPaymentsBetweenDates($from_date_object, $to_date_object, $this->user);
+            }
+            
             $total_sum = 0;
             
             if($expenses){
@@ -78,14 +86,23 @@ class ReportsController extends Controller
                 foreach ($expenses as $exp){
                     $total_sum += $exp->getPrice();
                 }
+                
+                if($bill_payments){
+                    $total_sum += $sum_of_payments;
+                } else {
+                    $bill_payments = null;
+                }
+                
             } else{
                 $first_category = null;
             }
-
+           
             return $this->render('AcmeBudgetTrackerBundle:Reports:take_reports.html.twig', array(
                 'from_date' => $from_date_object->format('d F Y'),
                 'to_date' => $to_date_object->format('d F Y'),
                 'expenses' => $expenses,
+                'bill_payments' => $bill_payments,
+                'sum_of_payments' => $sum_of_payments,
                 'first_category' => $first_category,
                 'total_sum' => $total_sum));
         }
