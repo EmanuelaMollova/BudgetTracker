@@ -108,4 +108,23 @@ class BillPaymentRepository extends EntityRepository
         
         return $q->getSingleScalarResult();
     }
+    
+    /*    public function findSumOfPaymentsByMonth($month, $year, $user)
+    {
+        $emConfig = $this->getEntityManager()->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        
+        $q = $this->createQueryBuilder('p')
+            ->add('select', 'SUM(p.price)')
+            ->where('MONTH(p.date_when_paid) = :month')
+            ->andWhere('YEAR(p.date_when_paid) = :year')
+            ->andWhere('p.user = :user') 
+            ->setParameter('month', $month)
+            ->setParameter('year', $year)
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        return $q->getSingleScalarResult();
+    }*/
 }

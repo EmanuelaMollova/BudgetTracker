@@ -56,11 +56,13 @@
                     {% endfor %}
                     {%endif%}
         
+                        <hr class="hr-colored span4 center">    
+                    <div><b>Sum: {{ (spent_for_today+spent_for_payments_today)|number_format(2) }}</b></div>
+                        
         {% endif %}
                     
                     
-                    <hr class="hr-colored span4 center">    
-                    <div><b>Sum: {{ (spent_for_today+spent_for_payments_today)|number_format(2) }}</b></div>
+                    
                     
                 </div>
             {% endif %}

@@ -77,6 +77,8 @@ class ReportsController extends Controller
             if($bill_payments){
                 $sum_of_payments = $this->setRepository('BillPayment')->
                         findSumOfPaymentsBetweenDates($from_date_object, $to_date_object, $this->user);
+            } else {
+                $sum_of_payments = 0;
             }
             
             $total_sum = 0;
