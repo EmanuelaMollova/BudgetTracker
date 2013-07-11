@@ -3,6 +3,7 @@
 namespace Acme\BudgetTrackerBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 class BillRepository extends EntityRepository
 {
@@ -19,22 +20,6 @@ class BillRepository extends EntityRepository
         
         return $q->getSingleScalarResult();
     }
-    /*
-    public function countCategoriesByUser($user)
-    {
-        $q = $this
-            ->createQueryBuilder('c')
-            ->select('COUNT(c.id)') 
-            ->where('c.user = :user')
-            ->andWhere('c.name <> :loans')
-            ->andWhere('c.name <> :debts')
-            ->setParameter('user', $user)
-            ->setParameter('loans', 'Loans')
-            ->setParameter('debts', 'Debts')
-             ->getQuery();
-       
-        return $q->getSingleScalarResult();
-    }*/
 
     public function findBillsByUser($user)
     {

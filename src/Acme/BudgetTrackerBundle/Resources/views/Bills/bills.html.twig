@@ -6,24 +6,17 @@
 
     <div class="text-center little-spacer ">
         <h3>Bills</h3>
-        
-        
+              
         {% if bills_for_user %}
             <table class="table table-striped big-spacer">
                 {% for b in bills_for_user %}
                     <tr>
                         <td>
                             <span class="right-spacer
-                                  {% if b.dateToPayAgain|date('U') > last_day_this_month|date('U')  %}
-                                        linethr
-                                  {% endif %}                  
+                                {% if b.dateToPayAgain|date('U') > last_day_this_month|date('U') %}
+                                    linethr
+                                {% endif %}                  
                             "><strong><a href="{{ path('payments', { 'id': b.id}) }}">{{ b.name }}</a></strong>
-
-                           {# <script>
-                                var path = "{{ path('edit_category', { 'id': cat.id}) }}";
-                            </script>
-
-                            <a href="{{ path('delete_category', { 'id': cat.id }) }}"><i class="icon-remove"></i></a>#}
                         </td>
                     </tr>
                 {% endfor %}
@@ -45,9 +38,6 @@
             <input class="little-spacer btn" type="submit" value="Submit"/>
         </form>
     </div> 
-        
-    </div>
-
 
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
 

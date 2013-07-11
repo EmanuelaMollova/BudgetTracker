@@ -25,7 +25,7 @@
             </p>
             
             <p class="lead text-error"> 
-                You have spent {{saved_sum|abs}} more than you should! :( 
+                You have spent {{ (saved_sum|abs)|number_format(2) }} more than you should! :( 
             </p>
         {% endif %}
         
@@ -34,7 +34,7 @@
         <div class="little-spacer">
         
             <label for="sum">Sum to deposit </label>
-            <input id="sum" type="text" value="{% if saved_sum > 0 %}{{ saved_sum }}{% endif %}" required> 
+            <input id="sum" type="text" value="{% if saved_sum > 0 %}{{ saved_sum|number_format(2) }}{% endif %}" required> 
             <label for="interest">Year interest</label> 
             <input id="interest" type="text" required>
             <label for="period">Period (months)</label> 

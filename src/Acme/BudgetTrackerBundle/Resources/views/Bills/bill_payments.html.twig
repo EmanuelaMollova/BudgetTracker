@@ -10,21 +10,21 @@
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Bills'} %}
 
     <div class="text-center little-spacer ">
-        <h3>Payments for {{bill.name}}</h3>
+        <h3>Payments for {{ bill.name }}</h3>
         
         <p class="little-spacer lead
             {% if  bill.dateToPayAgain != null %}
-                {% if bill.dateToPayAgain|date('U') > "now"|date('U')  %}
+                {% if bill.dateToPayAgain|date('U') > "now"|date('U') %}
                     text-success
-                {%else%} 
+                {% else %} 
                     text-error
                 {% endif %}">
-                Your {{bill.name}} is paid up to {{bill.dateToPayAgain|date('d-m-Y')}}.</p>
-           {%else%}
+                Your {{ bill.name }} is paid up to {{ bill.dateToPayAgain|date('d-m-Y') }}.</p>
+            {% else %}
                 text-warning">You still haven't paid for this bill.</p>
-           {%endif%}
+            {% endif %}
  
-                <p class="big-spacer lead"><strong>Add new payment:<strong></p>
+        <p class="big-spacer lead"><strong>Add new payment:<strong></p>
                     
         {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}                       
         <form class="little-spacer" action="{{ path('payments', { 'id': bill.id}) }}" method="post" {{ form_enctype(form) }}>
@@ -32,40 +32,34 @@
             {{ form_widget(form) }}
             <input class="little-spacer btn" type="submit" value="Submit"/>
         </form>
-        
-        
+
         {% if payments %}
                             
-                            <p>Your payments for {{bill.name}}</p>
+            <p>Your payments for {{ bill.name }}</p>
         
-        <table class="table table-hover">
-    <tr>
-        <th>
-            Paid on
-        </th>
-        <th>Price</th>
-        <th>Date to pay again</th>
-        <th>Description</th>
-    </tr>
-     {% for p in payments %}
-    <tr>
-        
-        <td>{{ p.dateWhenPaid|date("d-m-Y") }}</td> 
-    <td>{{ p.price|number_format(2) }}</td> 
-    <td>{{ p.dateToPayAgain|date("d-m-Y") }}</td> 
-    <td>{% if p.description %}{{ p.description }}{% else %} - {% endif %}</td> 
-</tr> 
-        {% endfor %}
-</table>
+            <table class="table table-hover">
+                <tr>
+                    <th>Paid on</th>
+                    <th>Price</th>
+                    <th>Date to pay again</th>
+                    <th>Description</th>
+                </tr>
+                
+                {% for p in payments %}
+                    <tr>      
+                        <td>{{ p.dateWhenPaid|date("d-m-Y") }}</td> 
+                        <td>{{ p.price|number_format(2) }}</td> 
+                        <td>{{ p.dateToPayAgain|date("d-m-Y") }}</td> 
+                        <td>{% if p.description %}{{ p.description }}{% else %} - {% endif %}</td> 
+                    </tr> 
+                {% endfor %}
+            </table>
        
-<p>Total: {{sum_of_payments}}</p>
+            <p>Total: {{ sum_of_payments }}</p>
 
-{%endif%}
-        
+        {%endif%}     
 
     </div> 
-        
-    </div>
     
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
 
