@@ -109,7 +109,7 @@
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' %}
     
     <script>
-        {% if budget_for_current_month != null %}
+        {% if newcommer == false and budget_for_current_month != null %}
             var chart = true;
             var remaining = {{ remaining }};
             var spent = {{ spent_for_current_month }};
