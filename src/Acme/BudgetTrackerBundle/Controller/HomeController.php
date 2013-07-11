@@ -52,7 +52,7 @@ class HomeController extends Controller
             $expenses_for_current_month = $this->expense_repository->
                findExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id);
             
-            $bill_payments_for_current_month = $this->setRepository('BillPayment')->
+            $bill_payments_for_current_month = $this->bill_payment_repository->
                 findPaymentsByMonth($today->format('m'), $today->format('Y'), $this->user);
 
             if(!$expenses_for_current_month && !$bill_payments_for_current_month){
@@ -64,15 +64,15 @@ class HomeController extends Controller
             } else {              
                 $first_category = $expenses_for_current_month[0]->getCategory()->getName();
 
-                $spent_for_payments_for_current_month = $this->setRepository('BillPayment')
-                        ->findSumOfPaymentsByMonth($today->format('m'), $today->format('Y'), $this->user);
+                $spent_for_payments_for_current_month = $this->bill_payment_repository->
+                    findSumOfPaymentsByMonth($today->format('m'), $today->format('Y'), $this->user);
                 
                 $spent_for_current_month = $this->expense_repository->
                     findSumOfExpensesByMonth($today->format('m'), $today->format('Y'), $this->user, $this->debts_id) +
                     $spent_for_payments_for_current_month;
 
-                $current_month = $this->month_repository
-                    ->findMonthByUser($today->format('m'), $today->format('Y'), $this->user); 
+                $current_month = $this->month_repository->
+                    findMonthByUser($today->format('m'), $today->format('Y'), $this->user); 
 
                 if($current_month){
                     $budget_for_current_month = $current_month[0]->getBudget();

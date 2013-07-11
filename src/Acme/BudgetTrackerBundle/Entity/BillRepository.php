@@ -6,20 +6,20 @@ use Doctrine\ORM\EntityRepository;
 
 class BillRepository extends EntityRepository
 {
-    /*public function countCategoriesByName($name, $user)
+    public function countBillsByName($name, $user)
     {
         $q = $this
-            ->createQueryBuilder('c')
-            ->select('COUNT(c.id)') 
-            ->where('c.name = :name')
-            ->andWhere('c.user = :user')
+            ->createQueryBuilder('b')
+            ->select('COUNT(b.id)') 
+            ->where('b.name = :name')
+            ->andWhere('b.user = :user')
             ->setParameter('name', $name)
             ->setParameter('user', $user)
              ->getQuery();
         
         return $q->getSingleScalarResult();
     }
-    
+    /*
     public function countCategoriesByUser($user)
     {
         $q = $this

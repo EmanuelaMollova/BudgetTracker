@@ -30,6 +30,11 @@
             </table>
         {% endif %}
 
+        {% if app.session.hasFlash('notice') %}
+            <div class="flash-notice text-error big-spacer">
+                {{ app.session.flash('notice') }}
+            </div>
+        {% endif %}
         
         <p class="big-spacer"><strong>Add new kind of bill<strong></p>
                     

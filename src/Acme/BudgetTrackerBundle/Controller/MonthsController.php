@@ -41,10 +41,10 @@ class MonthsController extends Controller
         
         foreach ($all_months as $m) {
             $sum_for_expenses = $this->expense_repository->
-                findSumOfExpensesByMonth($m->getDate()->format('m'), $m->getDate()->format('Y'),  $this->user, $this->debts_id);
+                findSumOfExpensesByMonth($m->getDate()->format('m'), $m->getDate()->format('Y'), $this->user, $this->debts_id);
             
-            $sum_for_payments = $this->setRepository('BillPayment')
-                    ->findSumOfPaymentsByMonth($m->getDate()->format('m'), $m->getDate()->format('Y'),  $this->user);
+            $sum_for_payments = $this->bill_payment_repository->
+                findSumOfPaymentsByMonth($m->getDate()->format('m'), $m->getDate()->format('Y'), $this->user);
                 
             $sum = $sum_for_expenses + $sum_for_payments;
             
