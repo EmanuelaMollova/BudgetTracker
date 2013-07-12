@@ -19,12 +19,10 @@
                 {% else %} 
                     text-error
                 {% endif %}">
-<<<<<<< HEAD
+
                 Your <strong>{{ bill.name }}</strong> is paid up to 
                 <strong>{{ bill.dateToPayAgain|date('d-m-Y') }}</strong>.</p>
-=======
-                Your {{ bill.name }} is paid up to {{ bill.dateToPayAgain|date('d-m-Y') }}.</p>
->>>>>>> 6afb3c027d66c27fc6914aa75cc4ed6b1a531d57
+
             {% else %}
                 text-warning">You still haven't paid for this bill.</p>
             {% endif %}
@@ -40,11 +38,7 @@
 
         {% if payments %}
                             
-<<<<<<< HEAD
             <p class="big-spacer little-bottom-spacer">Your payments for {{ bill.name }}</p>
-=======
-            <p>Your payments for {{ bill.name }}</p>
->>>>>>> 6afb3c027d66c27fc6914aa75cc4ed6b1a531d57
         
             <table class="table table-hover">
                 <tr>
@@ -63,12 +57,8 @@
                     </tr> 
                 {% endfor %}
             </table>
-       
-<<<<<<< HEAD
+
             <p class="little-spacer">Total: {{ sum_of_payments|number_format(2) }}</p>
-=======
-            <p>Total: {{ sum_of_payments }}</p>
->>>>>>> 6afb3c027d66c27fc6914aa75cc4ed6b1a531d57
 
         {%endif%}     
 
