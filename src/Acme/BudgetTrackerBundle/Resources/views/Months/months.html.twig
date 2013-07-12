@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %} Months {% endblock %}
+{% block title %} {{ 'month.title'|trans({}, 'messages') }} {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -12,7 +12,7 @@
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Months'} %}
 
     <div class="little-spacer text-center"> 
-        <h3>Months</h3>
+        <h3>{{ 'month.title'|trans({}, 'messages') }}</h3>
         
         {% if app.session.hasFlash('notice') %}
             <div class="flash-notice text-error little-spacer lead">
@@ -20,12 +20,13 @@
             </div>
         {% endif %}
 
+        {% form_theme form 'AcmeBudgetTrackerBundle:Form:label.html.twig' %}
         <form class="little-spacer" action="{{ path('create_month') }}" method="post" {{ form_enctype(form) }}>
             
             {{ form_widget(form) }}
 
             <button type="submit" class="btn little-spacer">
-                Submit
+                {{ 'submit'|trans({}, 'messages') }}
             </button>
              
         </form>
@@ -36,16 +37,16 @@
 
             <table class="table table-hover big-spacer">
                 <tr>
-                    <th>Month</th>
-                    <th>Budget</th>
-                    <th>Spent</th>
-                    <th>Saved</th>
-                    <th>Transfered</th>
+                    <th>{{ 'month.month'|trans({}, 'messages') }}</th>
+                    <th>{{ 'month.budget'|trans({}, 'messages') }}</th>
+                    <th>{{ 'month.spent'|trans({}, 'messages') }}</th>
+                    <th>{{ 'month.saved'|trans({}, 'messages') }}</th>
+                    <th>{{ 'month.transfered'|trans({}, 'messages') }}</th>
                     <th></th>
                     
                 </tr>
 
-                <h4 class="big-spacer">{{ 'all.months'|trans({}, 'messages')  }}</h4>
+                <h4 class="big-spacer">{{ 'month.all'|trans({}, 'messages')  }}</h4>
 
                 {% if all_months_count > 0 %}
                     {% for i in 0..all_months_count-1 %}
@@ -55,13 +56,13 @@
                             <td class="text-error">
                                 {{ spent[i]|number_format(2) }}
                                 {% if active_loans[i] > 0 %}
-                                    (loans: {{active_loans[i]|number_format(2)}})
+                                    ({{ 'month.loans'|trans({}, 'messages') }}: {{active_loans[i]|number_format(2)}})
                                 {% endif %}                           
                             </td>
                             {% if saved[i] >= 0 %}
                                 <td class="text-success">{{ saved[i]|number_format(2) }}
                             {% else %}
-                                <td class="text-error"><b>Overspent: {{ -saved[i]|number_format(2) }}
+                                <td class="text-error"><b>{{ 'month.overspent'|trans({}, 'messages') }}: {{ -saved[i]|number_format(2) }}
                             {% endif %}
                             </b></td>
                             <td>
@@ -74,7 +75,7 @@
                             <td>
                                 {% if saved[i] > 0 %}
                                     <a href="{{path('transfer', { 'id': all_months[i].id}) }}">
-                                        Transfer to another month
+                                        {{ 'month.transfer'|trans({}, 'messages') }}
                                     </a>
                                 {% endif %}
                             </td>

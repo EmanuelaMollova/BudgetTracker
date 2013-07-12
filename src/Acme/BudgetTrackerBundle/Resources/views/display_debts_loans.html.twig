@@ -1,11 +1,24 @@
 {% if items %}
-    <p class="big-spacer lead">{{ title }}</p>
+    <p class="big-spacer lead">
+        {% if debt == true %}
+            {{ 'dl.titlefordebts'|trans({}, 'messages') }} 
+        {% else %}
+            {{ 'dl.titleforloans'|trans({}, 'messages') }}
+        {% endif %}
+    </p>
     <table class="table table-hover little-spacer">
         <tr>
-            <th>{% if debt %}Return to{% else %}Receive from{% endif %}</th>
-            <th>Sum</th>
-            <th>Date when {% if debt %}taken{% else %}given{% endif %}</th>
-            <th>Description</th>
+            <th>{% if debt %}{{ 'dl.return'|trans({}, 'messages') }}{% else %}{{ 'dl.receive'|trans({}, 'messages') }}{% endif %}</th>
+            <th>{{ 'dl.sum'|trans({}, 'messages') }}</th>
+            <th>
+                {{ 'dl.datewhen'|trans({}, 'messages') }} 
+                {% if debt %}
+                    {{ 'dl.taken'|trans({}, 'messages') }}
+                {% else %}
+                    {{ 'dl.given'|trans({}, 'messages') }}
+                {% endif %}
+            </th>
+            <th>{{ 'dl.description'|trans({}, 'messages') }}</th>
             <th></th>
         </tr>
         {% for i in items %}              
@@ -14,7 +27,7 @@
                 <td>{{i.price|number_format(2)}}</td>
                 <td>{{i.date|date('d-m-Y')}}</td>
                 <td>{% if i.description %} {{ i.description }} {% else %} - {% endif %}<td>
-                <td><a href="{{path('return', {'id': i.id}) }}">Mark as returned</a></td>
+                <td><a href="{{path('return', {'id': i.id}) }}">{{ 'dl.markreturned'|trans({}, 'messages') }}</a></td>
             </tr>                
         {% endfor %}
         {% if passive %}
@@ -25,7 +38,7 @@
                 <td>{{p.price|number_format(2)}}</td>
                 <td>{{p.date|date('d-m-Y')}}</td>
                 <td>{% if p.description %} {{ p.description }} {% else %} - {% endif %}<td>
-                <td><a href="{{path('return', {'id': p.id}) }}">Unmark as returned</a></td>
+                <td><a href="{{path('return', {'id': p.id}) }}">{{ 'dl.unmarkreturned'|trans({}, 'messages') }}</a></td>
             </tr>
             
         {% endfor %}
@@ -33,22 +46,40 @@
     </table>
     
     {% if passive %}
-        <button class="btn" {%if debt%}id="show_returned_debts" {%else%} id="show_returned_loans"{%endif%}>
-            <i class="icon-chevron-down"></i> Show/Hide already {%if debt%}returned debts {%else%} received loans{%endif%}
+        <button class="btn" {% if debt %}id="show_returned_debts" {% else %} id="show_returned_loans"{% endif %}>
+            <i class="icon-chevron-down"></i> {{ 'dl.showhide'|trans({}, 'messages') }} 
+            {% if debt %} 
+                {{ 'dl.returned'|trans({}, 'messages') }} 
+            {% else %} 
+                {{ 'dl.received'|trans({}, 'messages') }}
+            {% endif %}
         </button>
     {%endif%}
     
 {% else %}
-    <p class="lead text-success big-spacer">{% if debt %}You have no debts to return!{% else %}You have no loans to receive!{% endif %}</p> 
+    <p class="lead text-success big-spacer">
+        {% if debt %}
+            {{ 'dl.nodebts'|trans({}, 'messages') }}
+        {% else %}
+            {{ 'dl.noloans'|trans({}, 'messages') }}
+        {% endif %}
+    </p> 
     
     {% if passive %}
-    <p class="big-spacer lead {%if debt %} debts {%else%} loans{%endif%}">Already returned</p>
+    <p class="big-spacer lead {%if debt %} debts {%else%} loans{%endif%}">{{ 'dl.alreadyreturned'|trans({}, 'messages') }}</p>
     <table class="table table-hover little-spacer {%if debt %} debts {%else%} loans{%endif%}">
         <tr>
-            <th>{% if debt %}Return to{% else %}Receive from{% endif %}</th>
-            <th>Sum</th>
-            <th>Date when {% if debt %}taken{% else %}given{% endif %}</th>
-            <th>Description</th>
+            <th>{% if debt %}{{ 'dl.return'|trans({}, 'messages') }}{% else %}{{ 'dl.receive'|trans({}, 'messages') }}{% endif %}</th>
+            <th>{{ 'dl.sum'|trans({}, 'messages') }}</th>
+            <th>
+                {{ 'dl.datewhen'|trans({}, 'messages') }} 
+                {% if debt %}
+                    {{ 'dl.taken'|trans({}, 'messages') }}
+                {% else %}
+                    {{ 'dl.given'|trans({}, 'messages') }}
+                {% endif %}
+            </th>
+            <th>{{ 'dl.description'|trans({}, 'messages') }}</th>
             <th></th>
         </tr>
         {% for p in passive %}
@@ -58,13 +89,18 @@
                 <td>{{p.price|number_format(2)}}</td>
                 <td>{{p.date|date('d-m-Y')}}</td>
                 <td>{% if p.description %} {{ p.description }} {% else %} - {% endif %}<td>
-                <td><a href="{{path('return', {'id': p.id}) }}">Unmark as returned</a></td>
+                <td><a href="{{path('return', {'id': p.id}) }}">{{ 'dl.unmarkreturned'|trans({}, 'messages') }}</a></td>
             </tr>
             
         {% endfor %}
             </table>
      <button class="btn" {%if debt%}id="show_returned_debts" {%else%} id="show_returned_loans"{%endif%}>
-            <i class="icon-chevron-down"></i> Show/Hide already {%if debt%}returned debts {%else%} received loans{%endif%}
+           <i class="icon-chevron-down"></i> {{ 'dl.showhide'|trans({}, 'messages') }} 
+            {% if debt %} 
+                {{ 'dl.returned'|trans({}, 'messages') }} 
+            {% else %} 
+                {{ 'dl.received'|trans({}, 'messages') }}
+            {% endif %}
     </button>
     {%endif%}
 {% endif %}

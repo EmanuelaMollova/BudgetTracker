@@ -100,8 +100,8 @@ class ReportsController extends Controller
             }
            
             return $this->render('AcmeBudgetTrackerBundle:Reports:take_reports.html.twig', array(
-                'from_date' => $from_date_object->format('d F Y'),
-                'to_date' => $to_date_object->format('d F Y'),
+                'from_date' => $from_date_object->format('d.m.Y'),
+                'to_date' => $to_date_object->format('d.m.Y'),
                 'expenses' => $expenses,
                 'bill_payments' => $bill_payments,
                 'sum_of_payments' => $sum_of_payments,

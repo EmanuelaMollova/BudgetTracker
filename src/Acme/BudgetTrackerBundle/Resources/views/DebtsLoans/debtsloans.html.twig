@@ -5,35 +5,34 @@
     <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
-{% block title %} Debts & Loans {% endblock %}
+{% block title %} {{ 'dl.title'|trans({}, 'messages') }} {% endblock %}
 
 {% block body %}
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Debts & Loans'} %}
 
     <div class="text-center little-spacer">
-        <h3>Debts and Loans</h3>   
+        <h3>{{ 'dl.title'|trans({}, 'messages') }}</h3>   
             
+        {% form_theme form 'AcmeBudgetTrackerBundle:Form:label.html.twig' %}
         <form class="little-spacer" action="{{ path('debts_loans') }}" method="post" {{ form_enctype(form) }}>
 
                 {{ form_widget(form) }}
 
                 <button type="submit" class="btn little-spacer">
-                    Submit
+                    {{ 'submit'|trans({}, 'messages') }}
                 </button>
 
         </form>
         
         {% include 'AcmeBudgetTrackerBundle::display_debts_loans.html.twig' with {
-            'title':'Debts you should return', 
             'debt': true, 
             'items': active_debts,
             'passive': passive_debts} %}
         
         <div class="big-spacer"></div>
         
-        {% include 'AcmeBudgetTrackerBundle::display_debts_loans.html.twig' with {
-            'title':'Loans you should receive', 
+        {% include 'AcmeBudgetTrackerBundle::display_debts_loans.html.twig' with { 
             'debt': false, 
             'items': active_loans,
             'passive': passive_loans} %}

@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %} Months {% endblock %}
+{% block title %} {{ 'month.title'|trans({}, 'messages') }} {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -13,14 +13,15 @@
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Months'} %}
 
     <div class="little-spacer text-center"> 
-        <h3>Transfers</h3>
+        <h3>{{ 'month.transf'|trans({}, 'messages') }}</h3>
         
+        {% form_theme form 'AcmeBudgetTrackerBundle:Form:label.html.twig' %} 
         <form class="little-spacer" action="{{ path('transfer', { 'id': id}) }}" method="post" {{ form_enctype(form) }}>
             
             {{ form_widget(form) }}
 
             <button type="submit" class="btn little-spacer">
-                Submit
+                {{ 'submit'|trans({}, 'messages') }}
             </button>
              
         </form>

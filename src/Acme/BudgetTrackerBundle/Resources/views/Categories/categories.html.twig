@@ -1,13 +1,13 @@
 {% extends '::base.html.twig' %}
 
-{% block title %} Categories {% endblock %}
+{% block title %} {{ 'category.title'|trans({}, 'messages') }} {% endblock %}
 
 {% block body %}
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Categories'} %}
 
     <div class="text-center little-spacer">       
-        <h3>Categories</h3> 
+        <h3>{{ 'category.title'|trans({}, 'messages') }}</h3> 
         
         {% if categories %}
             <table class="table table-striped big-spacer">
@@ -33,13 +33,13 @@
             </div>
         {% endif %}
         
-        <p class="big-spacer"><strong>{{ 'add.new.category'|trans({}, 'messages')  }}<strong></p>
+        <p class="big-spacer"><strong>{{ 'category.add'|trans({}, 'messages')  }}<strong></p>
             
         {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}                       
         <form action="{{ path('create_category') }}" method="post" {{ form_enctype(form) }}>
             {{ form_errors(form) }}
             {{ form_widget(form) }}
-            <input class="little-spacer btn" type="submit" value="Submit"/>
+            <input class="little-spacer btn" type="submit" value="{{ 'submit'|trans({}, 'messages')  }}"/>
         </form>
     </div> 
     

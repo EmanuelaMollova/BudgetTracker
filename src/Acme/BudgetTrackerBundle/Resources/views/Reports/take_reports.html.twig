@@ -5,14 +5,14 @@
     <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
-{% block title %} Report {% endblock %}
+{% block title %} {{ 'report.title'|trans({}, 'messages') }} {% endblock %}
 
 {% block body %}
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Reports'} %}
 
     <div class="text-center little-spacer">
-        <h3>Report for expenses from <b>{{ from_date }}</b> to <b>{{ to_date }}</b></h3>   
+        <h3>{{ 'report.h1'|trans({}, 'messages') }} <b>{{ from_date }}</b> {{ 'report.h2'|trans({}, 'messages') }}<b> {{ to_date }}</b></h3>   
 
         {% if expenses != null %}       
             {% include 'AcmeBudgetTrackerBundle::display_expenses.html.twig' with {
@@ -30,7 +30,7 @@
             <p class="text-warning lead">{{ from_date }} and {{ to_date }} for the selected categories.</p>
         {% endif %}
             
-        <div class="little-spacer"><a href="{{ path('reports') }}">Go back</a></div>           
+        <div class="little-spacer"><a href="{{ path('reports') }}">{{ 'report.goback'|trans({}, 'messages') }}</a></div>           
     </div>
 
     {% include 'AcmeBudgetTrackerBundle::notifications.html.twig' with {'report':'Reports'} %}

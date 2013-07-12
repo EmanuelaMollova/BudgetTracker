@@ -49,7 +49,7 @@ submit: "Изпрати"
 sum: "Общо"
 
 expenses:
-  exp: "Разходи"
+  title: "Разходи"
   nocat: "Трябва първо да %link_start%създадете няколко катеории%link_end%."
   cathelp: "Те ще Ви помогнат да организирате и филтрирате лесно разходите си."
   aftercat: "След като създадете категории, елате обратно и започнете да записвате разходите си."
@@ -60,9 +60,65 @@ expense_description: "Описание:"
 expense_price: "Цена:"
 expense_date: "Дата:"
 expense_category: "Категория:"
+
+report:
+  title: "Справки"
+  nocat: "Първо трябва да %link_start%създадете няколко категории%link_end% и да запишете разходите си."
+  aftercat: "След това ще можете да получавате справки за тях."
+  choosecat: "Изберете категории:"
+  chbx: "Изберете всички/никоя"
+  goback: "Назад"
+  h1: "Справка за разходите от" 
+  h2: "до"
   
-add:
-  new:
-    category: "Добави нова категория"
-    
-all.months: "Всички месеци"
+month_from_date: "От"
+month_to_date: "до"
+
+category:
+  title: "Категории"
+  add: "Добавете нова категория"
+  
+month:
+  title: "Месеци"
+  budget: "Бюджет"
+  spent: "Похарчени"
+  saved: "Спестени"
+  month: "Месец"
+  transfered: "Прехвърлени"
+  loans: "заеми"
+  overspent: "Похарчени в повече"
+  transfer: "Прехвърлете за друг месец"
+  all: "Всички месеци"
+  transf: "Трансфери"
+  
+month_date: "Задайте бюджета си за месец:"
+month_budget: "Бюджет:"
+
+transfer_money: "Прехвърлете"
+transfer_destination: "към"
+
+dl:
+  title: "Заеми и дългове"
+  return: "Върнете на"
+  receive: "Очаквайте от"
+  sum: "Сума"
+  datewhen: "Дата, когато е"
+  description: "Описание"
+  taken: "взет"
+  given: "даден"
+  markreturned: "Отбележете, че е върнат"
+  unmarkreturned: "Отбележете отново като не върнат"
+  showhide: "Покажи/скрий вече"
+  returned: "върнати дългове"
+  received: "получени заеми"
+  nodebts: "Нямате дългове за връщане!"
+  noloans: "Няма заеми, които да Ви бъдат върнати!"
+  alreadyreturned: "Вече върнати"
+  titlefordebts: "Дългове, които трябва да върнете"
+  titleforloans: "Заеми, които трябва да получите"
+  
+debtloan_product: "На/От:"
+debtloan_description: "Описание:"
+debtloan_price: "Сума:"
+debtloan_date: "Дата:"
+debtloan_category: "Категория:"

@@ -48,7 +48,7 @@ submit: "Submit"
 sum: "Sum"
 
 expenses:
-  exp: "Expenses"
+  title: "Expenses"
   nocat: "You should first %link_start%create some categories%link_end%."
   cathelp: "They will help you keep your expenses organised and filter them easily."
   aftercat: "After creating categories, come back to start adding your expenses."
@@ -59,6 +59,67 @@ expense_description: "Description:"
 expense_price: "Price:"
 expense_date: "Date:"
 expense_category: "Cateogry:"
+
+report:
+  title: "Reports"
+  nocat: "You should first %link_start%create some categories%link_end% and list your expesnses."
+  aftercat: "After that you will be able to get reports."
+  choosecat: "Choose categories:"
+  chbx: "Select/Deselect All"
+  goback: "Go back"
+  h1: "Report for expenses from" 
+  h2: "to"
+
+month_from_date: "From"
+month_to_date: "to"
   
-add.new.category: "Add new category"
-all.months: "All months"
+category:
+  title: "Categories"
+  add: "Add new category"
+
+month:
+  title: "Months"
+  budget: "Budget"
+  spent: "Spent"
+  saved: "Saved"
+  month: "Month"
+  transfered: "Transfered"
+  loans: "loans"
+  overspent: "Overspent"
+  transfer: "Transfer to another month"
+  all: "All months"
+  transf: "Transfers"
+  
+month_date: "Set you budget for month:"
+month_budget: "Budget:"
+
+transfer_money: "Transfer"
+transfer_destination: "to"
+
+dl:
+  title: "Debts & Loans"
+  return: "Return to"
+  receive: "Receive from"
+  sum: "Sum"
+  datewhen: "Date when"
+  description: "Descriptioin"
+  taken: "taken"
+  given: "given"
+  markreturned: "Mark as returned"
+  unmarkreturned: "Unmark as returned"
+  showhide: "Show/Hide already"
+  returrned: "returned debts"
+  received: "received loans"
+  nodebts: "You have no debts to return!"
+  noloans: "You have no loans to receive!"
+  alreadyreturned: "Already returned"
+  titlefordebts: "Debts you should return"
+  titleforloans: "Loans you should receive"
+  
+
+debtloan_product: "From/To:"
+debtloan_description: "Description:"
+debtloan_price: "Sum:"
+debtloan_date: "Date:"
+debtloan_category: "Category:"
+  

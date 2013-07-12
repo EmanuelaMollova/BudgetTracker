@@ -5,23 +5,22 @@
     <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
-{% block title %} Reports {% endblock %}
+{% block title %} {{ 'report.title'|trans({}, 'messages') }} {% endblock %}
 
 {% block body %}
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Reports'} %}
 
     <div class="text-center little-spacer "> 
-        <h3>Reports</h3>   
+        <h3>{{ 'report.title'|trans({}, 'messages') }}</h3>   
 
         {% if newcomer == true %}
         
             <div class="lead little-spacer">
                 <p>
-                    You should first <a href="{{ path('categories') }}">create some categories</a>
-                    and list your expesnses.
+                    <p>{{ 'report.nocat' | trans({'%link_start%' : '<a href="'~path('categories')~'">', '%link_end%' : '</a>'}, 'messages')|raw }}</p>
                 </p>
-                <p class="little-spacer">After that you will be able to get reports.</p>
+                <p class="little-spacer">{{ 'report.aftercat'|trans({}, 'messages') }}</p>
             </div>
         
         {% else %}
@@ -32,9 +31,9 @@
                 </div>
             {% endif %}
         
-            <p class="lead big-spacer">Choose categories:</p>
+            <p class="lead big-spacer">{{ 'report.choosecat'|trans({}, 'messages') }}</p>
 
-            {% form_theme form 'AcmeBudgetTrackerBundle:Form:checkbox.html.twig' %}
+            {% form_theme form 'AcmeBudgetTrackerBundle:Form:checkbox.html.twig' %}         
             <form class="little-spacer" action="{{ path('take_report') }}" method="post" {{ form_enctype(form) }}>
 
                 {{ form_errors(form) }}
@@ -42,17 +41,18 @@
 
                 <div class="checkboxes text-left offset7">
                     {{ form_row(form.categories) }}
-                    <input id="" type="checkbox"> Bills
-                    <p><input id="chbx" type="checkbox"><b> Select/Deselect All</b></p>
+                    {#<input id="" type="checkbox"> Bills#}
+                    <p><input id="chbx" type="checkbox"><b> {{ 'report.chbx'|trans({}, 'messages') }}</b></p>
                 </div>
 
+                {% form_theme form 'AcmeBudgetTrackerBundle:Form:label.html.twig' %}
                 <div class="big-spacer">
                     {{ form_row(form.from_date) }}   
                     {{ form_row(form.to_date) }}
                 </div>
 
                 <button type="submit" class="btn little-spacer">
-                    Submit
+                    {{ 'submit'|trans({}, 'messages') }}
                 </button> 
 
             </form>

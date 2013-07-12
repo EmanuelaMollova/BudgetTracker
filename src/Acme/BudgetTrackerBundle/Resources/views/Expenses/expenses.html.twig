@@ -5,7 +5,7 @@
     <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
-{% block title %} {{ 'expenses.exp' | trans({}, 'messages') }} {% endblock %}
+{% block title %} {{ 'expenses.title' | trans({}, 'messages') }} {% endblock %}
 
 {% block body %}
     
@@ -13,7 +13,7 @@
 
     <div class="text-center little-spacer">
         
-        <h3>{{ 'expenses.exp' | trans({}, 'messages') }}</h3>
+        <h3>{{ 'expenses.title' | trans({}, 'messages') }}</h3>
         
         {% if newcomer == true %}
         
