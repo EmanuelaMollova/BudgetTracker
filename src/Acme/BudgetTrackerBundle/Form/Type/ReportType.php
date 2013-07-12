@@ -4,6 +4,7 @@ namespace Acme\BudgetTrackerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 
 class ReportType extends AbstractType
 {   
@@ -45,6 +46,7 @@ class ReportType extends AbstractType
             'label' => 'to',
             'required' => true
         )); 
+       
     }
 
     public function getName()

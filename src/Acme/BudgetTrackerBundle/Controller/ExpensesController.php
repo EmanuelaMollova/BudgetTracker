@@ -32,17 +32,14 @@ class ExpensesController extends Controller
         $expenses_for_today = $this->expense_repository->
             findExpensesBetweenDates($from_date, $to_date, $this->user, $this->debts_id);
         
-        $payments_for_today = $this->setRepository('BillPayment')->
-               findPaymentsBetweenDates($this->user, $from_date, $to_date); 
-        
-
-        
-        
+        $payments_for_today = $this->bill_payment_repository->
+            findPaymentsBetweenDates($this->user, $from_date, $to_date); 
+          
         $spent_for_today = $this->expense_repository->
             findSumOfExpensesBetweenDates($from_date, $to_date, $this->user, $this->debts_id);
         
-        $spent_for_payments_today = $this->setRepository('BillPayment')->
-                 findSumOfPaymentsBetweenDates($from_date, $to_date, $this->user);
+        $spent_for_payments_today = $this->bill_payment_repository->
+            findSumOfPaymentsBetweenDates($from_date, $to_date, $this->user);
         
         //Create the form for adding new expenses
         $today = new \DateTime('now');

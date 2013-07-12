@@ -2,6 +2,7 @@
 
 namespace Acme\BudgetTrackerBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityRepository;
 
 class MonthRepository extends EntityRepository

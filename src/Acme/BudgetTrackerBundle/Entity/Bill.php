@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Table(name="bill")
  * @ORM\Entity(repositoryClass="Acme\BudgetTrackerBundle\Entity\BillRepository")
- * @UniqueEntity(fields={"name", "user"})
  */
 class Bill
 {
@@ -52,8 +51,6 @@ class Bill
         $this->date_to_pay_again = null;
     }
     
-
-
     public function getId()
     {
         return $this->id;
@@ -81,30 +78,6 @@ class Bill
     public function getUser()
     {
         return $this->user;
-    }
-
-
-    /**
-     * Set paid_for_the_month
-     *
-     * @param boolean $paidForTheMonth
-     * @return Bill
-     */
-    public function setPaidForTheMonth($paidForTheMonth)
-    {
-        $this->paid_for_the_month = $paidForTheMonth;
-    
-        return $this;
-    }
-
-    /**
-     * Get paid_for_the_month
-     *
-     * @return boolean 
-     */
-    public function getPaidForTheMonth()
-    {
-        return $this->paid_for_the_month;
     }
 
     /**

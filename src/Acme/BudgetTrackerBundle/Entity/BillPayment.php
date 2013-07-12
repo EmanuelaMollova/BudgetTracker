@@ -78,30 +78,6 @@ class BillPayment
         return $this->price;
     }
 
-    public function setDate($date)
-    {
-        $this->date = $date;
-    
-        return $this;
-    }
-
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    public function setCategory(\Acme\BudgetTrackerBundle\Entity\Category $category = null)
-    {
-        $this->category = $category;
-    
-        return $this;
-    }
-
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
     public function setUser(\Acme\BudgetTrackerBundle\Entity\User $user = null)
     {
         $this->user = $user;

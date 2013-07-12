@@ -9,7 +9,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Table(name="month")
  * @ORM\Entity(repositoryClass="Acme\BudgetTrackerBundle\Entity\MonthRepository")
- * @UniqueEntity(fields={"name", "user"})
  */
 class Month
 {

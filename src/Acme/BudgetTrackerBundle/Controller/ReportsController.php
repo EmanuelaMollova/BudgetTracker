@@ -71,12 +71,14 @@ class ReportsController extends Controller
             $expenses = $this->expense_repository->
                 findExpensesByCategoriesAndDates($from_date_object, $to_date_object, $query, $this->user, $this->debts_id); 
             
-            $bill_payments = $this->setRepository('BillPayment')->
-                    findPaymentsBetweenDates($this->user, $from_date_object, $to_date_object);
+            $bill_payments = $this->bill_payment_repository->
+                findPaymentsBetweenDates($this->user, $from_date_object, $to_date_object);
             
             if($bill_payments){
-                $sum_of_payments = $this->setRepository('BillPayment')->
-                        findSumOfPaymentsBetweenDates($from_date_object, $to_date_object, $this->user);
+                $sum_of_payments = $this->bill_payment_repository->
+                    findSumOfPaymentsBetweenDates($from_date_object, $to_date_object, $this->user);
+            } else {
+                $sum_of_payments = 0;
             }
             
             $total_sum = 0;

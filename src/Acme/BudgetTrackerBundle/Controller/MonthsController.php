@@ -40,9 +40,14 @@ class MonthsController extends Controller
         $loans = array();
         
         foreach ($all_months as $m) {
-            $sum = $this->expense_repository->
-                findSumOfExpensesByMonth($m->getDate()->format('m'), $m->getDate()->format('Y'),  $this->user, $this->debts_id);
+            $sum_for_expenses = $this->expense_repository->
+                findSumOfExpensesByMonth($m->getDate()->format('m'), $m->getDate()->format('Y'), $this->user, $this->debts_id);
+            
+            $sum_for_payments = $this->bill_payment_repository->
+                findSumOfPaymentsByMonth($m->getDate()->format('m'), $m->getDate()->format('Y'), $this->user);
                 
+            $sum = $sum_for_expenses + $sum_for_payments;
+            
             if(!$sum){
                 $sum = 0;
             }
@@ -95,6 +100,7 @@ class MonthsController extends Controller
             foreach ($saved as $s) {
                 $saved_sum += $s;
             }
+            $saved_sum = number_format($saved_sum, 2, '.', '');
             
             return $this->render(
             'AcmeBudgetTrackerBundle:Banks:banks.html.twig', array(

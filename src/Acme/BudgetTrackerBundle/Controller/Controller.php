@@ -15,7 +15,8 @@ class Controller extends BaseController
     protected $expense_repository;
     protected $category_repository;
     protected $month_repository;
-    protected $bill_repository;
+   //? protected $bill_repository;
+    protected $bill_payment_repository;
     protected $debts_id;
     protected $loans_id;
     protected $newcomer;
@@ -41,7 +42,7 @@ class Controller extends BaseController
     /*
      * Gives value to all or some of the frequently used variables
      */
-    protected function setVariables($newcomer = true, $month = true, $em = true, $ids = true, $expense = true, $category = true, $bill = true)
+    protected function setVariables($newcomer = true, $month = true, $em = true, $ids = true, $expense = true, $category = true, $bill_payment = true)
     {
         $this->user = $this->container->get('security.context')->getToken()->getUser();
         
@@ -61,8 +62,8 @@ class Controller extends BaseController
             $this->month_repository = $this->setRepository('Month');
         }
         
-        if($bill){
-            $this->bill_repository = $this->setRepository('Bill');
+        if($bill_payment){
+            $this->bill_payment_repository = $this->setRepository('BillPayment');
         }
         
         if($ids){

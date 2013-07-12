@@ -12,12 +12,20 @@ use Acme\BudgetTrackerBundle\Form\Type\BillPaymentType;
 class BillsController extends Controller
 { 
     /*
-     * Creates new categories
+     * Sets most used variables
+     */
+    private function init()
+    {
+        $this->setVariables($newcomer = false, $month = false, $em = true, $ids = false, $expense = false, $category = false);
+        $this->bill_repository = $this->setRepository('Bill');
+    }
+
+    /*
+     * Displays bills and creates new ones
      */
     public function billsAction(Request $request)
     {
-        $this->setVariables($newcomer = false, $month = false, $em = true, $ids = false, $expense = false);
-        
+        $this->init();      
         $bills_for_user = $this->bill_repository->findBillsByUser($this->user);
 
         $bill = new Bill();
@@ -29,10 +37,7 @@ class BillsController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
 
-            //$same = $this->bill_repository->
-             //   countCategoriesByName($category->getName(), $this->user);
-
-            $same = 0;    
+            $same = $this->bill_repository->countBillsByName($bill->getName(), $this->user);  
             
             if ($same == 0 && $form->isValid()) {
                 $bill->setUser($this->user);
@@ -52,19 +57,20 @@ class BillsController extends Controller
                 'form' => $form->createView()));    
     }
     
+    /*
+     * Takes care for bills payments - adds new payments, displays old ones and
+     * shows when the next payment should be made
+     */
     public function paymentsAction(Request $request, $id)
     {
-        $this->setVariables($newcomer = false, $month = false, $em = true, $ids = false, $expense = false);
-        
-        $this->bill_payment_repository = $this->setRepository('BillPayment');
+        $this->init();
         
         $payments = $this->bill_payment_repository->findPaymentsByBill($this->user, $id);
         $sum_of_payments = $this->bill_payment_repository->findSumOfPaymentsByBill($this->user, $id);
         
-        
         $bill = $this->bill_repository->findById($id);
         $bill = $bill[0];
-        
+
         $today = new \DateTime('now');
         $today = $today->format('d-m-Y');
         
@@ -76,7 +82,7 @@ class BillsController extends Controller
         $bill_payment->setDateWhenPaid($today);
         $bill_payment->setDateToPayAgain($to_pay_date);
         $form = $this->createForm(new BillPaymentType(), $bill_payment);
-        
+ 
          if ($request->isMethod('POST')) {
             $form->bind($request);
             
@@ -86,13 +92,7 @@ class BillsController extends Controller
             $date_to_pay_again_object = \DateTime::createfromformat('d-m-Y', $bill_payment->getDateToPayAgain());
             $bill_payment->setDateToPayAgain($date_to_pay_again_object);
             
-            echo 'bill';
-            var_dump($bill->getDateToPayAgain());
-            echo 'new';
-            var_dump($date_to_pay_again_object);
-            
-            if($bill->getDateToPayAgain() == null || $bill->getDateToPayAgain() < $bill_payment->getDateToPayAgain())
-            {
+            if($bill->getDateToPayAgain() == null || $bill->getDateToPayAgain() < $bill_payment->getDateToPayAgain()){
                 $bill->setDateToPayAgain($date_to_pay_again_object);
                 $this->em->persist($bill);
             }
@@ -101,8 +101,7 @@ class BillsController extends Controller
                 $bill_payment->setUser($this->user);
                 $bill_payment->setBill($bill);
 
-                $this->em->persist($bill_payment);
-                
+                $this->em->persist($bill_payment);               
                 $this->em->flush();
 
                 return $this->redirect($this->generateUrl('payments', array('id' => $id)));
@@ -124,4 +123,3 @@ class BillsController extends Controller
         }
     }
 }
-

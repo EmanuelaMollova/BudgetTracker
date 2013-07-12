@@ -71,7 +71,7 @@
                 
                 {% if remaining > 0 %}
                     <p class="lead text-success little-spacer ">Remaining: 
-                        <strong>{{ remaining }}</strong> 
+                        <strong>{{ remaining|number_format(2) }}</strong> 
                         (from {{ budget_for_current_month|number_format(2) }})
                     </p>
                     
@@ -86,7 +86,7 @@
                     </p>
                     
                     <p class="lead text-error">
-                        You have spent <strong>{{ remaining|abs }}</strong> more than you should!</p> 
+                        You have spent <strong>{{ (remaining|abs)|number_format(2) }}</strong> more than you should!</p> 
                     </p>
                 {% endif %}
                     
