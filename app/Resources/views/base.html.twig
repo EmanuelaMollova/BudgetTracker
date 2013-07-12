@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{{ 'base'|trans({}, 'messages') }}{#Welcome!#}{% endblock %}</title>
         {% block stylesheets %}
             <link href="{{ asset('bundles/acmebudgettracker/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('bundles/acmebudgettracker/css/budgettracker.css') }}" rel="stylesheet" type="text/css" />

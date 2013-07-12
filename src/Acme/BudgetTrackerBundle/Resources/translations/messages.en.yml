@@ -1,3 +1,5 @@
+base: "Welcome!"
+
 nav:
   expenses: "Expenses"
   reports: "Reports"
@@ -34,7 +36,6 @@ index:
    
 displayexp:
   showhide: "Show/hide all products"
-  sum: "Sum"
   total: "Total"
   
   receive: "Receive from"
@@ -42,6 +43,22 @@ displayexp:
   price: "Price"
   date: "Date"
   description: "Description"
+
+submit: "Submit"
+sum: "Sum"
+
+expenses:
+  exp: "Expenses"
+  nocat: "You should first %link_start%create some categories%link_end%."
+  cathelp: "They will help you keep your expenses organised and filter them easily."
+  aftercat: "After creating categories, come back to start adding your expenses."
+  today: "Expenses for today:"
+  
+expense_product: "Product:"
+expense_description: "Description:"
+expense_price: "Price:"
+expense_date: "Date:"
+expense_category: "Cateogry:"
   
 add.new.category: "Add new category"
 all.months: "All months"

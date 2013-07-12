@@ -47,7 +47,7 @@ Booleans:
             </tr></table>
             {% endif %}
 </div>
-            <strong>{{ 'displayexp.sum' | trans({}, 'messages') }}: {{ sum|number_format(2) }}</strong>
+            <strong>{{ 'sum' | trans({}, 'messages') }}: {{ sum|number_format(2) }}</strong>
                 
             {% if highchart == true %}
                 {% set chart = chart ~ sum ~ '], ' %}
@@ -102,7 +102,7 @@ Booleans:
     {% endif %}
             </div> 
 
-    <strong>{{ 'displayexp.sum' | trans({}, 'messages') }}: {{ sum|number_format(2) }}</strong>
+    <strong>{{ 'sum' | trans({}, 'messages') }}: {{ sum|number_format(2) }}</strong>
         
     {% if highchart == true %}
         {% set chart = chart  ~ sum ~ ']' %}
@@ -132,7 +132,7 @@ Booleans:
                          
         </div>
         
-        <strong>{{ 'displayexp.sum' | trans({}, 'messages') }}: {{ sum_for_payments|number_format(2) }}</strong>
+        <strong>{{ 'sum' | trans({}, 'messages') }}: {{ sum_for_payments|number_format(2) }}</strong>
         
         {% set sum = sum_for_payments %}
         {% include 'AcmeBudgetTrackerBundle::display_expenses_progressbar.html.twig' %}

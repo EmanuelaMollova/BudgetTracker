@@ -1,3 +1,5 @@
+base: "Добре дошли!"
+
 nav:
   expenses: "Разходи"
   reports: "Справки"
@@ -42,6 +44,22 @@ displayexp:
   price: "Цена"
   date: "Дата"
   description: "Описание"
+
+submit: "Изпрати"
+sum: "Общо"
+
+expenses:
+  exp: "Разходи"
+  nocat: "Трябва първо да %link_start%създадете няколко катеории%link_end%."
+  cathelp: "Те ще Ви помогнат да организирате и филтрирате лесно разходите си."
+  aftercat: "След като създадете категории, елате обратно и започнете да записвате разходите си."
+  today: "Разходите Ви днес:"
+  
+expense_product: "Продукт:"
+expense_description: "Описание:"
+expense_price: "Цена:"
+expense_date: "Дата:"
+expense_category: "Категория:"
   
 add:
   new:
