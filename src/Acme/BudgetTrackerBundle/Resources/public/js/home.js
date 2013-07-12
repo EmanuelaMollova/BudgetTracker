@@ -12,7 +12,7 @@ $(document).ready(function(){
                             plotShadow: false
                         },
                         title: {
-                            text: 'Expenses'
+                            text: ''
                         },
                         tooltip: {
                             formatter: function () {
