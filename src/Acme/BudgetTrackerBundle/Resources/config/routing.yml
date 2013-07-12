@@ -20,27 +20,29 @@ fos_user_change_password:
     
 #BudgetTracker
 home:
-    pattern:  /
-    defaults: { _controller: AcmeBudgetTrackerBundle:Home:index }
+    pattern:  /{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Home:index, _locale: en }
+    requirements:
+        _locale: en|bg
     
 goodbye:
-    pattern: /goodbye
-    defaults: { _controller: AcmeBudgetTrackerBundle:Goodbye:goodbye }
-    
-expenses:
-    pattern: /expenses
-    defaults: { _controller: AcmeBudgetTrackerBundle:Expenses:expenses }
-    
-reports:
-    pattern: /reports
-    defaults: { _controller: AcmeBudgetTrackerBundle:Reports:reports }
-    
-categories:
-    pattern: /categories/{_locale}
-    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:categories, _locale: bg }
+    pattern: /goodbye/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Goodbye:goodbye, _locale: en }
     requirements:
         _locale: en|bg
         
+expenses:
+    pattern: /expenses/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Expenses:expenses, _locale: en }
+    requirements:
+        _locale: en|bg
+        
+reports:
+    pattern: /reports/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Reports:reports, _locale: en }
+    requirements:
+        _locale: en|bg
+              
 categories:
     pattern: /categories/{_locale}
     defaults: { _controller: AcmeBudgetTrackerBundle:Categories:categories, _locale: en }
@@ -48,54 +50,80 @@ categories:
         _locale: en|bg
     
 months:
-    pattern: /months
-    defaults: { _controller: AcmeBudgetTrackerBundle:Months:months } 
+    pattern: /months/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Months:months, _locale: en }
+    requirements:
+        _locale: en|bg
     
 create_category:
-    pattern: /create_category
-    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:createCategory }
-    
+    pattern: /create_category/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:createCategory, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 edit_category:
-    pattern: /edit_category/{id}
-    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:editCategory }
-    
+    pattern: /edit_category/{id}/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:editCategory, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 delete_category:
-    pattern: /delete_category/{id}
-    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:deleteCategory }
-    
+    pattern: /delete_category/{id}/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Categories:deleteCategory, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 create_expense:
-    pattern: /create_expense
-    defaults: { _controller: AcmeBudgetTrackerBundle:Expenses:createExpense }
-    
+    pattern: /create_expense/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Expenses:createExpense, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 create_month:
-    pattern: /create_month
-    defaults: { _controller: AcmeBudgetTrackerBundle:Months:createMonth }
-    
+    pattern: /create_month/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Months:createMonth, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 take_report:
-    pattern: /take_report
-    defaults: { _controller: AcmeBudgetTrackerBundle:Reports:reports }
-    
+    pattern: /take_report/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Reports:reports, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 bank_interest:
-    pattern: /bank_interest
-    defaults: { _controller: AcmeBudgetTrackerBundle:Months:months }
-    
+    pattern: /bank_interest/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Months:months, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 transfer:
-    pattern: /transfer/{id}
-    defaults: { _controller: AcmeBudgetTrackerBundle:Months:transfer }
-    
+    pattern: /transfer/{id}/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Months:transfer, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 debts_loans:
-    pattern: /debts_loans
-    defaults: { _controller: AcmeBudgetTrackerBundle:DebtsLoans:debtsLoans }
-    
+    pattern: /debts_loans/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:DebtsLoans:debtsLoans, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 return:
-    pattern: /return/{id}
-    defaults: { _controller: AcmeBudgetTrackerBundle:DebtsLoans:return }
-    
+    pattern: /return/{id}/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:DebtsLoans:return, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 bills:
-    pattern: /bills
-    defaults: { _controller: AcmeBudgetTrackerBundle:Bills:bills }
-    
+    pattern: /bills/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Bills:bills, _locale: en }
+    requirements:
+        _locale: en|bg
+        
 payments:
-    pattern: /payments/{id}
-    defaults: { _controller: AcmeBudgetTrackerBundle:Bills:payments }
-    
+    pattern: /payments/{id}/{_locale}
+    defaults: { _controller: AcmeBudgetTrackerBundle:Bills:payments, _locale: en }  
+    requirements:
+        _locale: en|bg
+        

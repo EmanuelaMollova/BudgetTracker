@@ -15,7 +15,7 @@ Booleans:
 {% endif %}
 
 <button class="toggle_expenses btn little-spacer">
-    <i class="icon-chevron-down"></i>Show/hide all products
+    <i class="icon-chevron-down"></i>{{ 'displayexp.showhide' | trans({}, 'messages') }}
 </button>
 
 {# Display categories, sums for them and expenses #}
@@ -47,7 +47,7 @@ Booleans:
             </tr></table>
             {% endif %}
 </div>
-            <strong>Sum: {{ sum|number_format(2) }}</strong>
+            <strong>{{ 'displayexp.sum' | trans({}, 'messages') }}: {{ sum|number_format(2) }}</strong>
                 
             {% if highchart == true %}
                 {% set chart = chart ~ sum ~ '], ' %}
@@ -102,7 +102,7 @@ Booleans:
     {% endif %}
             </div> 
 
-    <strong>Sum: {{ sum|number_format(2) }}</strong>
+    <strong>{{ 'displayexp.sum' | trans({}, 'messages') }}: {{ sum|number_format(2) }}</strong>
         
     {% if highchart == true %}
         {% set chart = chart  ~ sum ~ ']' %}
@@ -132,7 +132,7 @@ Booleans:
                          
         </div>
         
-        <strong>Sum: {{ sum_for_payments|number_format(2) }}</strong>
+        <strong>{{ 'displayexp.sum' | trans({}, 'messages') }}: {{ sum_for_payments|number_format(2) }}</strong>
         
         {% set sum = sum_for_payments %}
         {% include 'AcmeBudgetTrackerBundle::display_expenses_progressbar.html.twig' %}
@@ -144,7 +144,7 @@ Booleans:
     {% endif %}
     
     {# Display total sum #}
-    <p class="lead text-error little-spacer">Total: <strong>{{total_sum|number_format(2)}}</strong></p> 
+    <p class="lead text-error little-spacer">{{ 'displayexp.total' | trans({}, 'messages') }}: <strong>{{total_sum|number_format(2)}}</strong></p> 
 
     {% if highchart == true %}
 

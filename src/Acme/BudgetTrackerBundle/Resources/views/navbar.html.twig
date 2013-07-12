@@ -13,36 +13,42 @@
         <ul class="nav">
 
             <li{% if var == "Expenses" %} class="active"{% endif %}>
-                <a href="{{ path('expenses') }}"> Expenses</a>
+                <a href="{{ path('expenses') }}">{{ 'nav.expenses'|trans({}, 'messages') }}</a>
             </li>
 
             <li{% if var == "Reports" %} class="active"{% endif %}>
-                <a href="{{ path('reports') }}">Reports</a>
+                <a href="{{ path('reports') }}">{{ 'nav.reports'|trans({}, 'messages') }}</a>
             </li>
 
             <li{% if var == "Categories" %} class="active"{% endif %}>
-                <a href="{{ path('categories') }}">Categories</a>
+                <a href="{{ path('categories') }}">{{ 'nav.categories'|trans({}, 'messages') }}</a>
             </li>
             
             <li{% if var == "Months" %} class="active"{% endif %}>
-                <a href="{{ path('months') }}">Months</a>
+                <a href="{{ path('months') }}">{{ 'nav.months'|trans({}, 'messages') }}</a>
             </li>
             
             <li{% if var == "Debts & Loans" %} class="active"{% endif %}>
-                <a href="{{ path('debts_loans') }}">Debts & Loans</a>
+                <a href="{{ path('debts_loans') }}">{{ 'nav.debtsloans'|trans({}, 'messages') }}</a>
             </li>
             
             <li{% if var == "Bills" %} class="active"{% endif %}>
-                <a href="{{ path('bills') }}">Bills</a>
+                <a href="{{ path('bills') }}">{{ 'nav.bills'|trans({}, 'messages') }}</a>
             </li>
             
             <li{% if var == "Bank interest" %} class="active"{% endif %}>
-                <a href="{{ path('bank_interest') }}">Bank Interest</a>
+                <a href="{{ path('bank_interest') }}">{{ 'nav.bank'|trans({}, 'messages') }}</a>
             </li>
 
         </ul>
         
         <ul class="nav pull-right">
+            
+            {% for locale in ['en', 'bg'] %}
+                <li {% if locale == app.request.locale %}class="active"{% endif %}>
+                <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale' : locale})) }}">{{ locale }}</a>
+                </li>
+            {% endfor %}
             
             <li{% if var == "Profile" %} class="active"{% endif %}>
                 <a href={{ path('fos_user_profile_show') }}>
@@ -51,9 +57,12 @@
                 </a>
             </li>
             
-            <li><a href={{ path('fos_user_security_logout') }}>Logout</a> </li>
+            <li><a href={{ path('fos_user_security_logout') }}>{{ 'nav.logout'|trans({}, 'messages') }}</a> </li>
             
         </ul>
+        
+
+
         
     </div>
 </div>

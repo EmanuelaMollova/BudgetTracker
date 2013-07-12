@@ -18,7 +18,7 @@ class ExpensesController extends Controller
      * creates a new expense and adds it to the database.
      */
     public function expensesAction(Request $request)
-    {
+    {        
         $this->setVariables($newcomer = true, $month = false);
 
         //Set the current date for searching all expenses for today     
@@ -80,5 +80,5 @@ class ExpensesController extends Controller
                     'spent_for_payments_today' => $spent_for_payments_today,
                     'form' => $form->createView()));
         }
-    } 
+    }
 }

@@ -1,1 +1,47 @@
+nav:
+  expenses: "Expenses"
+  reports: "Reports"
+  categories: "Categories"
+  months: "Months"
+  debtsloans: "Debts & Loans"
+  bills: "Bills"
+  bank: "Bank Interest"
+  logout: "Logout"
+  
+index:
+  hello: "Hello"
+  welcome: "... and welcome to BudgetTracker!"
+  start: "We suggest you start by %link_start%creating some categories%link_end% to help you keep your expenses organised."
+  next: "Next, you can %link_start%add your budget for the current month%link_end%."
+  exp: "And then of course - start %link_start%listing your expenses%link_end%."
+  reports: "Whenever you want to see how much you have spent lately and for what - you can visit %link_start%reports section%link_end%."
+  explanation: "There you will see a list for just the expenses you are interested in."
+  homepage: "If you want just a quick overview for the current month, the home page will give you the needed information."
+  more: "You can list your debts and loans, keep track when you have to pay your bills and calculate your profit for given bank interest."
+  enjoy: "Enjoy your stay in BudgetTracker!"
+  
+  noexpenses: "You don't have expenses for the current month yet."
+  addexpenses: "You can add some from %link_start%here%link_end%."
+  addbudget: "And you can %link_start%add your budget%link_end%, too (if you still haven't added it :)."
+  
+  expenses:
+   currentmonth: "Expenses for the current month"
+   from: "from"
+   spentall: "You have spent all your budget of "
+   spentmore: "You have exceeded your budget of "
+   summore1: "You have spent"
+   summore2: "more than you should!"
+   
+displayexp:
+  showhide: "Show/hide all products"
+  sum: "Sum"
+  total: "Total"
+  
+  receive: "Receive from"
+  product: "Product"
+  price: "Price"
+  date: "Date"
+  description: "Description"
+  
 add.new.category: "Add new category"
+all.months: "All months"

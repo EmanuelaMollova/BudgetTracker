@@ -2,13 +2,13 @@
     <tr>
         <th>
             {% if current_category == "Loans" %} 
-                Receive from 
+                {{ 'displayexp.receive' | trans({}, 'messages') }} 
             {% else %} 
-                Product 
+                {{ 'displayexp.product' | trans({}, 'messages') }}  
             {% endif %}
         </th>
-        <th>Price</th>
-        <th>Date</th>
-        <th>Description</th>
+        <th>{{ 'displayexp.price' | trans({}, 'messages') }} </th>
+        <th>{{ 'displayexp.date' | trans({}, 'messages') }} </th>
+        <th>{{ 'displayexp.description' | trans({}, 'messages') }} </th>
     </tr>
     <tr>
