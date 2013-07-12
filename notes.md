@@ -22,12 +22,9 @@ TOD0:
     * Stylish jEditable buttons
     * when editing remove the X icon
 
-<<<<<<< HEAD
 * Check all templates for NUMBER FORMAT !!!
-* Not returned debts ?
-=======
 * Not returned debts - warning not to spend all your money?
->>>>>>> a6d5a43550de35b9f4c4b0842d960660ab9502b2
+
 * 404 
 * js - category validation and banks  
 * Alerts, not session messages
