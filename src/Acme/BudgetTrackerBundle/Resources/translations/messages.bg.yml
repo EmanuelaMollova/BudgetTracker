@@ -37,7 +37,6 @@ index:
 displayexp:
   showhide: "Покажи/скрий всички разходи"
   sum: "Общо"
-  total: "Общо"
 
   receive: "Очаквайте от"
   product: "Продукт"
@@ -47,6 +46,7 @@ displayexp:
 
 submit: "Изпрати"
 sum: "Общо"
+total: "Общо"
 
 expenses:
   title: "Разходи"
@@ -122,3 +122,51 @@ debtloan_description: "Описание:"
 debtloan_price: "Сума:"
 debtloan_date: "Дата:"
 debtloan_category: "Категория:"
+
+bill:
+  title: "Сметки"
+  add: "Добавете нови сметки за плащане"
+  payment:
+    title: "Плащания"
+    paid1: "Сметката Ви за"
+    paid2: "е платена до "
+    nopayment: "Все още няма плащания за този вид сметка."
+    new: "Добавете ново плащане:"
+    paymentsfor: "Плащанията Ви за"
+    datepaid: "Платено на"
+    price: "Цена"
+    dateagain: "Да се плати пак на"
+    description: "Описание"
+    
+bill_payment_description: "Описание:"
+bill_payment_price: "Цена:"
+bill_payment_date_when_paid: "Дата, на която е платено:"
+bill_payment_date_to_pay_again: "Дата, на която трябва да се плати отново:"
+
+bank:
+  title: "Банкова лихва"
+  saved: "Досега сте спестили "
+  nothingsaved: "Досега не сте спестили нищо! :("
+  exceeded: "Превишили сте лимита си! "
+  morespent1: "Похарчили сте "
+  morespent2: "повече отколкото е трябвало! :( "
+  calculate: "Пресметнете печалбата си, ако вложите спестяванията си на депизит в банка"
+  deposit: "Сума за внасяне:"
+  interest: "Годишна лихва:"
+  period: Период (в месеци)
+  calc: "Изчисли"
+  profitresult: "Печалбата Ви, натрупана от лихвата ще е "
+  tax: "Но върху нея има 10% данък, което я прави "
+  result1: "И така след"
+  result2: "месеца сумата Ви ще стане "
+  error: "Моля попълнете всички полета!"
+
+notifications:
+  warning: "Внимание!"
+  have: "Имате"
+  debt: "дълг"
+  debts: "дълга"
+  return: "да върнете на:"
+  bill: "сметка"
+  bills: "сметки"
+  pay: "да платите скоро:"

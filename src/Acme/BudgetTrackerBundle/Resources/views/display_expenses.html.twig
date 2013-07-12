@@ -144,7 +144,7 @@ Booleans:
     {% endif %}
     
     {# Display total sum #}
-    <p class="lead text-error little-spacer">{{ 'displayexp.total' | trans({}, 'messages') }}: <strong>{{total_sum|number_format(2)}}</strong></p> 
+    <p class="lead text-error little-spacer">{{ 'total' | trans({}, 'messages') }}: <strong>{{total_sum|number_format(2)}}</strong></p> 
 
     {% if highchart == true %}
 

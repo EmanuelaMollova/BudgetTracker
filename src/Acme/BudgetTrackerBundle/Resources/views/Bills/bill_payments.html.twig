@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
 
+{% block title %} {{ 'bill.payment.title'|trans({}, 'messages') }} {% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('bundles/acmebudgettracker/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
@@ -10,7 +12,7 @@
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Bills'} %}
 
     <div class="text-center little-spacer ">
-        <h3>Payments for {{ bill.name }}</h3>
+        <h3>{{ 'bill.payment.title'|trans({}, 'messages') }} - {{ bill.name }}</h3>
         
         <p class="little-spacer lead
             {% if  bill.dateToPayAgain != null %}
@@ -20,32 +22,32 @@
                     text-error
                 {% endif %}">
 
-                Your <strong>{{ bill.name }}</strong> is paid up to 
+                {{ 'bill.payment.paid1'|trans({}, 'messages') }} <strong>{{ bill.name }}</strong> {{ 'bill.payment.paid2'|trans({}, 'messages') }}
                 <strong>{{ bill.dateToPayAgain|date('d-m-Y') }}</strong>.</p>
 
             {% else %}
-                text-warning">You still haven't paid for this bill.</p>
+                text-warning">{{ 'bill.payment.nopayment'|trans({}, 'messages') }}</p>
             {% endif %}
  
-        <p class="big-spacer lead"><strong>Add new payment:<strong></p>
+        <p class="big-spacer lead"><strong>{{ 'bill.payment.new'|trans({}, 'messages') }}<strong></p>
                     
-        {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}                       
+        {% form_theme form 'AcmeBudgetTrackerBundle:Form:label.html.twig' %}                       
         <form class="little-spacer" action="{{ path('payments', { 'id': bill.id}) }}" method="post" {{ form_enctype(form) }}>
             {{ form_errors(form) }}
             {{ form_widget(form) }}
-            <input class="little-spacer btn" type="submit" value="Submit"/>
+            <input class="little-spacer btn" type="submit" value="{{ 'submit'|trans({}, 'messages') }}"/>
         </form>
 
         {% if payments %}
                             
-            <p class="big-spacer little-bottom-spacer">Your payments for {{ bill.name }}</p>
+            <p class="big-spacer little-bottom-spacer">{{ 'bill.payment.paymentsfor'|trans({}, 'messages') }} {{ bill.name }}</p>
         
             <table class="table table-hover">
                 <tr>
-                    <th>Paid on</th>
-                    <th>Price</th>
-                    <th>Date to pay again</th>
-                    <th>Description</th>
+                    <th>{{ 'bill.payment.datepaid'|trans({}, 'messages') }}</th>
+                    <th>{{ 'bill.payment.price'|trans({}, 'messages') }}</th>
+                    <th>{{ 'bill.payment.dateagain'|trans({}, 'messages') }}</th>
+                    <th>{{ 'bill.payment.description'|trans({}, 'messages') }}</th>
                 </tr>
                 
                 {% for p in payments %}
@@ -58,7 +60,7 @@
                 {% endfor %}
             </table>
 
-            <p class="little-spacer">Total: {{ sum_of_payments|number_format(2) }}</p>
+            <p class="little-spacer">{{ 'total'|trans({}, 'messages') }}: {{ sum_of_payments|number_format(2) }}</p>
 
         {%endif%}     
 

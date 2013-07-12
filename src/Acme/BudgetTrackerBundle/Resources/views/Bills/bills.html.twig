@@ -1,11 +1,13 @@
 {% extends '::base.html.twig' %}
 
+{% block title %} {{ 'bill.title' | trans({}, 'messages') }} {% endblock %}
+
 {% block body %}
 
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Bills'} %}
 
     <div class="text-center little-spacer ">
-        <h3>Bills</h3>
+        <h3>{{ 'bill.title' | trans({}, 'messages') }}</h3>
               
         {% if bills_for_user %}
             <table class="table table-striped big-spacer">
@@ -29,13 +31,13 @@
             </div>
         {% endif %}
         
-        <p class="big-spacer"><strong>Add new kind of bill<strong></p>
+        <p class="big-spacer"><strong>{{ 'bill.add' | trans({}, 'messages') }}<strong></p>
                     
         {% form_theme form 'AcmeBudgetTrackerBundle:Form:errors.html.twig' %}                       
         <form action="{{ path('bills') }}" method="post" {{ form_enctype(form) }}>
             {{ form_errors(form) }}
             {{ form_widget(form) }}
-            <input class="little-spacer btn" type="submit" value="Submit"/>
+            <input class="little-spacer btn" type="submit" value="{{ 'submit' | trans({}, 'messages') }}"/>
         </form>
     </div> 
 

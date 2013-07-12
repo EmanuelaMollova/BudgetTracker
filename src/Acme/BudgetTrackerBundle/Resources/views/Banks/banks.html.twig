@@ -1,65 +1,65 @@
 {% extends '::base.html.twig' %}
 
-{% block title %} Bank Interest {% endblock %}
+{% block title %} {{ 'bank.title'|trans({}, 'messages') }} {% endblock %}
 
 {% block body %}
     
     {% include 'AcmeBudgetTrackerBundle::navbar.html.twig' with {'var':'Bank interest'} %}
 
     <div class="little-spacer text-center">       
-        <h3>Bank Interest</h3> 
+        <h3>{{ 'bank.title'|trans({}, 'messages') }}</h3> 
         
         {% if saved_sum > 0%}
             <p class="lead text-success little-spacer">
-                You have saved <b>{{ saved_sum|number_format(2, '.', '') }}</b> so far!
+                {{ 'bank.saved'|trans({}, 'messages') }}<b>{{ saved_sum|number_format(2, '.', '') }}</b>!
             </p>
             
         {% elseif saved_sum == 0 %}
             <p class="lead text-warning little-spacer">
-                You have saved nothing so far! :(
+                {{ 'bank.nothingsaved'|trans({}, 'messages') }}
             </p>
             
         {% else %}
             <p class="lead text-error little-spacer">
-                You have exceeded your budget! 
+                {{ 'bank.exceeded'|trans({}, 'messages') }}
             </p>
             
             <p class="lead text-error"> 
-                You have spent {{ (saved_sum|abs)|number_format(2, '.', '') }} more than you should! :( 
+                {{ 'bank.morespent1'|trans({}, 'messages') }}{{ (saved_sum|abs)|number_format(2, '.', '') }} {{ 'bank.morespent2'|trans({}, 'messages') }}
             </p>
         {% endif %}
         
-        <p class="lead big-spacer">Calculate what your profit will be if you deposit in a bank</p>
+        <p class="lead big-spacer">{{ 'bank.calculate'|trans({}, 'messages') }}</p>
     
         <div class="little-spacer">
         
-            <label for="sum">Sum to deposit </label>
+            <label for="sum">{{ 'bank.deposit'|trans({}, 'messages') }} </label>
 
             <input id="sum" type="text" value="{% if saved_sum > 0 %}{{ saved_sum|number_format(2, '.', '') }}{% endif %}" required> 
 
-            <label for="interest">Year interest</label> 
+            <label for="interest">{{ 'bank.interest'|trans({}, 'messages') }}</label> 
             <input id="interest" type="text" required>
-            <label for="period">Period (months)</label> 
+            <label for="period">{{ 'bank.period'|trans({}, 'messages') }}</label> 
             <input id="period" type="text" required>
 
-            <div class="little-spacer"><button class="btn">Calculate</button></div>
+            <div class="little-spacer"><button class="btn">{{ 'bank.calc'|trans({}, 'messages') }}</button></div>
         </div>
                 
         <div class="products big-spacer">
-            <p class="lead">Your profit is <span id="profit"></span>.</p>
+            <p class="lead">{{ 'bank.profitresult'|trans({}, 'messages') }}<span id="profit"></span>.</p>
             
             <p class="lead">
-                But there is a 10% tax on it, which makes it <b><span id="profit_tax"></span></b>.
+                {{ 'bank.tax'|trans({}, 'messages') }}<b><span id="profit_tax"></span></b>.
             </p> 
             
             <p class="lead">
-                So after <span id="months"></span> month(s) your sum will become 
+                {{ 'bank.result1'|trans({}, 'messages') }} <span id="months"></span> {{ 'bank.result2'|trans({}, 'messages') }}
                 <b><span id="new_sum" class="text-success"></span></b>.
             </p>
         </div>
         
         <div class="products" id="error">
-            <p class="lead text-error big-spacer">Please fill in all the fileds!</p>
+            <p class="lead text-error big-spacer">{{ 'bank.error'|trans({}, 'messages') }}</p>
         </div> 
     </div> 
 

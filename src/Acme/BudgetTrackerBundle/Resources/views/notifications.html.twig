@@ -1,20 +1,44 @@
 <div id="notifications" class="box alert alert-error text-center">
     
-    <p>Warning!</p>
+    <p>{{ 'notifications.warning'|trans({}, 'messages') }}</p>
     
     {% if debts_count() > 0 %}
-        <p>You have {{ debts_count() }} {% if debts_count() == 1 %}debt {%else%} debts {%endif%} to return to:</p>
+        <p>
+            {{ 'notifications.have'|trans({}, 'messages') }} {{ debts_count() }} 
+            {% if debts_count() == 1 %}
+                {{ 'notifications.debt'|trans({}, 'messages') }}
+            {% else %} 
+                {{ 'notifications.debts'|trans({}, 'messages') }} 
+            {% endif %} 
+            {{ 'notifications.return'|trans({}, 'messages') }}
+        </p>
     
         {% for a in get_debts() %}
-            <p><a href="{{path('debts_loans')}}"><strong>{{ a.product }} - {{ a.price|number_format(2) }}</strong></a></p>
+            <p>
+                <a href="{{path('debts_loans')}}">
+                    <strong>{{ a.product }} - {{ a.price|number_format(2) }}</strong>
+                </a>
+            </p>
         {% endfor %}           
     {% endif %}
 
     {% if bills_count() > 0 %}        
-        <p>You have {{ bills_count() }} {% if bills_count() == 1 %}bill {%else%} bills {%endif%} to pay soon:</p>       
+        <p>
+            {{ 'notifications.have'|trans({}, 'messages') }} {{ bills_count() }} 
+                {% if bills_count() == 1 %}
+                    {{ 'notifications.bill'|trans({}, 'messages') }}
+                {% else %} 
+                    {{ 'notifications.bills'|trans({}, 'messages') }}
+                {% endif %} 
+            {{ 'notifications.pay'|trans({}, 'messages') }}
+        </p>       
         
         {% for b in get_bills() %}
-            <p><a href="{{path('bills')}}"><strong>{{ b.name }} - {{ b.dateToPayAgain|date("d-m-Y") }}</strong></a></p>
+            <p>
+                <a href="{{path('bills')}}">
+                    <strong>{{ b.name }} - {{ b.dateToPayAgain|date("d-m-Y") }}</strong>
+                </a>
+            </p>
         {% endfor %}
     {% endif %}
   

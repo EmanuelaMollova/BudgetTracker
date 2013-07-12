@@ -36,7 +36,6 @@ index:
    
 displayexp:
   showhide: "Show/hide all products"
-  total: "Total"
   
   receive: "Receive from"
   product: "Product"
@@ -116,10 +115,56 @@ dl:
   titlefordebts: "Debts you should return"
   titleforloans: "Loans you should receive"
   
-
 debtloan_product: "From/To:"
 debtloan_description: "Description:"
 debtloan_price: "Sum:"
 debtloan_date: "Date:"
 debtloan_category: "Category:"
+
+bill:
+  title: "Bills"
+  add: "Add new kind of bill"
+  payment:
+    title: "Payments"
+    paid1: "Your bill for"
+    paid2: "is paid up to "
+    nopayment: "You still don't have payments for this bill."
+    new: "Add new payment:"
+    paymentsfor: "Your payments for"
+    datepaid: "Paid on"
+    price: "Price"
+    dateagain: "Date to pay again"
+    description: "Description"
+    
+bill_payment_description: "Description:"
+bill_payment_price: "Price:"
+bill_payment_date_when_paid: "Date when paid:"
+bill_payment_date_to_pay_again: "Date to pay again:"
+
+bank:
+  title: "Bank Interest"
+  saved: "So far you have saved "
+  nothingsaved: "You have saved nothing so far! :("
+  exceeded: "You have exceeded your budget! "
+  morespent1: "You have spent "
+  morespent2: "more than you should! :( "
+  calculate: "Calculate what your profit will be if you deposit in a bank"
+  deposit: "Sum to deposit"
+  interest: "Year interest"
+  period: Period (months)
+  calc: "Calculate"
+  profitresult: "Your profit is "
+  tax: "But there is a 10% tax on it, which makes it "
+  result1: "So after"
+  result2: "month(s) your sum will become "
+  error: "Please fill in all the fileds!"
   
+notifications:
+  warning: "Warning!"
+  have: "You have"
+  debt: "debt"
+  debts: "debts"
+  return: "to return to:"
+  bill: "bill"
+  bills: "bills"
+  pay: "to pay soon:"
